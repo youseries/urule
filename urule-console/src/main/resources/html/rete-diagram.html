@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="pragma" content="no-cache"> 
+<meta http-equiv="expires" content="0">
+<title>RETE树展示</title>
+ <link rel="stylesheet" href="${contextPath}/urule/res/urule-asserts/css/bootstrap.min.css">
+ <script type="text/javascript" src="${contextPath}/urule/res/urule-asserts/venderjs/jquery.min.js"></script>
+ <script type="text/javascript" src="${contextPath}/urule/res/urule-asserts/venderjs/raphael.min.js"></script>
+ <script type="text/javascript" src="${contextPath}/urule/res/urule-asserts/venderjs/retediagram.js"></script>
+ <script type="text/javascript" src="${contextPath}/urule/res/urule-asserts/venderjs/bootstrap.min.js"></script>
+</head>
+<body>
+<div id='container'></div>
+<script type="text/javascript">
+	window._server="${contextPath}/urule";
+	$(document).ready(function(){
+		var files="${files}";
+		drawReteDiagram('container',files);
+	});
+</script>
+</body>
+</html>

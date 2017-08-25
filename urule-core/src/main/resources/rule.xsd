@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.bstek.com/rule" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bstek.com/rule">
+<element name="rule-set">
+	<complexType>
+		<sequence>
+			<element name="import-variable-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-constant-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-action-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-parameter-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="rule" type="tns:rule" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="decision-tree">
+	<complexType>
+		<sequence>
+			<element name="import-variable-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-constant-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-action-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-parameter-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="variable-tree-node" type="tns:variable-tree-node" maxOccurs="1" minOccurs="1"></element>
+		</sequence>
+		<attribute name="salience" type="int"></attribute>
+		<attribute name="effective-date" type="date"></attribute>
+		<attribute name="expires-date" type="date"></attribute>
+		<attribute name="enabled" type="boolean"></attribute>
+	</complexType>
+</element>
+
+<element name="scorecard">
+	<complexType>
+		<sequence>
+			<element name="rows" type="tns:attribute-row" minOccurs="1" maxOccurs="unbounded"></element>
+			<element name="custom-cols" type="tns:custom-col" minOccurs="0" maxOccurs="unbounded"></element>
+			<element name="cells" type="tns:card-cell" minOccurs="3" maxOccurs="unbounded"></element>
+		</sequence>		
+		<attribute name="attr-col-width" type="string"></attribute>
+		<attribute name="attr-col-name" type="string"></attribute>
+		<attribute name="attr-col-category" type="string"></attribute>
+		
+		<attribute name="condition-col-width" type="string"></attribute>
+		<attribute name="condition-col-name" type="string"></attribute>
+		
+		<attribute name="score-col-width" type="string"></attribute>
+		<attribute name="score-col-name" type="string"></attribute>
+		
+		<attribute name="name" type="string"></attribute>
+		
+		<attribute name="salience" type="int"></attribute>
+		<attribute name="effective-date" type="date"></attribute>
+		<attribute name="expires-date" type="date"></attribute>
+		<attribute name="enabled" type="boolean"></attribute>
+		<attribute name="weight-support" type="boolean"></attribute>
+		<attribute name="scoring-type">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="sum"></enumeration>
+					<enumeration value="weightsum"></enumeration>
+					<enumeration value="custom"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="scoring-bean" type="string"></attribute>
+		<attribute name="assign-target-type">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="variable"></enumeration>
+					<enumeration value="parameter"></enumeration>
+					<enumeration value="none"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="assign-category" type="string"></attribute>
+		<attribute name="assign-var" type="string"></attribute>
+		<attribute name="assign-var-label" type="string"></attribute>
+	</complexType>
+</element>
+
+<complexType name="custom-col">
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="col-number" type="int"></attribute>
+</complexType>
+
+<complexType name="attribute-row">
+	<sequence>
+		<element name="condition-rows" type="tns:condition-row" minOccurs="0" maxOccurs="unbounded"></element>
+	</sequence>
+	<attribute name="row-number" type="int"></attribute>
+</complexType>
+<complexType name="condition-row">
+	<attribute name="row-number" type="int"></attribute>
+</complexType>
+
+<complexType name="card-cell">
+	<choice>
+		<element name="joint" type="tns:joint"></element>
+		<element name="value" type="tns:value"></element>
+	</choice>
+	<attribute name="var" type="string"></attribute>
+	<attribute name="var-label" type="string"></attribute>
+	<attribute name="datatype" type="tns:datatype"></attribute>
+	
+	<attribute name="type">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="attribute"></enumeration>
+				<enumeration value="condition"></enumeration>
+				<enumeration value="score"></enumeration>
+				<enumeration value="custom"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+	<attribute name="rowspan" type="integer"></attribute>
+	<attribute name="weight" type="string"></attribute>
+	<attribute name="row" type="int"></attribute>
+	<attribute name="col" type="int"></attribute>
+</complexType>
+
+
+<complexType name="variable-tree-node">
+	<sequence>
+		<element name="left" type="tns:left" maxOccurs="1" minOccurs="1"></element>
+		<element name="condition-tree-node" type="tns:condition-tree-node" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+</complexType>
+
+<complexType name="condition-tree-node">
+	<sequence>
+		<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+		<element name="condition-nodes" type="tns:variable-tree-node" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="action-nodes" type="tns:action-tree-node" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+	<attribute name="op" type="tns:op" use="required"></attribute>
+</complexType>
+
+<complexType name="action-tree-node">
+	<sequence>
+		<element name="execute-function" type="tns:execute-function" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="execute-method" type="tns:execute-method" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="var-assign" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<all>
+					<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+				</all>
+				<attribute name="var" type="string" use="required"></attribute>
+				<attribute name="var-label" type="string" use="required"></attribute>
+				<attribute name="var-category" type="string" use="required"></attribute>
+					<attribute name="type" use="required">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="variable"></enumeration>
+							<enumeration value="parameter"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+			</complexType>
+		</element>
+		<element name="console-print" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<sequence>
+					<element name="value" type="tns:value" minOccurs="1" maxOccurs="1"></element>
+				</sequence>
+			</complexType>
+		</element>
+	</sequence>
+</complexType>
+
+<element name="res-packages">
+	<complexType>
+		<sequence>
+			<element name="res-package" type="tns:res-package" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<complexType name="res-package">
+	<sequence>
+		<element name="package-item" type="tns:res-package-item" maxOccurs="unbounded" minOccurs="0"></element>
+	</sequence>
+	<attribute name="id" type="string" use="required"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="create_date" type="date"></attribute>
+</complexType>
+
+<complexType name="res-package-item">
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="path" type="string" use="required"></attribute>
+	<attribute name="version" type="string"></attribute>	
+</complexType>
+
+<element name="variable-library">
+	<complexType>
+		<sequence>
+			<element name="category" type="tns:var-category" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="constant-library">
+	<complexType>
+		<sequence>
+			<element name="category" type="tns:constant-category" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="action-library">
+	<complexType>
+		<sequence>
+			<element name="spring-bean" type="tns:spring-bean" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="parameter-library">
+	<complexType>
+		<sequence>
+			<element name="parameter" type="tns:var" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="rule-flow">
+	<complexType>
+		<sequence>
+			<element name="import-variable-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-constant-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-action-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="import-parameter-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+			
+			<element name="start" type="tns:start" maxOccurs="1" minOccurs="1"></element>
+			<element name="rule" type="tns:rule-task" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="rule-package" type="tns:rule-package" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="fork" type="tns:fork" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="join" type="tns:join" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="decision" type="tns:decision" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="action" type="tns:action" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="script" type="tns:script" maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="end" type="tns:end" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+		<attribute name="id" type="string" use="required"></attribute>
+	</complexType>
+</element>
+
+<element name="decision-table" type="tns:decision-table">
+</element>
+<element name="script-decision-table" type="tns:script-decision-table"></element>
+
+<complexType name="import-variable-library">
+	<attribute name="resource" type="string" use="required"></attribute>
+</complexType>
+<complexType name="import-action-library">
+	<attribute name="resource" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="spring-bean">
+	<sequence>
+		<element name="method" maxOccurs="unbounded" minOccurs="0">
+			<complexType>
+				<sequence>
+					<element name="parameter" maxOccurs="unbounded" minOccurs="0">
+						<complexType>
+							<attribute name="name" type="string" use="required"></attribute>
+							<attribute name="type" type="tns:datatype" use="required"></attribute>
+						</complexType>
+					</element>
+				</sequence>
+				<attribute name="method-name" type="string" use="required"></attribute>
+				<attribute name="name" type="string" use="required"></attribute>
+			</complexType>
+		</element>
+	</sequence>
+	<attribute name="id" type="string" use="required"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="rule">
+	<sequence>
+		<element name="if" type="tns:if" maxOccurs="1" minOccurs="1"></element>
+		<element name="then" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+		<element name="else" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="salience" type="int"></attribute>
+	<attribute name="loop" type="boolean"></attribute>
+	<attribute name="effective-date" type="date"></attribute>
+	<attribute name="expires-date" type="date"></attribute>
+	<attribute name="enabled" type="boolean"></attribute>
+	<attribute name="activation-group" type="string"></attribute>
+	<attribute name="agenda-group" type="string"></attribute>
+	<attribute name="auto-focus" type="boolean"></attribute>
+	<attribute name="ruleflow-group" type="string"></attribute>
+</complexType>
+
+<complexType name="loop-rule">
+	<sequence>
+		<element name="loop-start" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+		<element name="loop-target" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+		<element name="if" type="tns:if" maxOccurs="1" minOccurs="1"></element>
+		<element name="then" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+		<element name="else" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+		<element name="loop-end" type="tns:actions" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="salience" type="int"></attribute>
+	<attribute name="loop" type="boolean"></attribute>
+	<attribute name="effective-date" type="date"></attribute>
+	<attribute name="expires-date" type="date"></attribute>
+	<attribute name="enabled" type="boolean"></attribute>
+	<attribute name="activation-group" type="string"></attribute>
+	<attribute name="agenda-group" type="string"></attribute>
+	<attribute name="auto-focus" type="boolean"></attribute>
+	<attribute name="ruleflow-group" type="string"></attribute>
+</complexType>
+
+<complexType name="if">
+	<choice>
+		<element name="atom" type="tns:atom" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="named-atom" type="tns:named-atom" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="and" type="tns:and" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="or" type="tns:or" maxOccurs="unbounded" minOccurs="0"></element>
+	</choice>
+</complexType>
+
+
+<complexType name="actions">
+	<sequence>
+		<element name="execute-function" type="tns:execute-function" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="execute-method" type="tns:execute-method" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="var-assign" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<all>
+					<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+				</all>
+				<attribute name="content" type="string" use="required"></attribute>
+				<attribute name="var" type="string" use="required"></attribute>
+				<attribute name="var-label" type="string" use="required"></attribute>
+				<attribute name="var-category" type="string" use="required"></attribute>
+				<attribute name="type" use="required">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="variable"></enumeration>
+							<enumeration value="parameter"></enumeration>
+							<enumeration value="reference"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+			</complexType>
+		</element>
+		<element name="console-print" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<sequence>
+					<element name="value" type="tns:value" minOccurs="1" maxOccurs="1"></element>
+				</sequence>
+			</complexType>
+		</element>
+	</sequence>
+</complexType>
+
+<complexType name="execute-function">
+	<sequence>
+		<element name="function-parameter" type="tns:function-parameter" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="function-label" type="string"></attribute>
+	<attribute name="function-name" type="string"></attribute>
+</complexType>
+
+<complexType name="execute-method">
+	<sequence>
+		<element name="parameter" type="tns:method-parameter" minOccurs="0" maxOccurs="unbounded"></element>
+	</sequence>
+	<attribute name="bean" type="string" use="required"></attribute>
+	<attribute name="bean-label" type="string" use="required"></attribute>
+	<attribute name="method-label" type="string" use="required"></attribute>
+	<attribute name="method-name" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="method-parameter">
+	<sequence>
+		<element name="value" type="tns:value" minOccurs="1" maxOccurs="1"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="type" type="tns:datatype" use="required"></attribute>
+</complexType>
+
+<complexType name="constant-category">
+	<sequence>
+		<element name="constant" type="tns:constant" minOccurs="1" maxOccurs="unbounded"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="label" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="constant">
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="label" type="string" use="required"></attribute>
+	<attribute name="type" type="tns:datatype" use="required"></attribute>
+</complexType>
+
+<complexType name="var-category">
+	<sequence>
+		<element name="var" type="tns:var" maxOccurs="unbounded" minOccurs="0"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Custom"></enumeration>
+				<enumeration value="Clazz"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+	<attribute name="clazz" type="string"></attribute>
+</complexType>
+
+<simpleType name="datatype">
+		<restriction base="string">
+			<enumeration value="String"></enumeration>
+			<enumeration value="Integer"></enumeration>
+			<enumeration value="Double"></enumeration>
+			<enumeration value="Long"></enumeration>
+			<enumeration value="Float"></enumeration>
+			<enumeration value="BigDecimal"></enumeration>
+			<enumeration value="Boolean"></enumeration>
+			<enumeration value="Date"></enumeration>
+			<enumeration value="List"></enumeration>
+			<enumeration value="Set"></enumeration>
+			<enumeration value="Map"></enumeration>
+			<enumeration value="Enum"></enumeration>
+			<enumeration value="Object"></enumeration>
+		</restriction>
+</simpleType>
+
+<complexType name="var">
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="label" type="string" use="required"></attribute>
+	<attribute name="type" type="tns:datatype" use="required"></attribute>
+	<attribute name="default-value" type="string"></attribute>
+	<attribute name="act" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="In"></enumeration>
+				<enumeration value="Out"></enumeration>
+				<enumeration value="InOut"></enumeration>
+				<enumeration value="Internal"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+</complexType>
+
+<complexType name="left">
+	<sequence>
+		<element name="parameter" type="tns:method-parameter" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="simple-arith" type="tns:simple-arith" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="function-parameter" type="tns:function-parameter" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="function-label" type="string"></attribute>
+	<attribute name="function-name" type="string"></attribute>
+	
+	<attribute name="bean-name" type="string"></attribute>
+	<attribute name="bean-label" type="string" ></attribute>
+	<attribute name="method-name" type="string"></attribute>
+	<attribute name="method-label" type="string"></attribute>
+	
+	<attribute name="var" type="string" use="required"></attribute>
+	<attribute name="var-label" type="string" use="required"></attribute>
+	<attribute name="datatype" type="tns:datatype" use="required"></attribute>
+	<attribute name="var-category" type="string"></attribute>
+	<attribute name="type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="variable"></enumeration>
+				<enumeration value="parameter"></enumeration>
+				<enumeration value="method"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+</complexType>
+
+<complexType name="function-parameter">
+	<sequence>
+		<element name="value" type="tns:value" minOccurs="1" maxOccurs="1"></element>
+	</sequence>
+	<attribute name="property-name" type="string"></attribute>
+	<attribute name="property-label" type="string"></attribute>
+</complexType>
+
+<complexType name="value">
+	<sequence>
+		<element name="parameter" type="tns:method-parameter" minOccurs="0" maxOccurs="unbounded"></element>
+		<element name="complex-arith" type="tns:complex-arith" maxOccurs="1" minOccurs="0"></element>
+		<element name="function-parameter" type="tns:function-parameter" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="function-label" type="string"></attribute>
+	<attribute name="function-name" type="string"></attribute>
+	
+	<attribute name="bean-name" type="string"></attribute>
+	<attribute name="bean-label" type="string" ></attribute>
+	<attribute name="method-name" type="string"></attribute>
+	<attribute name="method-label" type="string"></attribute>
+	
+	<attribute name="var" type="string"></attribute>
+	<attribute name="var-label" type="string"></attribute>
+	<attribute name="datatype" type="tns:datatype"></attribute>
+	<attribute name="var-category" type="string"></attribute>
+	
+	<attribute name="const" type="string"></attribute>
+	<attribute name="const-label" type="string"></attribute>
+	<attribute name="const-category" type="string"></attribute>
+	
+	<attribute name="content" type="string"></attribute>
+	<attribute name="type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Variable"></enumeration>
+				<enumeration value="VariableCategory"></enumeration>
+				<enumeration value="Input"></enumeration>
+				<enumeration value="Parameter"></enumeration>
+				<enumeration value="Constant"></enumeration>
+				<enumeration value="Method"></enumeration>
+				<enumeration value="Reference"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+</complexType>
+
+<complexType name="simple-arith">
+	<attribute name="type" type="tns:arith-type" use="required"></attribute>
+	<attribute name="value" type="string" use="required"></attribute>
+</complexType>
+
+
+<complexType name="complex-arith">
+	<choice>
+		<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+		<element name="paren" type="tns:paren" maxOccurs="1" minOccurs="1"></element>
+	</choice>
+	<attribute name="type" type="tns:arith-type" use="required"></attribute>
+</complexType>
+
+<complexType name="paren">
+	<sequence>
+		<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+		<element name="complex-arith" type="tns:complex-arith" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+</complexType>
+
+<simpleType name="arith-type">
+	<restriction base="string">
+		<enumeration value="Add"></enumeration>
+		<enumeration value="Sub"></enumeration>
+		<enumeration value="Mul"></enumeration>
+		<enumeration value="Div"></enumeration>
+	</restriction>
+</simpleType>
+
+<complexType name="atom">
+	<sequence>
+		<element name="left" type="tns:left" maxOccurs="1" minOccurs="1"></element>
+		<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="op" type="tns:op" use="required"></attribute>
+</complexType>
+<complexType name="named-atom">
+	<sequence>
+		<element name="named-criteria" type="tns:named-criteria" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+	<attribute name="reference-name" type="string" use="required"></attribute>
+	<attribute name="var-category" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="named-criteria">
+	<sequence>
+		<element name="value" type="tns:value" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="var" type="string" use="required"></attribute>
+	<attribute name="var-label" type="string" use="required"></attribute>
+	<attribute name="op" type="tns:op" use="required"></attribute>
+</complexType>
+
+<simpleType name="op">
+	<restriction base="string">
+		<enumeration value="NotEquals"></enumeration>
+		<enumeration value="Equals"></enumeration>
+		<enumeration value="In"></enumeration>
+		<enumeration value="NotIn"></enumeration>
+		<enumeration value="StartWith"></enumeration>
+		<enumeration value="NotStartWith"></enumeration>
+		<enumeration value="EndWith"></enumeration>
+		<enumeration value="NotEndWith"></enumeration>
+		<enumeration value="GreaterThen"></enumeration>
+		<enumeration value="GreaterThenEquals"></enumeration>
+		<enumeration value="LessThen"></enumeration>
+		<enumeration value="LessThenEquals"></enumeration>
+		<enumeration value="Null"></enumeration>
+		<enumeration value="NotNull"></enumeration>
+		<enumeration value="Eval"></enumeration>
+		<enumeration value="Match"></enumeration>
+		<enumeration value="NotMatch"></enumeration>
+	</restriction>
+</simpleType>
+
+<complexType name="and">
+	<sequence>
+		<element name="atom" type="tns:atom" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="and" type="tns:and" maxOccurs="unbounded" minOccurs="0"></element>	
+		<element name="or" type="tns:or" maxOccurs="unbounded" minOccurs="0"></element>	
+	</sequence>
+</complexType>
+<complexType name="or">
+	<sequence>
+		<element name="atom" type="tns:atom" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="and" type="tns:and" maxOccurs="unbounded" minOccurs="0"></element>	
+		<element name="or" type="tns:or" maxOccurs="unbounded" minOccurs="0"></element>	
+	</sequence>
+</complexType>
+
+
+<complexType name="decision-table">
+	<sequence>
+		<element name="import-variable-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-constant-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-action-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-parameter-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="cell" type="tns:cell" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="col" type="tns:column" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="row" type="tns:row" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+	<attribute name="salience" type="int"></attribute>
+	<attribute name="effective-date" type="date"></attribute>
+	<attribute name="expires-date" type="date"></attribute>
+	<attribute name="enabled" type="boolean"></attribute>
+</complexType>
+
+<complexType name="script-decision-table">
+	<sequence>
+		<element name="import-variable-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-constant-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-action-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="import-parameter-library" type="tns:import" maxOccurs="unbounded" minOccurs="0"></element>
+		<element name="script-cell" type="tns:script-cell" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="col" type="tns:column" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="row" type="tns:row" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+</complexType>
+
+<complexType name="import">
+	<attribute name="path" type="string" use="required"></attribute>
+</complexType>
+
+<complexType name="cell">
+	<choice>
+		<element name="joint" type="tns:joint"></element>
+		<element name="value" type="tns:value"></element>
+		<element name="execute-method" type="tns:execute-method"></element>
+	</choice>
+	<attribute name="row" type="integer" use="required"></attribute>
+	<attribute name="col" type="integer" use="required"></attribute>
+	<attribute name="rowspan" type="integer"></attribute>
+</complexType>
+<complexType name="script-cell" mixed="true">
+	<attribute name="row" type="integer" use="required"></attribute>
+	<attribute name="col" type="integer" use="required"></attribute>
+	<attribute name="rowspan" type="integer"></attribute>
+</complexType>
+
+<complexType name="condition">
+	<sequence>
+		<element name="value" type="tns:value" minOccurs="1" maxOccurs="1"></element>
+		<element name="joint" type="tns:join" minOccurs="0" maxOccurs="unbounded"></element>
+	</sequence>
+	<attribute name="op" type="tns:op" use="required"></attribute>
+</complexType>
+
+<complexType name="joint">
+	<sequence>
+		<element name="condition" type="tns:condition" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+	<attribute name="type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="And"></enumeration>
+				<enumeration value="Or"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+</complexType>
+
+<complexType name="row">
+	<attribute name="num" type="integer" use="required"></attribute>
+	<attribute name="height" type="integer" use="required"></attribute>
+</complexType>
+
+<complexType name="column">
+	<attribute name="num" type="integer" use="required"></attribute>
+	<attribute name="width" type="integer" use="required"></attribute>
+	<attribute name="var-category" type="string"></attribute>
+	<attribute name="var" type="string"></attribute>
+	<attribute name="var-label" type="string"></attribute>
+	<attribute name="datatype" type="tns:datatype"></attribute>
+	<attribute name="type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Criteria"></enumeration>
+				<enumeration value="Assignment"></enumeration>
+				<enumeration value="ConsolePrint"></enumeration>
+				<enumeration value="ExecuteMethod"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+</complexType>
+
+<complexType name="start">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="rule-task">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="file" type="string"></attribute>
+	<attribute name="version" type="string"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="rule-package">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="package-id" type="string"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="fork">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="unbounded" minOccurs="1"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="join">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="action">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="0"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="action-bean" type="string" use="required"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+
+<complexType name="script" mixed="true">
+	<sequence>
+		<element name="connection" type="tns:connection" maxOccurs="1" minOccurs="0"></element>
+		<element name="content" type="string" maxOccurs="1" minOccurs="1"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+
+<complexType name="decision">
+	<sequence>
+		<element name="item" type="tns:decision-item" maxOccurs="unbounded" minOccurs="1"></element>
+		<element name="connection" type="tns:connection" maxOccurs="unbounded" minOccurs="0"></element>
+	</sequence>
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="decision-type" use="required">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Criteria"></enumeration>
+				<enumeration value="Percent"></enumeration>
+			</restriction>
+		</simpleType>
+	</attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+
+<complexType name="decision-item" mixed="true">
+	<attribute name="connection" type="string" use="required"></attribute>
+	<attribute name="percent" type="int"></attribute>
+</complexType>
+
+<complexType name="end">
+	<attribute name="x" type="string"></attribute>
+	<attribute name="y" type="string"></attribute>
+	<attribute name="width" type="string"></attribute>
+	<attribute name="height" type="string"></attribute>
+	<attribute name="name" type="string" use="required"></attribute>
+	<attribute name="event-bean" type="string"></attribute>
+</complexType>
+<complexType name="connection" mixed="true">
+	<attribute name="to" type="string" use="required"></attribute>
+	<attribute name="name" type="string"></attribute>
+	<attribute name="g" type="string"></attribute>
+</complexType>
+</schema>
