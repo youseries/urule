@@ -1,0 +1,57 @@
+
+@font-face {font-family: "rf";
+  src: url('iconfont.ttf') format('truetype')/* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+}
+
+.rf {
+  font-family:"rf" !important;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.rf-fork:before { content: "\e600"; }
+.rf-check:before { content: "\e625"; }
+.rf-search:before { content: "\e623"; }
+.rf-table:before { content: "\e60b"; }
+.rf-display:before { content: "\e624"; }
+.rf-save:before { content: "\e609"; }
+.rf-link:before { content: "\e628"; }
+.rf-folder:before { content: "\e622"; }
+.rf-library:before { content: "\e60d"; }
+.rf-minus:before { content: "\e619"; }
+.rf-plus:before { content: "\e60c"; }
+.rf-code:before { content: "\e617"; }
+.rf-scripttable:before { content: "\e618"; }
+.rf-database:before { content: "\e60e"; }
+.rf-paste:before { content: "\e629"; }
+.rf-remove:before { content: "\e61a"; }
+.rf-export:before { content: "\e61f"; }
+.rf-start:before { content: "\e601"; }
+.rf-rule:before { content: "\e602"; }
+.rf-copy:before { content: "\e62a"; }
+.rf-tree:before { content: "\e60f"; }
+.rf-decision1:before { content: "\e603"; }
+.rf-flow:before { content: "\e610"; }
+.rf-list:before { content: "\e620"; }
+.rf-root:before { content: "\e60a"; }
+.rf-select:before { content: "\e615"; }
+.rf-rename:before { content: "\e61c"; }
+.rf-script:before { content: "\e604"; }
+.rf-constant:before { content: "\e605"; }
+.rf-package:before { content: "\e616"; }
+.rf-savenewversion:before { content: "\e614"; }
+.rf-createpro:before { content: "\e61d"; }
+.rf-version:before { content: "\e61b"; }
+.rf-type:before { content: "\e626"; }
+.rf-action:before { content: "\e606"; }
+.rf-authority:before { content: "\e621"; }
+.rf-operation:before { content: "\e627"; }
+.rf-join:before { content: "\e607"; }
+.rf-import:before { content: "\e61e"; }
+.rf-cut:before { content: "\e62b"; }
+.rf-project:before { content: "\e611"; }
+.rf-decision:before { content: "\e608"; }
+.rf-variable:before { content: "\e612"; }
+.rf-parameter:before { content: "\e613"; }
+.rf-scorecard:before { content: "\e62c"; }

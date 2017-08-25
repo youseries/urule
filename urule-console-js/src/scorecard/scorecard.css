@@ -1,0 +1,10 @@
+.col-resize-trigger{
+    cursor: col-resize;
+    width: 2px;
+    float: right;
+}
+.attribute-operation{
+    vertical-align: middle;
+    font-size: 12pt;
+    margin-left: 3px;
+}
