@@ -59,6 +59,10 @@ public abstract class CriterionBuilder{
 	
 	/**
 	 * 带reference name的条件比较特殊，它不需要判断是否有父节点，需要将所有节点都直接挂在ObjectTypeNode下
+	 * @param criteria 命名条件对象
+	 * @param prevNode 上一节点对象
+	 * @param context 上下文对象
+	 * @return 返回命名条件节点对象
 	 */
 	protected NamedCriteriaNode buildNamedCriteria(NamedCriteria criteria,ConditionNode prevNode,BuildContext context){
 		/*if(prevNode!=null){

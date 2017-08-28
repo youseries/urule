@@ -30,7 +30,7 @@ public class KnowledgeSessionFactory {
 	
 	/**
 	 * 创建一个普通的KnowledgeSession对象
-	 * @param knowledgePackage 创建KnowledgeSession对象所需要的KnowledgePackage集合对象
+	 * @param knowledgePackages 创建KnowledgeSession对象所需要的KnowledgePackage集合对象
 	 * @return 返回一个新的KnowledgeSession对象
 	 */
 	public static KnowledgeSession newKnowledgeSession(KnowledgePackage[] knowledgePackages){
@@ -79,7 +79,7 @@ public class KnowledgeSessionFactory {
 	
 	/**
 	 * 创建一个用于批处理的BatchSession对象，这里默认将开启10个普通的线程池来运行提交的批处理任务，默认将每100个任务放在一个线程里处理
-	 * @param knowledgePackage 创建BatchSession对象所需要的KnowledgePackage集合对象
+	 * @param knowledgePackages 创建BatchSession对象所需要的KnowledgePackage集合对象
 	 * @return 返回一个新的BatchSession对象
 	 */
 	public static BatchSession newBatchSession(KnowledgePackage[] knowledgePackages){

@@ -195,5 +195,6 @@ public class Utils implements ApplicationContextAware{
 			functionDescriptorLabelMap.put(fun.getLabel(), fun);
 		}
 		Utils.applicationContext=applicationContext;
+		new Splash().print();
 	}
 }

@@ -46,7 +46,7 @@ public interface ProcessEventListener extends KnowledgeEventListener{
 	void beforeNodeTriggered(ProcessBeforeNodeTriggeredEvent event);
 	/**
 	 * 流经规则流中每个节点后触发
-	 * @param event
+	 * @param event ProcessBeforeNodeTriggeredEvent对象
 	 */
 	void afterNodeTriggered(ProcessAfterNodeTriggeredEvent event);
 }
