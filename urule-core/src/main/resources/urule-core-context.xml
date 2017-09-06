@@ -73,8 +73,6 @@
 		<property name="disabled" value="${urule.countFunctionDisabled}"></property>
 	</bean>
 	
-	<bean id="urule.ruleServiceProvider" class="com.bstek.urule.jsr94.RuleServiceProviderImpl"></bean>
-	
 	<bean id="urule.remoteService" class="com.bstek.urule.runtime.service.RemoteServiceImpl">
 		<property name="resporityServerUrl" value="${urule.resporityServerUrl}"></property>
 	</bean>
