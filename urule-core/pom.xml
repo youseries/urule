@@ -59,11 +59,6 @@
 		<version>1.9.11</version>
 	</dependency>
 	<dependency>
-	  <groupId>javax.rules</groupId>
-	  <artifactId>jsr94</artifactId>
-	  <version>1.0</version>
-	</dependency>
-	<dependency>
 		<groupId>commons-io</groupId>
 		<artifactId>commons-io</artifactId>
 		<version>2.4</version>
