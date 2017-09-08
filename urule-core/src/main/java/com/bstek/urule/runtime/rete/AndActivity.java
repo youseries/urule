@@ -119,6 +119,11 @@ public class AndActivity extends JoinActivity {
 	}
 	
 	@Override
+	public boolean orNodeIsPassed() {
+		return false;
+	}
+	
+	@Override
 	public void reset() {
 		toActivityMap.clear();
 		pass=false;

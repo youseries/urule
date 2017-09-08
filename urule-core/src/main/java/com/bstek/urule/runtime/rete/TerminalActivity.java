@@ -44,6 +44,10 @@ public class TerminalActivity extends AbstractActivity {
 		return result;
 	}
 	@Override
+	public boolean orNodeIsPassed() {
+		return false;
+	}
+	@Override
 	public void reset() {
 	}
 }

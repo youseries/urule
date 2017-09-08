@@ -35,6 +35,9 @@ public class CriteriaActivity  extends AbstractActivity {
 		if(pass){
 			return null;
 		}
+		if(orNodeIsPassed()){
+			return null;
+		}
 		List<Object> allMatchedObjects=new ArrayList<Object>();
 		boolean result=criteria.evaluate(context, obj,allMatchedObjects);
 		if(result){
@@ -47,6 +50,20 @@ public class CriteriaActivity  extends AbstractActivity {
 			return visitPahs(context,obj,tracker,variableMap);
 		}
 		return null;
+	}
+	@Override
+	public boolean orNodeIsPassed() {
+		List<Path> paths=getPaths();
+		if(paths!=null){
+			if(paths.size()>1){
+				return false;
+			}else if(paths.size()==1){
+				Path path=paths.get(0);
+				AbstractActivity activity=(AbstractActivity)path.getTo();
+				return activity.orNodeIsPassed();
+			}
+		}
+		return false;
 	}
 	@Override
 	public void reset() {

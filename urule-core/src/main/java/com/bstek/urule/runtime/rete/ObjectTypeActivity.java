@@ -58,6 +58,10 @@ public class ObjectTypeActivity extends AbstractActivity {
 		return false;
 	}
 	@Override
+	public boolean orNodeIsPassed() {
+		return false;
+	}
+	@Override
 	public void reset() {
 	}
 }

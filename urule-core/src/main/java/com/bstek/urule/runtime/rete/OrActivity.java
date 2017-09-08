@@ -33,6 +33,10 @@ public class OrActivity extends JoinActivity {
 		return visitPahs(context,obj,tracker,variableMap);
 	}
 	@Override
+	public boolean orNodeIsPassed() {
+		return pass;
+	}
+	@Override
 	public void reset(){
 		pass=false;
 	}

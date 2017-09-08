@@ -62,5 +62,6 @@ public abstract class AbstractActivity implements Activity {
 		}
 		return trackers;
 	}
+	public abstract boolean orNodeIsPassed();
 	public abstract void reset();
 }

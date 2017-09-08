@@ -57,6 +57,10 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 		return null;
 	}
 	@Override
+	public boolean orNodeIsPassed() {
+		return false;
+	}
+	@Override
 	public void reset() {
 		pass=false;
 	}
