@@ -41,6 +41,7 @@ import com.bstek.urule.model.library.Datatype;
  * @since 2015年1月8日
  */
 public class Utils implements ApplicationContextAware{
+	private static boolean debug;
 	private static ApplicationContext applicationContext;
 	private static Map<String,FunctionDescriptor> functionDescriptorMap=new HashMap<String,FunctionDescriptor>();
 	private static Map<String,FunctionDescriptor> functionDescriptorLabelMap=new HashMap<String,FunctionDescriptor>();
@@ -181,8 +182,15 @@ public class Utils implements ApplicationContextAware{
 		return functionDescriptorMap;
 	}
 	
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
+	public void setDebug(boolean debug) {
+		Utils.debug = debug;
+	}
+	
+	public static boolean isDebug() {
+		return debug;
+	}
+	
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		Collection<FunctionDescriptor> functionDescriptors=applicationContext.getBeansOfType(FunctionDescriptor.class).values();
 		for(FunctionDescriptor fun:functionDescriptors){
 			if(fun.isDisabled()){

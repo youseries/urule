@@ -100,7 +100,6 @@ public class ExecuteMethodAction extends AbstractAction {
 				}
 			}
 		}catch(Exception ex){
-			ex.printStackTrace();
 			throw new RuleException(ex);
 		}
 	}

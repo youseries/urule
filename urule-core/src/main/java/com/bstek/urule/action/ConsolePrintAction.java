@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.urule.Utils;
 import com.bstek.urule.model.rule.Value;
 import com.bstek.urule.runtime.rete.Context;
 import com.bstek.urule.runtime.rete.ValueCompute;
@@ -31,6 +32,9 @@ public class ConsolePrintAction extends AbstractAction {
 	private Value value;
 	private ActionType actionType=ActionType.ConsolePrint;
 	public ActionValue execute(Context context,Object matchedObject,List<Object> allMatchedObjects,Map<String,Object> variableMap) {
+		if(!Utils.isDebug()){
+			return null;
+		}
 		ValueCompute valueCompute=(ValueCompute)context.getApplicationContext().getBean(ValueCompute.BEAN_ID);
 		Object content=valueCompute.complexValueCompute(value, matchedObject, context,allMatchedObjects,variableMap);
 		if(content instanceof BigDecimal){

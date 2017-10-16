@@ -115,7 +115,9 @@
 	
 	<bean id="urule.valueCompute" class="com.bstek.urule.runtime.rete.ValueCompute"></bean>
 
-	<bean id="urule.utils" class="com.bstek.urule.Utils"></bean>
+	<bean id="urule.utils" class="com.bstek.urule.Utils">
+		<property name="debug" value="${urule.debug}"></property>
+	</bean>
 	
 	<bean id="urule.flowResourceBuilder" class="com.bstek.urule.builder.resource.FlowResourceBuilder">
 		<property name="flowDeserializer" ref="urule.flowDeserializer"></property>
