@@ -25,6 +25,7 @@ import com.bstek.urule.console.servlet.RequestContext;
  */
 public interface EnvironmentProvider {
 	/**
+	 * @param context 请求上下文对象
 	 * @return 返回当前登录用户
 	 */
 	User getLoginUser(RequestContext context);

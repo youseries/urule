@@ -98,14 +98,20 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		path=Utils.decodeURL(path);
 		InputStream inputStream=repositoryService.readFile(path,null);
 		String content=IOUtils.toString(inputStream,"utf-8");
-		Document doc=DocumentHelper.parseText(content);
-		OutputFormat format=OutputFormat.createPrettyPrint();
-		StringWriter out=new StringWriter();
-		XMLWriter writer=new XMLWriter(out, format);
-		writer.write(doc);
 		inputStream.close();
+		String xml=null;
+		try{
+			Document doc=DocumentHelper.parseText(content);
+			OutputFormat format=OutputFormat.createPrettyPrint();
+			StringWriter out=new StringWriter();
+			XMLWriter writer=new XMLWriter(out, format);
+			writer.write(doc);
+			xml=out.toString();
+		}catch(Exception ex){
+			xml=content;
+		}
 		Map<String,Object> result=new HashMap<String,Object>();
-		result.put("content", out.toString());
+		result.put("content", xml);
 		writeObjectToJson(resp, result);
 	}
 	
