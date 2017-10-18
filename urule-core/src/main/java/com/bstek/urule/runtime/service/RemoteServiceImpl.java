@@ -67,7 +67,9 @@ public class RemoteServiceImpl implements RemoteService{
 		InputStreamReader inputStreamReader=null;
 		BufferedReader bufferedReader=null;
 		try {
-			String content="packageId="+Utils.encodeURL(packageId)+"";
+			packageId=Utils.encodeURL(packageId);
+			packageId=Utils.encodeURL(packageId);
+			String content="packageId="+packageId+"";
 			if(StringUtils.isNotEmpty(timestamp)){
 				content+="&timestamp="+timestamp+"";
 			}
