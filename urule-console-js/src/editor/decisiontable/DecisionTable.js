@@ -968,8 +968,12 @@ window._setDirty=function(){
 				async:false,
 				type:'POST',
 				data:{files},
-				error:function(req,error){
-					alert("加载文件失败！");
+				error:function(response){
+					if(response && response.responseText){
+						bootbox.alert("<span style='color: red'>加载文件失败："+response.responseText+"</span>");
+					}else{
+						bootbox.alert("<span style='color: red'>加载文件失败,服务端出错</span>");
+					}
 				},
 				success:function(data){
 					var decisionTable=data[0];

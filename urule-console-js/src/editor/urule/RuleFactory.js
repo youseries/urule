@@ -209,8 +209,12 @@ import {MsgBox} from 'flowdesigner';
 				url:url,
 				type:'POST',
 				data:{files:file},
-				error:function(req,error){
-					MsgBox.alert("加载文件失败！");
+				error:function(response){
+					if(response && response.responseText){
+						bootbox.alert("<span style='color: red'>加载文件失败，服务端错误："+response.responseText+"</span>");
+					}else{
+						bootbox.alert("<span style='color: red'>加载文件失败,服务端出错</span>");
+					}
 				},
 				success:function(data){
 					var ruleset=data[0];

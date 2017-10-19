@@ -24,11 +24,15 @@ export function ajaxSave(url,parameters,callback) {
         success:function (result) {
             callback(result);
         },
-        error:function (req) {
-            if(req.status===401){
+        error:function (response) {
+            if(response && response.status===401){
                 bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                bootbox.alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });

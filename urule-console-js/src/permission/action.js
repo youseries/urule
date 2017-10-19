@@ -13,8 +13,12 @@ export function loadMasterData() {
             success:function (data) {
                 dispatch({type:MASTER_LOADED,data});
             },
-            error:function () {
-                alert("加载权限信息失败！");
+            error:function (response) {
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>加载权限信息失败,服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>加载权限信息失败,服务端出错</span>");
+                }
             }
         });
     }
@@ -57,11 +61,15 @@ export function save(data) {
         success:function () {
             bootbox.alert('保存成功');
         },
-        error:function (req) {
-            if(req.status===401){
-                alert("权限不足，不能进行此操作.");
+        error:function (response) {
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });

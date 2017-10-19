@@ -47,11 +47,15 @@ export function createNewFile(newFileName,fileType,parentNodeData){
                 event.eventEmitter.emit(event.EXPAND_TREE_NODE,parentNodeData);
                 event.eventEmitter.emit(event.CLOSE_CREATE_FILE_DIALOG);
             },
-            error:function (req) {
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+            error:function (response) {
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });
@@ -72,11 +76,15 @@ export function rename(path, newPath) {
                 event.eventEmitter.emit(event.HIDE_RENAME_DIALOG);
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function (req) {
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+            error:function (response) {
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });
@@ -96,11 +104,15 @@ export function createNewProject(newProjectName,parentNodeData) {
                 event.eventEmitter.emit(event.CLOSE_NEW_PROJECT_DIALOG);
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function (req) {
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+            error:function (response) {
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });
@@ -121,11 +133,15 @@ export function createNewFolder(newFolderName,parentNodeData) {
                 event.eventEmitter.emit(event.CLOSE_CREATE_FOLDER_DIALOG);
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function (req) {
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+            error:function (response) {
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });
@@ -157,12 +173,16 @@ export function fileRename(itemData, newName) {
                 event.eventEmitter.emit(event.CLOSE_UPDATE_PROJECT_DIALOG);
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function (req) {
+            error:function (response) {
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });
@@ -182,12 +202,16 @@ function moveFile(path, newPath , dispatch) {
             event.eventEmitter.emit(event.CLOSE_UPDATE_PROJECT_DIALOG);
             componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
         },
-        error:function (req) {
+        error:function (response) {
             componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
-            if(req.status===401){
-                alert("权限不足，不能进行此操作.");
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });
@@ -226,9 +250,13 @@ export function loadData(classify,projectName,types,searchFileName) {
                 dispatch({data:rootFile,type:LOAD_END});
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function () {
+            error:function (response) {
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
-                alert("加载数据失败.");
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>加载数据失败,服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>加载数据失败,服务端出错</span>");
+                }
             }
         });
     }
@@ -813,8 +841,12 @@ function buildPasteMenuItem() {
                             buildData(rootFile,1);
                             dispatch({data:rootFile,type:LOAD_END});
                         },
-                        error:function () {
-                            alert("服务端出现错误，复制文件操作失败.");
+                        error:function (response) {
+                            if(response && response.responseText){
+                                bootbox.alert("<span style='color: red'>复制文件操作失败,服务端错误："+response.responseText+"</span>");
+                            }else{
+                                bootbox.alert("<span style='color: red'>复制文件操作失败,服务端出错</span>");
+                            }
                         }
                     });
                 }
@@ -886,11 +918,15 @@ export function saveFileSource(file,content){
         success:function () {
             bootbox.alert('保存成功!');
         },
-        error:function (req) {
-            if(req.status===401){
-                alert("权限不足，不能进行此操作.");
+        error:function (response) {
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });
@@ -905,11 +941,15 @@ export function seeFileSource(data) {
         success:function (result) {
             event.eventEmitter.emit(event.OPEN_SOURCE_DIALOG,data.fullPath,result.content);
         },
-        error:function (req) {
-            if(req.status===401){
-                alert("权限不足，不能进行此操作.");
+        error:function (response) {
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });
@@ -924,11 +964,15 @@ function seeFileVersions(data) {
         success:function (list) {
             event.eventEmitter.emit(event.OPEN_FILE_VERSION_DIALOG,{list,data});
         },
-        error:function (req) {
-            if(req.status===401){
-                alert("权限不足，不能进行此操作.");
+        error:function (response) {
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
             }else{
-                alert('服务端错误，操作失败!');
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
             }
         }
     });
@@ -952,12 +996,16 @@ function fileDelete(item, dispatch,isFolder) {
                 }
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
             },
-            error:function (req) {
+            error:function (response) {
                 componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
-                if(req.status===401){
-                    alert("权限不足，不能进行此操作.");
+                if(response.status===401){
+                    bootbox.alert("权限不足，不能进行此操作.");
                 }else{
-                    alert('服务端错误，操作失败!');
+                    if(response && response.responseText){
+                        bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                    }else{
+                        bootbox.alert("<span style='color: red'>服务端出错</span>");
+                    }
                 }
             }
         });

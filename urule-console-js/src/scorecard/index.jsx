@@ -218,8 +218,12 @@ $(document).ready(function (e) {
                 cancelDirty();
             }
         },
-        error:function () {
-            bootbox.alert("加载数据失败！");
+        error:function (response) {
+            if(response && response.responseText){
+                bootbox.alert("<span style='color: red'>加载数据失败,服务端错误："+response.responseText+"</span>");
+            }else{
+                bootbox.alert("<span style='color: red'>加载数据失败,服务端出错</span>");
+            }
         }
     });
 });

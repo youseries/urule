@@ -329,8 +329,12 @@ export default class RuleFlowDesigner extends FlowDesigner{
             url,
             data:{files},
             type:'POST',
-            error:function(req,error){
-                alert("加载文件["+files+"]失败！");
+            error:function(response){
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>加载库文件失败，服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>加载库文件失败,服务端出错</span>");
+                }
             },
             success:function(data){
                 callback(data);

@@ -71,8 +71,12 @@ function buildScriptLintFunction(type){
                     updateLinting(editor,[]);
                 }
             },
-            error:function(){
-                alert('语法检查操作失败！');
+            error:function(response){
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>语法检查操作失败："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>语法检查操作失败,服务端出错</span>");
+                }
             }
         });
     };
@@ -170,8 +174,12 @@ function init(){
         url:url,
         type:"POST",
         data:{file},
-        error:function(req,error){
-            alert("文件加载失败！");
+        error:function(response){
+            if(response && response.responseText){
+                bootbox.alert("<span style='color: red'>文件加载失败："+response.responseText+"</span>");
+            }else{
+                bootbox.alert("<span style='color: red'>文件加载失败,服务端出错</span>");
+            }
         },
         success:function(data){
             codeMirror.setValue(data);
@@ -202,8 +210,12 @@ function loadResLib(){
         url:url,
         type:"POST",
         data:{content:content},
-        error:function(req,error){
-            alert("资源库加载失败!");
+        error:function(response){
+            if(response && response.responseText){
+                bootbox.alert("<span style='color: red'>资源库加载失败："+response.responseText+"</span>");
+            }else{
+                bootbox.alert("<span style='color: red'>资源库加载失败,服务端出错</span>");
+            }
         },
         success:function(data){
             codeMirror._library=data;

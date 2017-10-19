@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -78,12 +79,20 @@ public class URuleServlet extends HttpServlet{
 			targetHandler.execute(req, resp);
 		}catch(Exception ex){
 			Throwable e=getCause(ex);
+			resp.setCharacterEncoding("UTF-8");
+			PrintWriter pw=resp.getWriter();
 			if(e instanceof NoPermissionException){
 				resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				PrintWriter pw=resp.getWriter();
 				pw.write("<h1>Permission denied!</h1>");
 				pw.close();
 			}else{
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				String errorMsg = e.getMessage();
+				if(StringUtils.isBlank(errorMsg)){
+					errorMsg=e.getClass().getName();
+				}
+				pw.write(errorMsg);
+				pw.close();				
 				throw new ServletException(ex);				
 			}
 		}finally{
