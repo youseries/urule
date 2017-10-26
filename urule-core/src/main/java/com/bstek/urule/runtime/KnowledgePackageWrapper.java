@@ -17,10 +17,12 @@ package com.bstek.urule.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import com.bstek.urule.RuleException;
+import com.bstek.urule.model.flow.FlowDefinition;
 import com.bstek.urule.model.rete.BaseReteNode;
 import com.bstek.urule.model.rete.Line;
 import com.bstek.urule.model.rete.ObjectTypeNode;
@@ -76,6 +78,13 @@ public class KnowledgePackageWrapper {
 			rebuildLine(lines, allNodes);
 		}
 		((KnowledgePackageImpl)knowledgePackage).buildWithElseRules();
+		
+		Map<String, FlowDefinition> flowMap=knowledgePackage.getFlowMap();
+		if(flowMap!=null && flowMap.size()>0){
+			for(FlowDefinition fd:flowMap.values()){
+				fd.buildConnectionToNode();
+			}
+		}
 	}
 	
 	private void rebuildLine(List<Line> lines,List<ReteNode> reteNodes){
