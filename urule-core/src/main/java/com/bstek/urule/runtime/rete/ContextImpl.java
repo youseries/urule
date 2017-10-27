@@ -22,7 +22,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 
-import com.bstek.urule.runtime.ElUtils;
+import com.bstek.urule.runtime.ElCalculator;
 import com.bstek.urule.runtime.WorkingMemory;
 import com.bstek.urule.runtime.assertor.AssertorEvaluator;
 
@@ -36,8 +36,10 @@ public class ContextImpl implements Context {
 	private Map<String,String> variableCategoryMap;
 	private ValueCompute valueCompute;
 	private WorkingMemory workingMemory;
+	private ElCalculator elCalculator;
 	public ContextImpl(WorkingMemory workingMemory,ApplicationContext applicationContext,Map<String,String> variableCategoryMap) {
 		this.workingMemory=workingMemory;
+		this.elCalculator=new ElCalculator();
 		this.applicationContext = applicationContext;
 		this.assertorEvaluator=(AssertorEvaluator)applicationContext.getBean(AssertorEvaluator.BEAN_ID);
 		this.variableCategoryMap=variableCategoryMap;
@@ -57,7 +59,7 @@ public class ContextImpl implements Context {
 	
 	@Override
 	public Object parseExpression(String expression) {
-		return ElUtils.eval(expression);
+		return elCalculator.eval(expression);
 	}
 	
 	public String getVariableCategoryClass(String variableCategory) {
