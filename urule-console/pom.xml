@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.bstek.urule</groupId>
     <artifactId>urule-parent</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
   </parent>
   <artifactId>urule-console</artifactId>
   <version>2.0.6-SNAPSHOT</version>
@@ -51,7 +51,12 @@
 	    <version>3.14</version>
 	</dependency>
   </dependencies>
-  
+	<licenses>
+		<license>
+			<name>GNU General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+		</license>
+	</licenses>
 	<developers>
 		<developer>
 			<name>Gaojie</name>
