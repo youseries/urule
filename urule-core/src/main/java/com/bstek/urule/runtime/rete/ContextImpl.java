@@ -36,10 +36,9 @@ public class ContextImpl implements Context {
 	private Map<String,String> variableCategoryMap;
 	private ValueCompute valueCompute;
 	private WorkingMemory workingMemory;
-	private ElCalculator elCalculator;
+	private ElCalculator elCalculator=new ElCalculator();
 	public ContextImpl(WorkingMemory workingMemory,ApplicationContext applicationContext,Map<String,String> variableCategoryMap) {
 		this.workingMemory=workingMemory;
-		this.elCalculator=new ElCalculator();
 		this.applicationContext = applicationContext;
 		this.assertorEvaluator=(AssertorEvaluator)applicationContext.getBean(AssertorEvaluator.BEAN_ID);
 		this.variableCategoryMap=variableCategoryMap;
