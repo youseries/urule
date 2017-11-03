@@ -68,7 +68,7 @@ public class Agenda {
 		}
 		session.getAllFacts().clear();
 		response.setFiredRules(firedRules);
-		response.setMatchedRules(matchedRules);
+		response.addMatchedRules(matchedRules);
 		return response;
 	}
 	
