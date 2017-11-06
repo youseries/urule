@@ -14,13 +14,6 @@ export default class QuickStart extends Component{
                 &lt;version&gt;[version]&lt;/version&gt;<br/>
             &lt;/dependency&gt;<br/>
             </pre>
-            因为URule相关jar包是发布在bsdn的nexus上，所以我们还需要在pom.xml文件中添加如下repository才能下载到urule-console及相关文件：
-            <pre style={{fontSize: '15px',border:'solid #666666 1px;padding: 10px'}}>
-            &lt;repository&gt;<br/>
-                &lt;id&gt;bsdn-maven-repository&lt;/id&gt;<br/>
-                &lt;url&gt;http://nexus.bsdn.org/content/groups/public/&lt;/url&gt;<br/>
-            &lt;/repository&gt;<br/>
-            </pre>
             因为URule Console中架构在Spring之上的，所以需要加载URule Console中提供的Spring配置文件，具体方法是打开web.xml文件，在其中添加Spring的ContextLoaderListener，具体配置如下：
             <pre style={{fontSize: '15px',border:'solid #666666 1px;padding: 10px'}}>
             &lt;listener&gt;<br/>
@@ -60,6 +53,9 @@ export default class QuickStart extends Component{
             <pre style={{fontSize: '15px',border:'solid #666666 1px;padding: 10px'}}>
             http://localhost:[port]/[contextPath]/urule/frame
             </pre>
+            <div>
+                了解更多信息，请至<a href="http://wiki.bsdn.org/display/urule2" target="_blank">http://wiki.bsdn.org/display/urule2</a>
+            </div>
         </div>
         );
     }
