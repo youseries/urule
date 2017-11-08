@@ -63,7 +63,7 @@ public class RepositoryRefactor {
 		}
 	}
 	
-	public List<String> getReferenceFiles(Node rootNode,String path){
+	public List<String> getReferenceFiles(Node rootNode,String path,String searchText){
 		List<String> referenceFiles=new ArrayList<String>();
 		List<String> files=getFiles(rootNode, path);
 		for(String nodePath:files){
@@ -71,8 +71,9 @@ public class RepositoryRefactor {
 			try {
 				String content = IOUtils.toString(inputStream);
 				inputStream.close();
-				boolean contain=content.contains(path);
-				if(contain){
+				boolean containPath=content.contains(path);
+				boolean containText=content.contains(searchText);
+				if(containPath && containText){
 					referenceFiles.add(nodePath);
 				}
 			} catch (IOException e) {

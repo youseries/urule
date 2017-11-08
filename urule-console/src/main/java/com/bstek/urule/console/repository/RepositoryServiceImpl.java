@@ -727,9 +727,9 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		}
 	}
 
-	public List<String> getReferenceFiles(String path) {
+	public List<String> getReferenceFiles(String path,String searchText) {
 		Node rootNode=getRootNode();
-		return refactor.getReferenceFiles(rootNode, path);
+		return refactor.getReferenceFiles(rootNode, path,searchText);
 	}
 	
 	@Override

@@ -91,7 +91,9 @@ public class CommonServletHandler extends RenderPageServletHandler{
 	}
 	public void loadReferenceFiles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");
-		List<String> files=repositoryService.getReferenceFiles(path);
+		path=Utils.decodeURL(path);
+		String searchText=req.getParameter("searchText");
+		List<String> files=repositoryService.getReferenceFiles(path,searchText);
 		List<RefFile> refFiles=new ArrayList<RefFile>();
 		for(String file:files){
 			RefFile ref=new RefFile();

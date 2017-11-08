@@ -45,11 +45,19 @@ class ParameterEditor extends Component{
                     </div>
                     <div className="btn-group btn-group-sm" style={{margin:'2px'}}>
                         <button className="btn btn-info" type="button" onClick={(e)=>{
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file);
+                                    if(!this.currentData){
+                                        bootbox.alert('请先选择一条具体的参数');
+                                        return;
+                                    }
+                                    const text=`var-category="参数" var="${this.currentData.name}"`;
+                                    const title=`参数"${this.currentData.name}"`;
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                     </div>
                 </div>
-                <Grid headers={headers} rows={data} dispatch={dispatch} operationConfig={operationConfig}/>
+                <Grid headers={headers} rows={data} dispatch={dispatch} operationConfig={operationConfig} rowClick={(rowData)=>{
+                    this.currentData=rowData;
+                }}/>
             </div>
         );
     }

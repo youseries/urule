@@ -101,12 +101,20 @@ class VariableEditor extends Component{
                             </div>
                             <div className="btn-group btn-group-sm" style={{margin:'2px'}}>
                                 <button className="btn btn-info" type="button" onClick={(e)=>{
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file);
+                                    if(!this.currentData){
+                                        bootbox.alert('请先选择一条具体的变量');
+                                        return;
+                                    }
+                                    const text=`var-category="${this.masterData.name}" var="${this.currentData.name}"`;
+                                    const title=`变量"${this.masterData.name}.${this.currentData.name}"`;
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                             </div>
                         </div>
 
                         <Grid headers={masterGridHeaders} dispatch={dispatch} rows={masterData} operationConfig={masterGridOperationCol} rowClick={(rowData)=>{
+                            this.masterData=rowData;
+                            this.currentData=null;
                             setTimeout(function(){dispatch(action.loadSlaveData(rowData));},1);
                         }}></Grid>
                         <ImportXmlDialog dispatch={dispatch}/>
@@ -117,7 +125,9 @@ class VariableEditor extends Component{
                                 <button className="btn btn-primary" type="button" onClick={(e)=>{dispatch(action.addSlave())}}><i className="glyphicon glyphicon-plus-sign"></i> 添加字段</button>
                             </div>
                         </div>
-                        <Grid headers={slaveGridHeaders} dispatch={dispatch} operationConfig={slaveGridOperationCol} rows={masterRowData.variables || []}></Grid>
+                        <Grid headers={slaveGridHeaders} dispatch={dispatch} operationConfig={slaveGridOperationCol} rows={masterRowData.variables || []} rowClick={(rowData)=>{
+                            this.currentData=rowData;
+                        }}></Grid>
                     </div>
                 </Splitter>
             </div>
