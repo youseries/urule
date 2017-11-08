@@ -17,6 +17,7 @@ package com.bstek.urule.console.servlet.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.aop.framework.AopProxy;
+import org.springframework.aop.support.AopUtils;
 
 import com.bstek.urule.console.servlet.RenderPageServletHandler;
 import com.bstek.urule.model.ExposeAction;
@@ -56,7 +60,8 @@ public class ActionServletHandler extends RenderPageServletHandler{
 	}
 	public void loadMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String beanId=req.getParameter("beanId");
-		Object bean=applicationContext.getBean(beanId);
+		Object o=applicationContext.getBean(beanId);
+		Object bean=getTarget(o);
 		List<Method> list=new ArrayList<Method>();
 		java.lang.reflect.Method[] methods=bean.getClass().getMethods();
 		for(java.lang.reflect.Method m:methods){
@@ -72,6 +77,44 @@ public class ActionServletHandler extends RenderPageServletHandler{
 			list.add(method);
 		}
 		writeObjectToJson(resp, list);
+	}
+	
+	private Object getTarget(Object proxy){
+		if(!AopUtils.isAopProxy(proxy)) {
+			return proxy;//不是代理对象
+		}
+		try {
+			if(AopUtils.isJdkDynamicProxy(proxy)) {
+					return getJdkDynamicProxyTargetObject(proxy);
+			} else { //cglib
+				return getCglibProxyTargetObject(proxy);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private Object getCglibProxyTargetObject(Object proxy) throws Exception {
+		Field h = proxy.getClass().getDeclaredField("CGLIB$CALLBACK_0");
+		h.setAccessible(true);
+		Object dynamicAdvisedInterceptor = h.get(proxy);
+		Field advised = dynamicAdvisedInterceptor.getClass().getDeclaredField("advised");
+		advised.setAccessible(true);
+
+		Object target = ((AdvisedSupport)advised.get(dynamicAdvisedInterceptor)).getTargetSource().getTarget();
+
+		return target;
+	}
+
+
+	private Object getJdkDynamicProxyTargetObject(Object proxy) throws Exception {
+		Field h = proxy.getClass().getSuperclass().getDeclaredField("h");
+		h.setAccessible(true);
+		AopProxy aopProxy = (AopProxy) h.get(proxy);
+		Field advised = aopProxy.getClass().getDeclaredField("advised");
+		advised.setAccessible(true);
+		Object target = ((AdvisedSupport)advised.get(aopProxy)).getTargetSource().getTarget();
+		return target;
 	}
 	
 	private List<Parameter> buildParameters(java.lang.reflect.Method m){
