@@ -3,7 +3,6 @@ package com.bstek.urule.springboot;
 import java.util.Properties;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
 
 import com.bstek.urule.URulePropertyPlaceholderConfigurer;
 
