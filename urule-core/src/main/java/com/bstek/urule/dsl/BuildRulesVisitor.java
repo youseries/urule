@@ -221,6 +221,8 @@ public class BuildRulesVisitor extends RuleParserBaseVisitor<Object> {
 					}
 				}else if(context.enabledAttribute()!=null){
 					rule.setEnabled(Boolean.valueOf(context.enabledAttribute().Boolean().getText()));
+				}else if(context.debugAttribute()!=null){
+					rule.setDebug(Boolean.valueOf(context.debugAttribute().Boolean().getText()));
 				}else if(context.activationGroupAttribute()!=null){
 					String value=context.activationGroupAttribute().STRING().getText();
 					value=value.substring(1,value.length()-1);
@@ -286,6 +288,8 @@ public class BuildRulesVisitor extends RuleParserBaseVisitor<Object> {
 					}
 				}else if(context.enabledAttribute()!=null){
 					rule.setEnabled(Boolean.valueOf(context.enabledAttribute().Boolean().getText()));
+				}else if(context.debugAttribute()!=null){
+					rule.setDebug(Boolean.valueOf(context.debugAttribute().Boolean().getText()));
 				}else if(context.activationGroupAttribute()!=null){
 					String value=context.activationGroupAttribute().STRING().getText();
 					value=value.substring(1,value.length()-1);

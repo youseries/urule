@@ -46,6 +46,7 @@ import com.bstek.urule.runtime.service.KnowledgePackageService;
  */
 public class FlowDefinition implements ProcessDefinition {
 	private String id;
+	private boolean debug;
 	@JsonIgnore
 	private List<Library> libraries;
 	@JsonDeserialize(using=com.bstek.urule.model.flow.FlowNodeJsonDeserializer.class)
@@ -64,7 +65,7 @@ public class FlowDefinition implements ProcessDefinition {
 			throw new RuleException("StartNode must be define.");
 		}
 		response.addNodeName(startNode.getName());
-		FlowInstance instance=new FlowInstance(this);
+		FlowInstance instance=new FlowInstance(this,debug);
 		KnowledgeSession session=(KnowledgeSession)context.getWorkingMemory();
 		session.fireEvent(new ProcessBeforeStartedEventImpl(instance,session));
 		startNode.enter(context, instance);
@@ -159,6 +160,15 @@ public class FlowDefinition implements ProcessDefinition {
 	public void setId(String id) {
 		this.id = id;
 	}
+	@Override
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
 	@Override
 	public List<FlowNode> getNodes() {
 		return nodes;

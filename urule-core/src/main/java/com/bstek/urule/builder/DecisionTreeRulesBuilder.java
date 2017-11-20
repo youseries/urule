@@ -54,6 +54,7 @@ public class DecisionTreeRulesBuilder {
 		List<Rule> rules=new ArrayList<Rule>();
 		for(ActionTreeNode actionNode:list){
 			Rule rule=new Rule();
+			rule.setDebug(tree.getDebug());
 			rule.setEnabled(tree.getEnabled());
 			rule.setEffectiveDate(tree.getEffectiveDate());
 			rule.setExpiresDate(tree.getExpiresDate());

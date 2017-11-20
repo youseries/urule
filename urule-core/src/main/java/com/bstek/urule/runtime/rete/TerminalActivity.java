@@ -41,6 +41,9 @@ public class TerminalActivity extends AbstractActivity {
 		result.add(tracker);
 		KnowledgeSession session = (KnowledgeSession)context.getWorkingMemory();
 		session.fireEvent(new ActivationCreatedEventImpl(ac,session));
+		if(rule.getDebug()!=null && rule.getDebug()){
+			//out debug info
+		}
 		return result;
 	}
 	@Override

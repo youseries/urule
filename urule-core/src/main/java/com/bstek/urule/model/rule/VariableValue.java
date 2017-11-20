@@ -55,7 +55,7 @@ public class VariableValue extends AbstractValue{
 		return valueType;
 	}
 	public String getId() {
-		String id="[VAR]"+variableCategory+"."+variableLabel;
+		String id="[变量]"+variableCategory+"."+variableLabel;
 		if(arithmetic!=null){
 			id+=arithmetic.getId();
 		}

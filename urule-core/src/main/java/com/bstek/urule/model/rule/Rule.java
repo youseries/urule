@@ -29,6 +29,7 @@ public class Rule implements RuleInfo{
 	private Date effectiveDate;
 	private Date expiresDate;
 	private Boolean enabled;
+	private Boolean debug;
 	private String activationGroup;
 	private String agendaGroup;
 	private Boolean autoFocus;
@@ -60,6 +61,12 @@ public class Rule implements RuleInfo{
 	}
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+	public Boolean getDebug() {
+		return debug;
+	}
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
 	}
 	public Boolean getAutoFocus() {
 		return autoFocus;

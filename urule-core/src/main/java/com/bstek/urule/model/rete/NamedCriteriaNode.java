@@ -30,13 +30,15 @@ public class NamedCriteriaNode extends BaseReteNode implements ConditionNode{
 	private String criteriaInfo;
 	private NamedCriteria criteria;
 	private NodeType nodeType=NodeType.namedCriteria;
+	private boolean debug;
 	public NamedCriteriaNode() {
 		super(0);
 	}
-	public NamedCriteriaNode(NamedCriteria criteria,int id) {
+	public NamedCriteriaNode(NamedCriteria criteria,int id,boolean debug) {
 		super(id);
 		this.criteria = criteria;
 		setCriteriaInfo(criteria.getId());
+		this.debug=debug;
 	}
 	@Override
 	public NodeType getNodeType() {
@@ -61,7 +63,7 @@ public class NamedCriteriaNode extends BaseReteNode implements ConditionNode{
 		if(context.containsKey(this)){
 			return (CriteriaActivity)context.get(this);
 		}
-		NamedCriteriaActivity activity=new NamedCriteriaActivity(criteria);
+		NamedCriteriaActivity activity=new NamedCriteriaActivity(criteria,debug);
 		for(Line line:lines){
 			activity.addPath(line.newPath(context));
 		}

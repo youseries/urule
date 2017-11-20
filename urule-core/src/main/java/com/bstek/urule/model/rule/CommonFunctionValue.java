@@ -33,7 +33,7 @@ public class CommonFunctionValue extends AbstractValue{
 	@Override
 	public String getId() {
 		if(id==null){
-			id= "[FUN]"+label+"("+parameter.getId()+")";			
+			id= "[函数]"+label+"("+parameter.getId()+")";			
 		}
 		return id;
 	}

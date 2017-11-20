@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bstek.urule.RuleException;
+import com.bstek.urule.Utils;
 import com.bstek.urule.model.library.Datatype;
 import com.bstek.urule.model.rule.Parameter;
 import com.bstek.urule.runtime.rete.Context;
@@ -41,6 +42,8 @@ public class ExecuteMethodAction extends AbstractAction {
 	private List<Parameter> parameters;
 	private ActionType actionType=ActionType.ExecuteMethod;
 	public ActionValue execute(Context context,Object matchedObject,List<Object> allMatchedObjects,Map<String,Object> variableMap) {
+		String info=(beanLabel==null ? beanId : beanLabel)+(methodLabel==null ? methodName : methodLabel);
+		info="$$$执行动作："+info;
 		try{
 			Object obj=context.getApplicationContext().getBean(beanId);
 			java.lang.reflect.Method method=null;
@@ -80,6 +83,9 @@ public class ExecuteMethodAction extends AbstractAction {
 					valueKey=actionId.value();
 				}
 				Object value=method.invoke(obj, wrap.getValues());
+				if(debug && Utils.isDebug()){
+					System.out.println(info+"("+wrap.valuesToString()+")");
+				}
 				if(value!=null){
 					return new ActionValueImpl(valueKey,value);					
 				}else{
@@ -93,6 +99,9 @@ public class ExecuteMethodAction extends AbstractAction {
 					valueKey=actionId.value();
 				}
 				Object value=method.invoke(obj);
+				if(debug && Utils.isDebug()){
+					System.out.println(info+"()");
+				}
 				if(value!=null){
 					return new ActionValueImpl(valueKey,value);					
 				}else{
@@ -282,5 +291,22 @@ class ParametersWrap{
 	}
 	public void setValues(Object[] values) {
 		this.values = values;
+	}
+	public String valuesToString(){
+		if(values==null){
+			return "";
+		}
+		StringBuffer sb=new StringBuffer();
+		for(Object obj:values){
+			if(sb.length()>0){
+				sb.append(",");
+			}
+			if(obj==null){
+				sb.append("null");
+			}else{
+				sb.append(obj);
+			}
+		}
+		return sb.toString();
 	}
 }

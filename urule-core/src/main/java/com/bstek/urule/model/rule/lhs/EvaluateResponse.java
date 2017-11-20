@@ -13,20 +13,33 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.urule.action;
-
-import java.util.List;
-import java.util.Map;
-
-import com.bstek.urule.runtime.rete.Context;
+package com.bstek.urule.model.rule.lhs;
 
 /**
  * @author Jacky.gao
- * @since 2014年12月22日
+ * @since 2017年11月17日
  */
-public interface Action extends Comparable<Action>{
-	ActionValue execute(Context context,Object matchedObject,List<Object> allMatchedObjects,Map<String,Object> variableMap);
-	ActionType getActionType();
-	int getPriority();
-	void setDebug(boolean debug);
+public class EvaluateResponse {
+	private boolean result;
+	private Object leftResult;
+	private Object rightResult;
+	
+	public void setLeftResult(Object leftResult) {
+		this.leftResult = leftResult;
+	}
+	public void setRightResult(Object rightResult) {
+		this.rightResult = rightResult;
+	}
+	public Object getLeftResult() {
+		return leftResult;
+	}
+	public Object getRightResult() {
+		return rightResult;
+	}
+	public void setResult(boolean result) {
+		this.result = result;
+	}
+	public boolean getResult() {
+		return result;
+	}
 }

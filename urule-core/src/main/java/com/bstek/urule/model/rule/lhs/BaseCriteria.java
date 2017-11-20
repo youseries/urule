@@ -24,6 +24,6 @@ import com.bstek.urule.runtime.rete.EvaluationContext;
  * @since 2016年8月15日
  */
 public interface BaseCriteria {
-	boolean evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects);
+	EvaluateResponse evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects);
 	String getId();
 }

@@ -28,14 +28,16 @@ import com.bstek.urule.runtime.rete.CriteriaActivity;
 public class CriteriaNode extends BaseReteNode implements ConditionNode{
 	private String criteriaInfo;
 	private Criteria criteria;
+	private boolean debug;
 	private NodeType nodeType=NodeType.criteria;
 	public CriteriaNode() {
 		super(0);
 	}
-	public CriteriaNode(Criteria criteria,int id) {
+	public CriteriaNode(Criteria criteria,int id,boolean debug) {
 		super(id);
 		this.criteria = criteria;
 		setCriteriaInfo(criteria.getId());
+		this.debug=debug;
 	}
 	@Override
 	public NodeType getNodeType() {
@@ -62,7 +64,7 @@ public class CriteriaNode extends BaseReteNode implements ConditionNode{
 		if(context.containsKey(this)){
 			return (CriteriaActivity)context.get(this);
 		}
-		CriteriaActivity activity=new CriteriaActivity(criteria);
+		CriteriaActivity activity=new CriteriaActivity(criteria,debug);
 		for(Line line:lines){
 			activity.addPath(line.newPath(context));
 		}

@@ -60,6 +60,10 @@ public abstract class AbstractRuleParser<T> implements Parser<T> {
 		if(StringUtils.isNotEmpty(enabled)){
 			rule.setEnabled(Boolean.valueOf(enabled));
 		}
+		String debug=element.attributeValue("debug");
+		if(StringUtils.isNotEmpty(debug)){
+			rule.setDebug(Boolean.valueOf(debug));
+		}
 		String loop=element.attributeValue("loop");
 		if(StringUtils.isNotEmpty(loop)){
 			rule.setLoop(Boolean.valueOf(loop));

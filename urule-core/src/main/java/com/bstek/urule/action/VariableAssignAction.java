@@ -45,12 +45,14 @@ public class VariableAssignAction extends AbstractAction {
 	private Value value;
 	private LeftType type;
 	private ActionType actionType=ActionType.VariableAssign;
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ActionValue execute(Context context,Object matchedObject,List<Object> allMatchedObjects,Map<String,Object> variableMap) {
 		Object targetFact=null;
 		String propertyName=null;
 		ValueCompute valueCompute=context.getValueCompute();
 		Object obj=valueCompute.complexValueCompute(value, matchedObject, context,allMatchedObjects,variableMap);
+		String label=null;
 		if(type!=null && type.equals(LeftType.NamedReference)){
 			String refName=referenceName;
 			targetFact=variableMap.get(refName);
@@ -62,6 +64,7 @@ public class VariableAssignAction extends AbstractAction {
 				throw new RuleException("Reference ["+referenceName+"] not define.");
 			}
 			propertyName=variableName;
+			label=referenceName+"."+(variableLabel==null ? variableName : variableLabel);
 		}else{
 			String className=context.getVariableCategoryClass(variableCategory);
 			if(className.equals(HashMap.class.getName())){
@@ -80,8 +83,12 @@ public class VariableAssignAction extends AbstractAction {
 				obj=datatype.convert(obj);
 			}
 			propertyName=variableName;
+			label=variableCategory+"."+(variableLabel==null ? variableName : variableLabel);
 		}
 		Utils.setObjectProperty(targetFact, propertyName, obj);
+		if(debug && Utils.isDebug()){
+			System.out.println("###变量赋值："+label+"="+obj);
+		}
 		return null;
 	}
 

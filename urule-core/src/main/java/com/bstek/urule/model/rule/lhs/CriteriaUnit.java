@@ -27,86 +27,96 @@ public class CriteriaUnit {
 	private Criteria criteria;
 	private JunctionType junctionType;
 	private List<CriteriaUnit> nextUnits;
-	public boolean evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
+	public EvaluateResponse evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
 		if(criteria==null){
 			for(CriteriaUnit nextUnit:nextUnits){
-				boolean nextResult=nextUnit.evaluate(context, obj, allMatchedObjects);
+				EvaluateResponse response=nextUnit.evaluate(context, obj, allMatchedObjects);
+				boolean nextResult=response.getResult();
 				JunctionType junctionType=nextUnit.getJunctionType();
 				if(junctionType==null){
-					return nextResult;
+					return response;
 				}
 				if(junctionType.equals(JunctionType.or)){
 					if(nextResult){
-						return true;
+						return response;
 					}
 				}else{
 					if(!nextResult){
-						return false;
+						return response;
 					}
 				}
 			}
-			return true;
+			EvaluateResponse res=new EvaluateResponse();
+			res.setResult(true);
+			return res;
 		}else{
-			boolean result=criteria.evaluate(context, obj, allMatchedObjects);
+			EvaluateResponse response=criteria.evaluate(context, obj, allMatchedObjects);
+			boolean result=response.getResult();
 			if(junctionType==null){
-				return result;
+				return response;
 			}
 			if(result){
 				if(junctionType.equals(JunctionType.or)){
-					return true;
+					return response;
 				}
 			}else{
 				if(junctionType.equals(JunctionType.and)){
-					return false;
+					return response;
 				}
 			}
 			if(nextUnits==null){
-				return result;
+				return response;
 			}
 			if(junctionType.equals(JunctionType.and)){
 				for(CriteriaUnit nextUnit:nextUnits){
-					boolean nextResult=nextUnit.evaluate(context, obj, allMatchedObjects);
+					EvaluateResponse nextResponse=nextUnit.evaluate(context, obj, allMatchedObjects);
+					boolean nextResult=nextResponse.getResult();
 					if(!nextResult){
-						return false;
+						return nextResponse;
 					}
 					JunctionType type=nextUnit.getJunctionType();
 					if(type==null){
-						return nextResult;
+						return nextResponse;
 					}
 					if(type.equals(JunctionType.or)){
 						if(nextResult){
-							return true;
+							return nextResponse;
 						}
 					}else{
 						if(!nextResult){
-							return false;
+							return nextResponse;
 						}
 					}
 				}
-				return true;
+				EvaluateResponse res=new EvaluateResponse();
+				res.setResult(true);
+				return res;
 			}else{
 				for(CriteriaUnit nextUnit:nextUnits){
-					boolean nextResult=nextUnit.evaluate(context, obj, allMatchedObjects);
+					EvaluateResponse nextResponse=nextUnit.evaluate(context, obj, allMatchedObjects);
+					boolean nextResult=nextResponse.getResult();
 					if(nextResult){
-						return true;
+						return nextResponse;
 					}
 					JunctionType type=nextUnit.getJunctionType();
 					if(type==null){
-						return nextResult;
+						return nextResponse;
 					}
 					if(type.equals(JunctionType.or)){
 						if(nextResult){
-							return true;
+							return nextResponse;
 						}
 					}else{
 						if(!nextResult){
-							return false;
+							return nextResponse;
 						}
 					}
 				}
 			}
 		}
-		return false;
+		EvaluateResponse res=new EvaluateResponse();
+		res.setResult(false);
+		return res;
 	}
 	public Criteria getCriteria() {
 		return criteria;

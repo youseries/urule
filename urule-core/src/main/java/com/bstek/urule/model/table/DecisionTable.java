@@ -32,6 +32,7 @@ public class DecisionTable {
 	private Date effectiveDate;
 	private Date expiresDate;
 	private Boolean enabled;
+	private Boolean debug;
 	private String remark;
 	private List<Row> rows;
 	private List<Column> columns;
@@ -62,7 +63,12 @@ public class DecisionTable {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+	public Boolean getDebug() {
+		return debug;
+	}
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
+	}
 	public String getRemark() {
 		return remark;
 	}

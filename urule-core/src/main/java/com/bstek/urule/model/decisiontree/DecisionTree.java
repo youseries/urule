@@ -29,6 +29,7 @@ public class DecisionTree {
 	private Date effectiveDate;
 	private Date expiresDate;
 	private Boolean enabled;
+	private Boolean debug;
 	private String remark;
 	private List<Library> libraries;
 	private VariableTreeNode variableTreeNode;
@@ -57,7 +58,12 @@ public class DecisionTree {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+	public Boolean getDebug() {
+		return debug;
+	}
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
+	}
 	public String getRemark() {
 		return remark;
 	}

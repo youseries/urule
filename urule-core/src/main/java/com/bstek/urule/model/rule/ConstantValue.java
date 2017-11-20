@@ -45,7 +45,7 @@ public class ConstantValue extends AbstractValue{
 		return valueType;
 	}
 	public String getId() {
-		String id="[CONST]"+constantCategory+"."+constantLabel;
+		String id="[常量]"+constantCategory+"."+constantLabel;
 		if(arithmetic!=null){
 			id+=arithmetic.getId();
 		}

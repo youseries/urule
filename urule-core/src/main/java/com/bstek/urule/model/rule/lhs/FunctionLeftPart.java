@@ -55,9 +55,9 @@ public class FunctionLeftPart implements LeftPart{
 					parametersId+=parameter.getId();
 					i++;
 				}
-				id = "[function]."+name+"("+parametersId+")";				
+				id = "[函数]."+name+"("+parametersId+")";				
 			}else{
-				id = "[function]."+name;								
+				id = "[函数]."+name;								
 			}
 		}
 		return id;

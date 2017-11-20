@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -40,6 +41,10 @@ public class FlowDefinitionParser implements Parser<FlowDefinition>,ApplicationC
 	public FlowDefinition parse(Element element) {
 		FlowDefinition flow=new FlowDefinition();
 		flow.setId(element.attributeValue("id"));
+		String debug=element.attributeValue("debug");
+		if(StringUtils.isNotBlank(debug)){
+			flow.setDebug(Boolean.valueOf(debug));
+		}
 		List<FlowNode> nodes=new ArrayList<FlowNode>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){

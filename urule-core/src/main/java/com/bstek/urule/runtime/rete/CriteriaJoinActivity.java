@@ -26,7 +26,7 @@ import com.bstek.urule.model.rule.lhs.Criteria;
  */
 public class CriteriaJoinActivity extends CriteriaActivity {
 	public CriteriaJoinActivity(Criteria criteria) {
-		super(criteria);
+		super(criteria,false);
 	}
 
 	@Override

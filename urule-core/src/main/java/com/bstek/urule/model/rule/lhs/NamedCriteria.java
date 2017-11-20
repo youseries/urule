@@ -30,9 +30,9 @@ public class NamedCriteria extends BaseCriterion implements BaseCriteria{
 	private String id;
 	
 	@Override
-	public boolean evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
-		boolean result=unit.evaluate(context, obj, allMatchedObjects);
-		return result;
+	public EvaluateResponse evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
+		EvaluateResponse response=unit.evaluate(context, obj, allMatchedObjects);
+		return response;
 	}
 
 	public String getReferenceName() {

@@ -74,7 +74,10 @@ public class DecisionTableParser implements Parser<DecisionTable> {
 		if(StringUtils.isNotEmpty(enabled)){
 			table.setEnabled(Boolean.valueOf(enabled));
 		}
-		
+		String debug=element.attributeValue("debug");
+		if(StringUtils.isNotEmpty(debug)){
+			table.setDebug(Boolean.valueOf(debug));
+		}
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
 				continue;

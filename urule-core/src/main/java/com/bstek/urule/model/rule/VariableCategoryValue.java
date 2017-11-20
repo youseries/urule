@@ -38,7 +38,7 @@ public class VariableCategoryValue extends AbstractValue {
 	
 	@Override
 	public String getId() {
-		String id="[CATEGORY]"+variableCategory;
+		String id="[变量对象]"+variableCategory;
 		if(arithmetic!=null){
 			id+=arithmetic.getId();
 		}

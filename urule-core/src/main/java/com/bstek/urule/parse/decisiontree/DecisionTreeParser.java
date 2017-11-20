@@ -79,6 +79,11 @@ public class DecisionTreeParser implements Parser<DecisionTree> {
 			tree.setEnabled(Boolean.valueOf(enabled));
 		}
 		
+		String debug=element.attributeValue("debug");
+		if(StringUtils.isNotEmpty(debug)){
+			tree.setDebug(Boolean.valueOf(debug));
+		}
+		
 		List<Library> libs=new ArrayList<Library>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){

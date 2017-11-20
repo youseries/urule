@@ -44,7 +44,7 @@ public abstract class CriterionBuilder{
 				List<ReteNode> prevChildrenNodes=prevNode.getChildrenNodes();
 				targetNode = fetchSameCriteriaNode(criteria, prevChildrenNodes);
 				if(targetNode==null){
-					targetNode=new CriteriaNode((Criteria)criteria,context.nextId());
+					targetNode=new CriteriaNode((Criteria)criteria,context.nextId(),context.currentRuleIsDebug());
 					prevNode.addLine(targetNode);
 				}
 			}else{
@@ -94,7 +94,7 @@ public abstract class CriterionBuilder{
 		List<ReteNode> childrenNodes=targetObjectTypeNode.getChildrenNodes();
 		CriteriaNode targetNode = fetchSameCriteriaNode(criteria, childrenNodes);
 		if(targetNode==null){
-			targetNode=new CriteriaNode((Criteria)criteria,context.nextId());
+			targetNode=new CriteriaNode((Criteria)criteria,context.nextId(),context.currentRuleIsDebug());
 			targetObjectTypeNode.addLine(targetNode);
 		}
 		return targetNode;
@@ -107,7 +107,7 @@ public abstract class CriterionBuilder{
 		List<ReteNode> childrenNodes=targetObjectTypeNode.getChildrenNodes();
 		NamedCriteriaNode targetNode = fetchExistNamedCriteriaNode(criteria,childrenNodes);
 		if(targetNode==null){
-			targetNode=new NamedCriteriaNode(criteria,context.nextId());	
+			targetNode=new NamedCriteriaNode(criteria,context.nextId(),context.currentRuleIsDebug());	
 			targetObjectTypeNode.addLine(targetNode);
 		}
 		return targetNode;

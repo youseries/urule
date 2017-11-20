@@ -76,9 +76,9 @@ public class MethodLeftPart implements LeftPart{
 					parametersId+=parameter.getId();
 					i++;
 				}
-				id="[method]"+beanLabel+"."+methodLabel+"("+parametersId+")";				
+				id="[方法]"+beanLabel+"."+methodLabel+"("+parametersId+")";				
 			}else{
-				id="[method]"+beanLabel+"."+methodLabel;								
+				id="[方法]"+beanLabel+"."+methodLabel;								
 			}
 		}
 		return id;

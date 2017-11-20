@@ -161,6 +161,12 @@ public interface RuleParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEnabledAttribute(RuleParserParser.EnabledAttributeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RuleParserParser#debugAttribute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDebugAttribute(RuleParserParser.DebugAttributeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RuleParserParser#activationGroupAttribute}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -17,6 +17,7 @@ package com.bstek.urule.model.rete.builder;
 
 import com.bstek.urule.model.library.ResourceLibrary;
 import com.bstek.urule.model.rete.ObjectTypeNode;
+import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.lhs.BaseCriteria;
 
 /**
@@ -30,4 +31,6 @@ public interface BuildContext {
 	ResourceLibrary getResourceLibrary();
 	ObjectTypeNode buildObjectTypeNode(String className);
 	int nextId();
+	void setCurrentRule(Rule rule);
+	boolean currentRuleIsDebug();
 }

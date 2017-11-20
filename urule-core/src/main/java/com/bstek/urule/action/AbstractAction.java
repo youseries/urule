@@ -22,7 +22,7 @@ package com.bstek.urule.action;
  */
 public abstract class AbstractAction implements Action {
 	private int priority;
-	
+	protected boolean debug;
 	@Override
 	public int compareTo(Action o) {
 		return o.getPriority()-priority;
@@ -30,6 +30,11 @@ public abstract class AbstractAction implements Action {
 	@Override
 	public int getPriority() {
 		return priority;
+	}
+	
+	@Override
+	public void setDebug(boolean debug) {
+		this.debug=debug;
 	}
 	public void setPriority(int priority) {
 		this.priority = priority;

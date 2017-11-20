@@ -48,6 +48,7 @@ public class DecisionTableRulesBuilder {
 		List<Column> columns=table.getColumns();
 		for(Row row:rows){
 			Rule rule=new Rule();
+			rule.setDebug(table.getDebug());
 			rule.setSalience(table.getSalience());
 			rule.setExpiresDate(table.getExpiresDate());
 			rule.setEffectiveDate(table.getEffectiveDate());

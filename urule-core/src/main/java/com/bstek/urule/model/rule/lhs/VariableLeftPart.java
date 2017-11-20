@@ -57,7 +57,7 @@ public class VariableLeftPart implements LeftPart{
 	@Override
 	public String getId() {
 		if(id==null){
-			id="[variable]"+getVariableCategory()+"."+getVariableLabel();
+			id="[变量]"+getVariableCategory()+"."+getVariableLabel();
 		}
 		return id;
 	}

@@ -43,7 +43,7 @@ public class Criteria extends BaseCriterion implements BaseCriteria{
 	private Value value;
 	
 	@Override
-	public boolean evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
+	public EvaluateResponse evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
 		Object leftValue=null;
 		Datatype datatype=null;
 		LeftPart leftPart=left.getLeftPart();
@@ -90,16 +90,21 @@ public class Criteria extends BaseCriterion implements BaseCriteria{
 		if(arithmetic!=null){
 			leftResult=valueCompute.simpleArithmeticCompute(context,leftValue, arithmetic);
 		}
+		EvaluateResponse response=new EvaluateResponse();
+		response.setLeftResult(leftResult);
 		Object right=null;
 		if(value!=null){
 			right=valueCompute.complexValueCompute(value,obj,context,allMatchedObjects,null);
+			response.setRightResult(right);
 			if(right==null){
-				return false;
+				response.setResult(false);
+				return response;
 			}
 		}
 		AssertorEvaluator assertorEvaluator=context.getAssertorEvaluator();
 		boolean result=assertorEvaluator.evaluate(leftResult, right, datatype,op);
-		return result;
+		response.setResult(result);
+		return response;
 	}
 	@Override
 	public String getId() {

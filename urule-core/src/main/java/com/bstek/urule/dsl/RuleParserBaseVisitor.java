@@ -192,6 +192,13 @@ public class RuleParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitDebugAttribute(RuleParserParser.DebugAttributeContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitActivationGroupAttribute(RuleParserParser.ActivationGroupAttributeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

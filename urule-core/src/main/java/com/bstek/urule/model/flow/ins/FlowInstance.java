@@ -33,9 +33,15 @@ public class FlowInstance implements ProcessInstance{
 	private FlowInstance parent;
 	private List<ProcessInstance> children=new ArrayList<ProcessInstance>();
 	private FlowNode currentNode;
-	public FlowInstance(ProcessDefinition flowDefinition) {
+	private boolean debug;
+	public FlowInstance(ProcessDefinition flowDefinition,boolean debug) {
 		this.flowDefinition=flowDefinition;
 		id=UUID.randomUUID().toString();
+		this.debug=debug;
+	}
+	
+	public boolean isDebug() {
+		return debug;
 	}
 	
 	@Override
@@ -78,7 +84,7 @@ public class FlowInstance implements ProcessInstance{
 		return parent;
 	}
 	public FlowInstance newChildInstance(int childCount){
-		FlowInstance instance=new FlowInstance(flowDefinition);
+		FlowInstance instance=new FlowInstance(flowDefinition,debug);
 		instance.setParallelInstanceCount(childCount);
 		instance.setParent(this);
 		addChild(instance);

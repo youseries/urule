@@ -60,6 +60,7 @@ public class ReteBuilder implements ApplicationContextAware{
 	}
 
 	private void buildBranch(Rule rule,BuildContext context){
+		context.setCurrentRule(rule);
 		Criterion criterion=rule.getLhs().getCriterion();
 		BaseReteNode prevNode = buildCriterion(context, criterion);
 		if(prevNode instanceof JunctionNode){

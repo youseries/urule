@@ -31,7 +31,7 @@ public class SimpleValue  extends AbstractValue{
 		this.content = content;
 	}
 	public String getId() {
-		String id="[SIMPLE]"+content;
+		String id="[字符]"+content;
 		if(arithmetic!=null){
 			id+=arithmetic.getId();
 		}

@@ -23,6 +23,7 @@ import com.bstek.urule.model.library.variable.VariableCategory;
 import com.bstek.urule.model.rete.ObjectTypeNode;
 import com.bstek.urule.model.rule.Parameter;
 import com.bstek.urule.model.rule.ParameterValue;
+import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.Value;
 import com.bstek.urule.model.rule.VariableCategoryValue;
 import com.bstek.urule.model.rule.VariableValue;
@@ -45,6 +46,7 @@ public class BuildContextImpl implements BuildContext {
 	private ResourceLibrary resourceLibrary;
 	private List<ObjectTypeNode> objectTypeNodes;
 	private int id=0;
+	private Rule currentRule;
 	public BuildContextImpl(ResourceLibrary resourceLibrary,List<ObjectTypeNode> objectTypeNodes) {
 		this.resourceLibrary = resourceLibrary;
 		this.objectTypeNodes = objectTypeNodes;
@@ -179,5 +181,20 @@ public class BuildContextImpl implements BuildContext {
 	@Override
 	public int nextId() {
 		return id++;
+	}
+
+	@Override
+	public void setCurrentRule(Rule rule) {
+		this.currentRule=rule;
+	}
+	@Override
+	public boolean currentRuleIsDebug() {
+		if(currentRule==null){
+			return false;
+		}
+		if(currentRule.getDebug()!=null && currentRule.getDebug()){
+			return true;
+		}
+		return false;
 	}
 }

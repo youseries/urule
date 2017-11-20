@@ -21,6 +21,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.bstek.urule.Utils;
+import com.bstek.urule.model.rule.lhs.EvaluateResponse;
 import com.bstek.urule.model.rule.lhs.NamedCriteria;
 
 /**
@@ -30,8 +32,10 @@ import com.bstek.urule.model.rule.lhs.NamedCriteria;
 public class NamedCriteriaActivity  extends AbstractActivity{
 	protected NamedCriteria criteria;
 	private boolean pass;
-	public NamedCriteriaActivity(NamedCriteria criteria){
+	private boolean debug;
+	public NamedCriteriaActivity(NamedCriteria criteria,boolean debug){
 		this.criteria=criteria;
+		this.debug=debug;
 	}
 	public List<FactTracker> enter(EvaluationContext context, Object obj,FactTracker tracker,Map<String,Object> variableMap) {
 		String referenceName=criteria.getReferenceName();
@@ -41,7 +45,9 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 			}
 		}
 		List<Object> allMatchedObjects=new ArrayList<Object>();
-		boolean result=criteria.evaluate(context,obj,allMatchedObjects);
+		EvaluateResponse response=criteria.evaluate(context,obj,allMatchedObjects);
+		boolean result=response.getResult();
+		doDebug(response);
 		if(result){
 			if(StringUtils.isNotBlank(referenceName)){
 				variableMap.put(referenceName,obj);				
@@ -56,6 +62,19 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 		}
 		return null;
 	}
+	
+	private void doDebug(EvaluateResponse response){
+		if(!debug || !Utils.isDebug()){
+			return;
+		}
+		String id=criteria.getId();
+		StringBuffer sb=new StringBuffer();
+		sb.append("^^^命名条件："+id);
+		String result=response.getResult() ? "满足" : "不满足";
+		sb.append(" =>"+result);
+		System.out.println(sb.toString());
+	}
+	
 	@Override
 	public boolean orNodeIsPassed() {
 		return false;

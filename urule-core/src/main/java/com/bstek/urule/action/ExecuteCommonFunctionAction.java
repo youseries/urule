@@ -44,6 +44,7 @@ public class ExecuteCommonFunctionAction extends AbstractAction{
 		if(function==null){
 			throw new RuleException("Function["+name+"] not exist.");
 		}
+		String info=(label==null)?name:label;
 		Value value=null;
 		Object object=null;
 		if(parameter!=null){
@@ -55,6 +56,10 @@ public class ExecuteCommonFunctionAction extends AbstractAction{
 			property=parameter.getProperty();
 		}
 		Object result=function.doFunction(object, property,context.getWorkingMemory());
+		if(debug && Utils.isDebug()){
+			info=info+(object==null ? "" : object);
+			System.out.println("***执行函数："+info);
+		}
 		if(result!=null){
 			return new ActionValueImpl(name,result);					
 		}else{

@@ -28,6 +28,7 @@ import com.bstek.urule.model.rule.Rhs;
 import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.RuleInfo;
 import com.bstek.urule.model.rule.lhs.BaseCriteria;
+import com.bstek.urule.model.rule.lhs.EvaluateResponse;
 import com.bstek.urule.model.rule.loop.LoopRule;
 import com.bstek.urule.model.scorecard.runtime.ScoreRule;
 import com.bstek.urule.runtime.KnowledgeSession;
@@ -92,6 +93,9 @@ public class ActivationImpl implements Activation{
 				List<Action> actions=rhs.getActions();
 				if(actions!=null){
 					for(Action action:actions){
+						if(rule.getDebug()!=null){
+							action.setDebug(rule.getDebug());							
+						}
 						ActionValue actionValue=action.execute(context,objectCriteriaMap.keySet(),matchedObjects,variableMap);
 						if(actionValue!=null){
 							actionValues.add(actionValue);
@@ -126,7 +130,8 @@ public class ActivationImpl implements Activation{
 		boolean result=false;
 		for(BaseCriteria criteria:list){
 			List<Object> allMatchedObjects=new ArrayList<Object>();
-			result=criteria.evaluate(context,obj,allMatchedObjects);
+			EvaluateResponse response=criteria.evaluate(context,obj,allMatchedObjects);
+			result=response.getResult();
 			if(result){
 				for(Object object:allMatchedObjects){
 					addObjectCriteria(object, criteria);

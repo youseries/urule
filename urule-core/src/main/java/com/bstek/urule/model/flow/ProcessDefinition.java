@@ -26,6 +26,7 @@ import com.bstek.urule.model.rule.Library;
 public interface ProcessDefinition {
 	List<Library> getLibraries();
 	String getId();
+	boolean isDebug();
 	List<FlowNode> getNodes();
 
 }
