@@ -73,6 +73,7 @@ attribute :loopAttribute
 		  | effectiveDateAttribute
 		  | expiresDateAttribute
 		  | enabledAttribute
+		  | debugAttribute
 		  | activationGroupAttribute
 		  | agendaGroupAttribute
 		  | autoFocusAttribute
@@ -84,6 +85,7 @@ salienceAttribute : ('salience' | '\u4f18\u5148\u7ea7') '=' NUMBER ','?;
 effectiveDateAttribute : ('effective-date' | '\u751f\u6548\u65f6\u95f4' | '\u751f\u6548\u65e5\u671f') '=' STRING ','?;
 expiresDateAttribute : ('expires-date' | '\u5931\u6548\u65f6\u95f4' | '\u5931\u6548\u65e5\u671f') '=' STRING ','?;
 enabledAttribute : ('enabled' | '\u6fc0\u6d3b' | '\u542f\u7528') '=' Boolean ','?;
+debugAttribute : ('debug' | '\u8c03\u8bd5' | '\u5141\u8bb8\u8c03\u8bd5') '=' Boolean ','?;
 activationGroupAttribute : ('activation-group' | '\u6fc0\u6d3b\u7ec4') '=' STRING ','? ;
 agendaGroupAttribute : ('agenda-group' | '\u8bae\u7a0b\u7ec4') '=' STRING ','? ;
 autoFocusAttribute : ('auto-focus' | '\u81ea\u52a8\u83b7\u53d6\u7126\u70b9') '=' Boolean ','?;
