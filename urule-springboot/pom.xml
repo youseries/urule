@@ -43,19 +43,9 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.bstek.urule</groupId>
 			<artifactId>urule-console</artifactId>
 			<version>2.1.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.derby</groupId>
-                    <artifactId>derby</artifactId>
-                </exclusion>
-            </exclusions>
 		</dependency>
 
 		<dependency>
