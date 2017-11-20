@@ -96,6 +96,12 @@ window._setDirty=function(){
 				defaultValue:true,
 				editorType:3,
 				onClick:onClick
+			},{
+				label:"允许调试信息输出",
+				name:"debug",
+				defaultValue:true,
+				editorType:3,
+				onClick:onClick
 			}]
 		});
 		addProp.click(function(e){
@@ -997,6 +1003,10 @@ window._setDirty=function(){
 					var enabled=decisionTable["enabled"];
 					if(enabled!=null){
 						self.addProperty(new urule.RuleProperty(self,"enabled",enabled,3));
+					}
+					var debug=decisionTable["debug"];
+					if(debug!=null){
+						self.addProperty(new urule.RuleProperty(self,"debug",debug,3));
 					}
 
 					var libraries=decisionTable.libraries||[];

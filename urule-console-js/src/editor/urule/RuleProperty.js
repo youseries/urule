@@ -97,6 +97,8 @@ urule.RuleProperty.prototype.getLabel=function(){
 		label="失效日期";
 	}else if(this.name=="enabled"){
 		label="是否启用";
+	}else if(this.name=="debug"){
+		label="允许调试信息输出";
 	}else if(this.name=="activation-group"){
 		label="互斥组";
 	}else if(this.name=="agenda-group"){

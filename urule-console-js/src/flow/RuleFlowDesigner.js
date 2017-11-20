@@ -34,8 +34,12 @@ export default class RuleFlowDesigner extends FlowDesigner{
             MsgBox.alert('决策流至少要包含一个开始节点和一个其它类型节点!');
             return;
         }
+        let debug=false;
+        if(this.debug!==undefined && this.debug!==null){
+            debug=this.debug;
+        }
         let xml='<?xml version="1.0" encoding="utf-8"?>';
-        xml+=`<rule-flow id="${this.flowId}">`;
+        xml+=`<rule-flow id="${this.flowId}" debug="${debug}">`;
         for(let lib of this.importVariableLibraries){
             xml+=`<import-variable-library path="${lib}"/>`;
         }
@@ -60,6 +64,7 @@ export default class RuleFlowDesigner extends FlowDesigner{
 
     fromJson(json){
         this.flowId=json.id;
+        this.debug=json.debug;
         const libs=json.libraries || [];
         for(let lib of libs){
             switch (lib.type){
@@ -148,6 +153,17 @@ export default class RuleFlowDesigner extends FlowDesigner{
             });
             flowIdText.val(this.flowId);
             g.append(flowIdGroup);
+
+            const debugGroup=$(`<div class="form-group"><label>允许调试信息输出</label></div>`);
+            const debugSelect=$(`<select class="form-control">
+                <option value="true" ${_this.debug ? "selected" : ""}>是</option>
+                <option value="false" ${_this.debug ? "" : "selected"}>否</option>
+            </select>`);
+            debugGroup.append(debugSelect);
+            debugSelect.change(function(){
+                _this.debug=$(this).val();
+            });
+            g.append(debugGroup);
 
             const libGroup=$('<div class="form-group"><label>库文件</label></div>');
             const addButton=$(`<span style="float: right;"><button type="button" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> 添加</button></span>`);

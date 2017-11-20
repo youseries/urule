@@ -48,7 +48,7 @@ export default class TableAction{
     initScoringSetting(){
         const scoringSettingContainer=$(`<div style="margin: 5px;">得分计算方式：</div>`);
         this.container.append(scoringSettingContainer);
-        this.scoringSettingSelect=$(`<select class="form-control" style="display: inline-block;width:120px;height:30px;"></select>`);
+        this.scoringSettingSelect=$(`<select class="form-control" style="display: inline-block;width:120px;height:30px;padding: 3px;"></select>`);
         scoringSettingContainer.append(this.scoringSettingSelect);
         this.scoringSettingSelect.append(`<option value="sum">求和</option>`);
         this.scoringSettingSelect.append(`<option value="weightsum">加权求和</option>`);

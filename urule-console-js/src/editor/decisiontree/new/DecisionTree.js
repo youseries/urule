@@ -70,6 +70,12 @@ export default class DecisionTree{
                 defaultValue:true,
                 editorType:3,
                 onClick:onClick
+            },{
+                label:"允许调试信息输出",
+                name:"debug",
+                defaultValue:true,
+                editorType:3,
+                onClick:onClick
             }]
         });
         addProp.click(function(e){
@@ -236,6 +242,10 @@ export default class DecisionTree{
                     var enabled=treeData["enabled"];
                     if(enabled!=null){
                         self.addProperty(new urule.RuleProperty(self,"enabled",enabled,3));
+                    }
+                    var debug=treeData["debug"];
+                    if(debug!=null){
+                        self.addProperty(new urule.RuleProperty(self,"debug",debug,3));
                     }
 
                     var libraries=treeData["libraries"];

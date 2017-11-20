@@ -105,7 +105,7 @@ function scriptHint(editor, keywords, getToken, options) {
 	CodeMirror.registerHelper("hint", "urule", uruleHint);
 
 	var importKeywords=( "importVariableLibrary importConstrantLibrary importActionLibrary import function").split(" ");
-	var ruleKeywords = ( "salience effective-date expires-date enabled activation-group agenda-group auto-focus ruleflow-group").split(" ");
+	var ruleKeywords = ( "salience effective-date expires-date enabled debug activation-group agenda-group auto-focus ruleflow-group").split(" ");
 	var ifKeywords = ( "参数 > >= < <= == != Endwith NotEndwith Startwith NotStartwith In NotIn Match NotMatch EqualsIgnoreCase NotEqualsIgnoreCase eval()").split(" ");
 	var thenKeywords = ( "参数 out").split(" ");
 	var endKeywords = ( "function").split(" ");
