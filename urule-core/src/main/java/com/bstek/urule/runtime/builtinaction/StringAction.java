@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.bstek.urule.runtime.builtinaction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bstek.urule.model.library.action.annotation.ActionBean;
 import com.bstek.urule.model.library.action.annotation.ActionMethod;
 import com.bstek.urule.model.library.action.annotation.ActionMethodParameter;
@@ -91,5 +94,15 @@ public class StringAction {
 	@ActionMethodParameter(names={"目标字符串","原字符串","新字符串"})
 	public String replace(String str,String oldStr,String newStr){
 		return str.replace(oldStr, newStr);
+	}
+	@ActionMethod(name="拆分字符串为集合")
+	@ActionMethodParameter(names={"目标字符串","原字符串","新字符串"})
+	public List<String> split(String str,String regex){
+		String[] arr=str.split(regex);
+		List<String> list=new ArrayList<String>();
+		for(String item:arr){
+			list.add(item);
+		}
+		return list;
 	}
 }
