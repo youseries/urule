@@ -355,7 +355,7 @@ function buildData(data,level) {
                             if(!result){
                                 return;
                             }
-                            const url=window._server+'/frame/exportProjectBackupFile?path='+encodeURI(data.fullPath);
+                            const url=window._server+'/frame/exportProjectBackupFile?path='+encodeURI(encodeURI(data.fullPath));
                             window.open(url,'_blank');
                         });
                     }
