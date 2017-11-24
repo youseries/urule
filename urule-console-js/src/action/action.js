@@ -38,7 +38,7 @@ export function saveData(data,newVersion,file) {
         }
         xml+="<spring-bean id='"+item.id+"' name='"+item.name+"'>";
         var methods=item.methods;
-        if(!methods){
+        if(!methods || methods.length===0){
             errorInfo="动作分类["+item.name+"]下未定义具体的动作方法.";
             break;
         }

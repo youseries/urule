@@ -85,7 +85,8 @@ class TreeItem extends Component{
                 <li className='parent_li'>
                     <span id={spanId}>
                         <i className='rf rf-minus' style={{marginRight:"2px"}}></i>
-                        <i className={data._icon} style={data._style}></i> <a href='###' style={data._style}>{data.name}</a>
+                        <i className={data._icon} style={data._style}></i> <a href='###' style={data._style}> {data.name}</a>
+                        <sup><i title={data.lock ? data.lockInfo : ''} className={data.lock ? 'rf rf-lock' : ''}></i></sup>
                     </span>
                     {menu}
                     <TreeParentItem dispatch={dispatch} children={children} expandLevel={this.props.expandLevel}/>
@@ -109,7 +110,8 @@ class TreeItem extends Component{
                             $("#"+spanId).addClass('tree-active');
                         }
                     }}>
-                        <i className={data._icon} style={data._style}></i> <a href='###' style={data._style}>{data.name}</a>
+                        <i className={data._icon} style={data._style}></i> <a href='###' style={data._style}> {data.name}</a>
+                        <sup><i title={data.lock ? data.lockInfo : ''} className={data.lock ? 'rf rf-lock' : ''}></i></sup>
                     </span>
                     {menu}
                 </li>

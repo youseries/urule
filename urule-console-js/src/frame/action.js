@@ -489,13 +489,15 @@ function buildData(data,level) {
                     }
                 }
             ];
-/*            data.contextMenu.push({
+            /*
+           data.contextMenu.push({
                 name:'添加脚本式决策表',
                 icon:Styles.frameStyle.getScriptDecisionTableIcon(),
                 click:function () {
                     event.eventEmitter.emit(event.OPEN_CREATE_FILE_DIALOG,{fileType:'dts.xml',nodeData:data})
                 }
-            });*/
+            });
+            */
             break;
         case "decisionTreeLib":
             data._icon=Styles.frameStyle.getDecisionTreeLibIcon();
@@ -789,6 +791,20 @@ function buildFullContextMenu(isFolder,folderType){
                 click:function (data,dispatch) {
                     event.eventEmitter.emit(event.SHOW_RENAME_DIALOG,data);
                 }
+            },
+            {
+                name:'锁定目录',
+                icon:'rf rf-lock',
+                click:function (data,dispatch) {
+                    lockFile(data.fullPath,dispatch);
+                }
+            },
+            {
+                name:'解锁目录',
+                icon:'rf rf-unlock',
+                click:function (data,dispatch) {
+                    unlockFile(data.fullPath,dispatch);
+                }
             }
         );
         if(!addPasteMenuItem){
@@ -905,8 +921,80 @@ function buildFileContextMenu() {
                 window.___cutFileData=data;
                 window.___copyFileData=null;
             }
+        },
+        {
+            name:'锁定文件',
+            icon:'rf rf-lock',
+            click:function (data,dispatch) {
+                lockFile(data.fullPath,dispatch);
+            }
+        },
+        {
+            name:'解锁文件',
+            icon:'rf rf-unlock',
+            click:function (data,dispatch) {
+                unlockFile(data.fullPath,dispatch);
+            }
         }
     ];
+};
+
+export function lockFile(file,dispatch){
+    componentEvent.eventEmitter.emit(componentEvent.SHOW_LOADING);
+    var url=window._server+"/frame/lockFile";
+    $.ajax({
+        url,
+        type:"POST",
+        data:{file},
+        success:function (data) {
+            const rootFile =data.repo.rootFile;
+            buildData(rootFile,1);
+            dispatch({data:rootFile,type:LOAD_END});
+            componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
+            bootbox.alert('锁定成功!');
+        },
+        error:function (response) {
+            componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
+            }else{
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
+            }
+        }
+    });
+};
+
+export function unlockFile(file,dispatch){
+    componentEvent.eventEmitter.emit(componentEvent.SHOW_LOADING);
+    var url=window._server+"/frame/unlockFile";
+    $.ajax({
+        url,
+        type:"POST",
+        data:{file},
+        success:function (data) {
+            const rootFile =data.repo.rootFile;
+            buildData(rootFile,1);
+            dispatch({data:rootFile,type:LOAD_END});
+            componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
+            bootbox.alert('解锁成功!');
+        },
+        error:function (response) {
+            componentEvent.eventEmitter.emit(componentEvent.HIDE_LOADING);
+            if(response.status===401){
+                bootbox.alert("权限不足，不能进行此操作.");
+            }else{
+                if(response && response.responseText){
+                    bootbox.alert("<span style='color: red'>服务端错误："+response.responseText+"</span>");
+                }else{
+                    bootbox.alert("<span style='color: red'>服务端出错</span>");
+                }
+            }
+        }
+    });
 };
 
 export function saveFileSource(file,content){

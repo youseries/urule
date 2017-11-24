@@ -29,7 +29,7 @@ export function saveData(data,newVersion,file) {
         }
         xml+="<category name='"+item.name+"' label='"+item.label+"'>";
         var constants=item.constants;
-        if(!constants){
+        if(!constants || constants.length===0){
             errorInfo="常量分类["+item.label+"]下未定义具体的常量信息";
             return false;
         }

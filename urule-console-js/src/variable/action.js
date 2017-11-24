@@ -31,8 +31,8 @@ export function saveData(data,newVersion,file) {
             return false;
         }
         xml+="<category name='"+item.name+"' type='"+item.type+"' clazz='"+item.clazz+"'>";
-        var variables=item.variables || [];
-        if(!variables){
+        var variables=item.variables;
+        if(!variables || variables.length==0){
             errorInfo="变量分类["+item.name+"]下未定义具体变量信息.";
             return false;
         }
