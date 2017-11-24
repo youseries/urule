@@ -421,7 +421,7 @@ public class PackageServletHandler extends RenderPageServletHandler {
 		String path=project+"/"+RepositoryServiceImpl.RES_PACKGE_FILE;
 		String xml=req.getParameter("xml");
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
-		repositoryService.saveFile(path, xml, user.getUsername(), false,null);
+		repositoryService.saveFile(path, xml, user, false,null);
 	}
 	
 	@SuppressWarnings("unchecked")

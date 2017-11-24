@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.urule.console.servlet;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
@@ -31,12 +32,13 @@ import com.bstek.urule.RuleException;
 public abstract class BaseServletHandler implements ServletHandler {
 	
 	protected void invokeMethod(String methodName,HttpServletRequest req,HttpServletResponse resp){
-		try{
-			Method method=this.getClass().getMethod(methodName, new Class<?>[]{HttpServletRequest.class,HttpServletResponse.class});			
+		Method method;
+		try {
+			method = this.getClass().getMethod(methodName, new Class<?>[]{HttpServletRequest.class,HttpServletResponse.class});
 			method.invoke(this, new Object[]{req,resp});
-		}catch(Exception ex){
-			throw new RuleException(ex);
-		}
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new RuleException(e);
+		}			
 	}
 	
 	protected String retriveMethod(HttpServletRequest req) throws ServletException{

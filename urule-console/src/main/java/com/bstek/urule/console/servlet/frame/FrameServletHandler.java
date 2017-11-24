@@ -163,7 +163,7 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		String content=IOUtils.toString(inputStream, "utf-8");
 		inputStream.close();
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
-		repositoryService.createFile(newFullPath, content,user.getUsername());
+		repositoryService.createFile(newFullPath, content,user);
 		loadProjects(req, resp);
 	}
 	
@@ -236,7 +236,7 @@ public class FrameServletHandler extends RenderPageServletHandler{
 			content.append("</" + name + ">");
 		}
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
-		repositoryService.createFile(path, content.toString(),user.getUsername());
+		repositoryService.createFile(path, content.toString(),user);
 		RepositoryFile newFileInfo=new RepositoryFile();
 		newFileInfo.setFullPath(path);
 		if(fileType.equals(FileType.VariableLibrary)){
@@ -333,13 +333,26 @@ public class FrameServletHandler extends RenderPageServletHandler{
 	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");
 		path=Utils.decodeURL(path);
-		repositoryService.deleteFile(path);
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.deleteFile(path,user);
 		String isFolder=req.getParameter("isFolder");
 		if(StringUtils.isNotBlank(isFolder) && isFolder.equals("true")){
 			loadProjects(req, resp);
 		}
 	}
 	
+	public void lockFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String file=req.getParameter("file");
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.lockPath(file, user);
+		loadProjects(req, resp);
+	}
+	public void unlockFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String file=req.getParameter("file");
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.unlockPath(file, user);
+		loadProjects(req, resp);
+	}
 	
 	public void exportProjectBackupFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");
@@ -426,7 +439,8 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		path=Utils.decodeURL(path);
 		String newPath=req.getParameter("newPath");
 		newPath=Utils.decodeURL(newPath);
-		repositoryService.fileRename(path, newPath);
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.fileRename(path, newPath,user);
 		loadProjects(req, resp);
 	}
 	

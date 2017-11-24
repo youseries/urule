@@ -32,6 +32,10 @@ import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
+import javax.jcr.lock.Lock;
+import javax.jcr.lock.LockException;
+import javax.jcr.lock.LockManager;
+import javax.jcr.nodetype.NodeType;
 import javax.jcr.version.Version;
 import javax.jcr.version.VersionHistory;
 import javax.jcr.version.VersionIterator;
@@ -87,6 +91,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 	private RepositoryImpl repository;
 	private Session session;
 	private VersionManager versionManager;
+	private LockManager lockManager;
 	private RepositoryRefactor refactor;
 	private RepositoryInteceptor repositoryInteceptor;
 	private PermissionService permissionService;
@@ -620,12 +625,14 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 					}
 					file.setFullPath(fileNode.getPath());
 					file.setName(name);
+					buildNodeLockInfo(fileNode,file);
 					parent.addChild(file, false);
 					buildNodes(fileNode.getNodes(), file, types,folderType,searchFileName);
 				}else{
 					file.setFullPath(fileNode.getPath());
 					file.setName(name);
 					file.setType(Type.folder);
+					buildNodeLockInfo(fileNode,file);
 					file.setFolderType(folderType);
 					parent.addChild(file, true);
 					buildNodes(fileNode.getNodes(), file, types,folderType,searchFileName);
@@ -635,12 +642,114 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 			throw new RuleException(ex);
 		}
 	}
+	
+	private void buildNodeLockInfo(Node node,RepositoryFile file) throws Exception{
+		String absPath=node.getPath();
+		if(!lockManager.isLocked(absPath)){
+			return;
+		}
+		String owner=lockManager.getLock(absPath).getLockOwner();
+		file.setLock(true);
+		file.setLockInfo("被"+owner+"锁定");
+	}
+	
+	@Override
+	public void lockPath(String path,User user) {
+		path = processPath(path);
+		int pos=path.indexOf(":");
+		if(pos!=-1){
+			path=path.substring(0,pos);
+		}
+		try{
+			Node rootNode=getRootNode();
+			if (!rootNode.hasNode(path)) {
+				throw new RuleException("File [" + path + "] not exist.");
+			}
+			Node fileNode = rootNode.getNode(path);
+			String topAbsPath=fileNode.getPath();
+			if(lockManager.isLocked(topAbsPath)){
+				String owner=lockManager.getLock(topAbsPath).getLockOwner();
+				throw new NodeLockException("【"+path+"】已被"+owner+"锁定，您不能进行再次锁定!");
+			}
+			
+			List<Node> nodeList=new ArrayList<Node>();
+			unlockAllChildNodes(fileNode, user, nodeList, path);
+			for(Node node:nodeList){
+				if(!lockManager.isLocked(node.getPath())){
+					continue;
+				}
+				Lock lock=lockManager.getLock(node.getPath());
+				lockManager.unlock(lock.getNode().getPath());
+			}
+			if(!fileNode.isNodeType(NodeType.MIX_LOCKABLE)){
+				if (!fileNode.isCheckedOut()) {
+					versionManager.checkout(fileNode.getPath());
+				}
+				fileNode.addMixin("mix:lockable");
+				session.save();
+			}
+			lockManager.lock(topAbsPath, true, true, Long.MAX_VALUE, user.getUsername());				
+		}catch(Exception ex){
+			if(ex instanceof LockException){
+				String msg=ex.getMessage();
+				if(msg.startsWith("Unable to perform a locking operation on a non-lockable node")){
+					throw new NodeLockException("锁定操作只能针对urule-2.1.1及以后版本创建的文件及文件夹进行操作!");
+				}
+			}
+			throw new RuleException(ex);
+		}
+	}
+	
+	private void unlockAllChildNodes(Node node,User user,List<Node> nodeList,String rootPath) throws Exception{
+		NodeIterator iter=node.getNodes();
+		while(iter.hasNext()){
+			Node nextNode=iter.nextNode();
+			String absPath=nextNode.getPath();
+			if(!lockManager.isLocked(absPath)){
+				continue;
+			}
+			Lock lock=lockManager.getLock(absPath);
+			String owner=lock.getLockOwner();
+			if(!user.getUsername().equals(owner)){
+				throw new NodeLockException("当前目录下有子目录被其它人锁定，您不能执行锁定"+rootPath+"目录");
+			}
+			nodeList.add(nextNode);
+			unlockAllChildNodes(nextNode, user, nodeList, rootPath);
+		}
+	}
+	
+	@Override
+	public void unlockPath(String path,User user) {
+		path = processPath(path);
+		int pos=path.indexOf(":");
+		if(pos!=-1){
+			path=path.substring(0,pos);
+		}
+		try{
+			Node rootNode=getRootNode();
+			if (!rootNode.hasNode(path)) {
+				throw new RuleException("File [" + path + "] not exist.");
+			}
+			Node fileNode = rootNode.getNode(path);
+			String absPath=fileNode.getPath();
+			if(!lockManager.isLocked(absPath)){
+				throw new NodeLockException("当前文件未锁定，不需要解锁!");
+			}
+			Lock lock=lockManager.getLock(absPath);
+			String owner=lock.getLockOwner();
+			if(!owner.equals(user.getUsername())){
+				throw new NodeLockException("当前文件由【"+owner+"】锁定，您无权解锁!");
+			}
+			lockManager.unlock(lock.getNode().getPath());
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
+	}
 
-	public void deleteFile(String path) {
+	public void deleteFile(String path,User user) {
 		if(!permissionService.fileHasWritePermission(path)){
 			throw new NoPermissionException();
 		}
-		
 		repositoryInteceptor.deleteFile(path);
 		path = processPath(path);
 		try {
@@ -663,12 +772,14 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 						continue;
 					}
 					fileNode = fileNode.getNode(dir);
+					lockCheck(fileNode,user);
 					if (!fileNode.isCheckedOut()) {
 						versionManager.checkout(fileNode.getPath());
 					}
 				}
 			}
 			fileNode = rootNode.getNode(path);
+			lockCheck(fileNode,user);
 			if (!fileNode.isCheckedOut()) {
 				versionManager.checkout(fileNode.getPath());
 			}
@@ -680,7 +791,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 	}
 
 	@Override
-	public void saveFile(String path, String content,String createUser,boolean newVersion,String versionComment) {
+	public void saveFile(String path, String content,User user,boolean newVersion,String versionComment) {
 		path=Utils.decodeURL(path); 
 		if(path.indexOf(RES_PACKGE_FILE)>-1){
 			if(!permissionService.projectPackageHasWritePermission(path)){
@@ -703,11 +814,12 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 				throw new RuleException("File [" + path + "] not exist.");
 			}
 			Node fileNode = rootNode.getNode(path);
+			lockCheck(fileNode,user);
 			versionManager.checkout(fileNode.getPath());
 			Binary fileBinary = new BinaryImpl(content.getBytes("utf-8"));
 			fileNode.setProperty(DATA, fileBinary);
 			fileNode.setProperty(FILE, true);
-			fileNode.setProperty(CRATE_USER, createUser);
+			fileNode.setProperty(CRATE_USER, user.getUsername());
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
 			DateValue dateValue = new DateValue(calendar);
@@ -717,9 +829,6 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 			}
 			session.save();
 			if (newVersion) {
-				if(StringUtils.isNotBlank(versionComment)){
-					
-				}
 				versionManager.checkin(fileNode.getPath());
 			}
 		} catch (Exception ex) {
@@ -807,6 +916,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 					} else {
 						parentNode = parentNode.addNode(dir);
 						parentNode.addMixin("mix:versionable");
+						parentNode.addMixin("mix:lockable");
 						parentNode.setProperty(DIR_TAG, true);
 						parentNode.setProperty(FILE, true);
 						parentNode.setProperty(CRATE_USER,user.getUsername());
@@ -826,11 +936,11 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		}
 	}
 
-	public void createFile(String path, String content,String createUser) {
+	public void createFile(String path, String content,User user) {
 		if(!permissionService.isAdmin()){
 			throw new NoPermissionException();
 		}
-		createFileNode(path, content, createUser, true);
+		createFileNode(path, content, user.getUsername(), true);
 	}
 	
 	
@@ -844,6 +954,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 			}
 			Node fileNode = rootNode.addNode(path);
 			fileNode.addMixin("mix:versionable");
+			fileNode.addMixin("mix:lockable");
 			Binary fileBinary = new BinaryImpl(content.getBytes());
 			fileNode.setProperty(DATA, fileBinary);
 			if(isFile){
@@ -972,6 +1083,19 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		this.repositoryBuilder = repositoryBuilder;
 	}
 
+	private void lockCheck(Node node,User user){
+		try{
+			if(lockManager.isLocked(node.getPath())){
+				String lockOwner=lockManager.getLock(node.getPath()).getLockOwner();
+				if(lockOwner.equals(user.getUsername())){
+					return;
+				}
+				throw new NodeLockException("【"+node.getName()+"】已被"+lockOwner+"锁定!");
+			}			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
+	}
 	
 	private Node getRootNode(){
 		try {
@@ -988,7 +1112,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		return path;
 	}
 
-	public void fileRename(String path, String newPath) {
+	public void fileRename(String path, String newPath,User user) {
 		if(!permissionService.isAdmin()){
 			throw new NoPermissionException();
 		}
@@ -1051,6 +1175,7 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 			cred.setAttribute("AutoRefresh", true);
 			session = repository.login(cred, null);
 			versionManager = session.getWorkspace().getVersionManager();
+			lockManager=session.getWorkspace().getLockManager();
 			Collection<ReferenceUpdater> updaters = applicationContext.getBeansOfType(ReferenceUpdater.class).values();
 			refactor = new RepositoryRefactor(this, updaters);
 			

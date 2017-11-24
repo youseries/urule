@@ -86,8 +86,8 @@ public class CommonServletHandler extends RenderPageServletHandler{
 		String content=req.getParameter("content");
 		String versionComment=req.getParameter("versionComment");
 		Boolean newVersion = Boolean.valueOf(req.getParameter("newVersion"));
-		String createUser=EnvironmentUtils.getLoginUser(new RequestContext(req, resp)).getUsername();
-		repositoryService.saveFile(file,content,createUser,newVersion,versionComment);
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.saveFile(file,content,user,newVersion,versionComment);
 	}
 	public void loadReferenceFiles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");

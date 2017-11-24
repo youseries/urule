@@ -27,6 +27,7 @@ import org.apache.velocity.VelocityContext;
 
 import com.bstek.urule.Utils;
 import com.bstek.urule.console.EnvironmentUtils;
+import com.bstek.urule.console.User;
 import com.bstek.urule.console.repository.RepositoryService;
 import com.bstek.urule.console.repository.RepositoryServiceImpl;
 import com.bstek.urule.console.servlet.RenderPageServletHandler;
@@ -64,8 +65,8 @@ public class ClientConfigServletHandler extends RenderPageServletHandler{
 		project=Utils.decodeURL(project);
 		String file=project+"/"+RepositoryServiceImpl.CLIENT_CONFIG_FILE;
 		String content=req.getParameter("content");
-		String username=EnvironmentUtils.getLoginUser(new RequestContext(req, resp)).getUsername();
-		repositoryService.saveFile(file, content, username, false,null);
+		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
+		repositoryService.saveFile(file, content, user, false,null);
 	}
 	
 	public void setRepositoryService(RepositoryService repositoryService) {

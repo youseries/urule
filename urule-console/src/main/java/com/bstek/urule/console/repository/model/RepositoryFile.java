@@ -31,6 +31,8 @@ public class RepositoryFile {
 	private String fullPath;
 	private Type type;
 	private Type folderType;
+	private boolean lock;
+	private String lockInfo;
 	@JsonIgnore
 	private LibType libType;
 	@JsonIgnore
@@ -113,5 +115,21 @@ public class RepositoryFile {
 
 	public void setFolderType(Type folderType) {
 		this.folderType = folderType;
+	}
+
+	public boolean isLock() {
+		return lock;
+	}
+
+	public void setLock(boolean lock) {
+		this.lock = lock;
+	}
+
+	public String getLockInfo() {
+		return lockInfo;
+	}
+
+	public void setLockInfo(String lockInfo) {
+		this.lockInfo = lockInfo;
 	}
 }

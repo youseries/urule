@@ -28,6 +28,7 @@ import javax.jcr.RepositoryException;
 import org.apache.tika.io.IOUtils;
 
 import com.bstek.urule.RuleException;
+import com.bstek.urule.console.User;
 import com.bstek.urule.console.repository.model.FileType;
 import com.bstek.urule.console.repository.updater.ReferenceUpdater;
 
@@ -42,7 +43,7 @@ public class RepositoryRefactor {
 		this.repositoryService=repositoryService;
 		this.updaters=updaters;
 	}
-	public void rename(Node rootNode,String path,String newpath,String createUser){
+	public void rename(Node rootNode,String path,String newpath,User user){
 		List<String> referenceFiles=getFiles(rootNode,path);
 		for(String nodePath:referenceFiles){
 			for(ReferenceUpdater updater:updaters){
@@ -53,7 +54,7 @@ public class RepositoryRefactor {
 						inputStream.close();
 						String newContent=updater.update(path, path, content);
 						if(newContent!=null){
-							repositoryService.saveFile(newpath,createUser,newContent, false,null);
+							repositoryService.saveFile(newpath,newContent,user,false,null);
 						}
 					} catch (IOException e) {
 						throw new RuleException(e);

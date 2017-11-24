@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.bstek.urule.console.exception.NoPermissionException;
+import com.bstek.urule.console.repository.NodeLockException;
 
 /**
  * @author Jacky.gao
@@ -92,8 +93,10 @@ public class URuleServlet extends HttpServlet{
 					errorMsg=e.getClass().getName();
 				}
 				pw.write(errorMsg);
-				pw.close();				
-				throw new ServletException(ex);				
+				pw.close();
+				if(!(e instanceof NodeLockException)){					
+					throw new ServletException(ex);				
+				}
 			}
 		}finally{
 			RequestHolder.reset();

@@ -35,12 +35,14 @@ public interface RepositoryService {
 	boolean fileExistCheck(String filePath);
 	RepositoryFile createProject(String projectName,User user,boolean classify);
 	void createDir(String path,User user);
-	void createFile(String path,String content,String createUser);
-	void saveFile(String path,String content,String createUser,boolean newVersion,String versionComment);
-	void deleteFile(String path);
+	void createFile(String path,String content,User user);
+	void saveFile(String path,String content,User user,boolean newVersion,String versionComment);
+	void deleteFile(String path,User user);
+	void lockPath(String path,User user);
+	void unlockPath(String path,User user);
 	Repository loadRepository(String project,String companyId,boolean classify,FileType[] types,String searchFileName);
 	List<RepositoryFile> loadProject(String companyId);
-	void fileRename(String path, String newPath);
+	void fileRename(String path, String newPath,User user);
 	List<String> getReferenceFiles(String path,String searchText);
 	InputStream readFile(String path,String version);
 	List<ResourcePackage> loadProjectResourcePackages(String project) throws Exception;

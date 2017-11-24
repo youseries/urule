@@ -133,7 +133,7 @@ public class PermissionConfigServletHandler extends RenderPageServletHandler{
 		String companyId=user.getCompanyId();
 		String content=req.getParameter("content");
 		String path=RepositoryServiceImpl.RESOURCE_SECURITY_CONFIG_FILE+(companyId==null ? "" : companyId);
-		repositoryService.saveFile(path, content, user.getUsername(), false,null);
+		repositoryService.saveFile(path, content, user, false,null);
 		permissionStore.refreshPermissionStore();
 	}
 	
