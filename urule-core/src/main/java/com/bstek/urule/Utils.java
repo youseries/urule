@@ -33,6 +33,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.bstek.urule.debug.DebugWriter;
 import com.bstek.urule.model.function.FunctionDescriptor;
 import com.bstek.urule.model.library.Datatype;
 
@@ -42,7 +43,9 @@ import com.bstek.urule.model.library.Datatype;
  */
 public class Utils implements ApplicationContextAware{
 	private static boolean debug;
+	private static boolean debugToFile;
 	private static ApplicationContext applicationContext;
+	private static Collection<DebugWriter> debugWriters;
 	private static Map<String,FunctionDescriptor> functionDescriptorMap=new HashMap<String,FunctionDescriptor>();
 	private static Map<String,FunctionDescriptor> functionDescriptorLabelMap=new HashMap<String,FunctionDescriptor>();
 	public static ApplicationContext getApplicationContext() {
@@ -186,8 +189,20 @@ public class Utils implements ApplicationContextAware{
 		Utils.debug = debug;
 	}
 	
+	public void setDebugToFile(boolean debugToFile) {
+		Utils.debugToFile = debugToFile;
+	}
+	
+	public static boolean isDebugToFile() {
+		return debugToFile;
+	}
+	
 	public static boolean isDebug() {
 		return debug;
+	}
+	
+	public static Collection<DebugWriter> getDebugWriters() {
+		return debugWriters;
 	}
 	
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -202,6 +217,7 @@ public class Utils implements ApplicationContextAware{
 			functionDescriptorMap.put(fun.getName(), fun);
 			functionDescriptorLabelMap.put(fun.getLabel(), fun);
 		}
+		debugWriters=applicationContext.getBeansOfType(DebugWriter.class).values();
 		Utils.applicationContext=applicationContext;
 		new Splash().print();
 	}

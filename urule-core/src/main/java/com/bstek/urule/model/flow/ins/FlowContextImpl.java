@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 
+import com.bstek.urule.debug.MessageItem;
 import com.bstek.urule.runtime.WorkingMemory;
 import com.bstek.urule.runtime.response.ExecutionResponseImpl;
 import com.bstek.urule.runtime.response.FlowExecutionResponse;
@@ -36,8 +37,8 @@ public class FlowContextImpl extends ContextImpl implements FlowContext {
 	private Map<String,Object> sessionValueMap;
 	private List<FlowInstance> flowInstances=new ArrayList<FlowInstance>();
 	private ExecutionResponseImpl response;
-	public FlowContextImpl(WorkingMemory workingMemory,Map<String,String> variableCategoryMap,ApplicationContext applicationContext) {
-		super(workingMemory,applicationContext,variableCategoryMap);
+	public FlowContextImpl(WorkingMemory workingMemory,Map<String,String> variableCategoryMap,ApplicationContext applicationContext,List<MessageItem> debugMessageItems) {
+		super(workingMemory,applicationContext,variableCategoryMap,debugMessageItems);
 		sessionValueMap=new HashMap<String,Object>();
 	}
 	

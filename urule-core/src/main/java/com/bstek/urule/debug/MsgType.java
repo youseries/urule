@@ -13,28 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.urule.runtime.rete;
-
-import java.util.List;
-
-import org.springframework.context.ApplicationContext;
-
-import com.bstek.urule.debug.MessageItem;
-import com.bstek.urule.debug.MsgType;
-import com.bstek.urule.runtime.WorkingMemory;
-import com.bstek.urule.runtime.assertor.AssertorEvaluator;
+package com.bstek.urule.debug;
 
 /**
  * @author Jacky.gao
- * @since 2015年1月8日
+ * @since 2017年11月27日
  */
-public interface Context {
-	AssertorEvaluator getAssertorEvaluator();
-	ValueCompute getValueCompute();
-	ApplicationContext getApplicationContext();
-	String getVariableCategoryClass(String variableCategory);
-	WorkingMemory getWorkingMemory();
-	Object parseExpression(String expression);
-	List<MessageItem> getDebugMessageItems();
-	void debugMsg(String msg,MsgType type,boolean debug);
+public enum MsgType {
+	Condition,VarAssign,ExecuteBeanMethod,ExecuteFunction,ConsoleOutput,RuleFlow,ScoreCard,RuleMatch
 }

@@ -147,6 +147,7 @@ public class KnowledgeBuilder extends AbstractBuilder{
 	
 	private List<Rule> buildRules(LoopRule loopRule){
 		Rule rule=new Rule();
+		rule.setDebug(loopRule.getDebug());
 		rule.setName("loop-rule");
 		rule.setLhs(loopRule.getLhs());
 		rule.setRhs(loopRule.getRhs());

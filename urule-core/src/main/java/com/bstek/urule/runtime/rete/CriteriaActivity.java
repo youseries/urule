@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.rule.lhs.Criteria;
 import com.bstek.urule.model.rule.lhs.EvaluateResponse;
 
@@ -45,7 +46,7 @@ public class CriteriaActivity  extends AbstractActivity {
 		List<Object> allMatchedObjects=new ArrayList<Object>();
 		EvaluateResponse response=criteria.evaluate(context, obj,allMatchedObjects);
 		boolean result=response.getResult();
-		doDebug(response);
+		doDebug(response,context);
 		if(result){
 			context.setPrevActivity(this);
 			pass=true;
@@ -58,7 +59,7 @@ public class CriteriaActivity  extends AbstractActivity {
 		return null;
 	}
 	
-	private void doDebug(EvaluateResponse response){
+	private void doDebug(EvaluateResponse response,Context context){
 		if(!debug || !Utils.isDebug()){
 			return;
 		}
@@ -69,7 +70,7 @@ public class CriteriaActivity  extends AbstractActivity {
 		sb.append(" =>"+result);
 		sb.append(", 左值："+(response.getLeftResult()==null ? "null" : response.getLeftResult()));
 		sb.append(", 右值："+(response.getRightResult()==null ? "null" : response.getRightResult()));
-		System.out.println(sb.toString());
+		context.debugMsg(sb.toString(), MsgType.Condition, debug);
 	}
 	
 	@Override

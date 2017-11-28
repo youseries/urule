@@ -20,7 +20,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 
-import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.Node;
 import com.bstek.urule.model.flow.ins.FlowContext;
 import com.bstek.urule.model.flow.ins.FlowInstance;
@@ -49,9 +49,8 @@ public abstract class FlowNode implements Node{
 		this.name=name;
 	}
 	public final void enter(FlowContext context,FlowInstance instance){
-		if(instance.isDebug() && Utils.isDebug()){
-			System.out.println(">>>进入决策流节点："+name);
-		}
+		String msg=">>>进入决策流节点："+name;
+		context.debugMsg(msg, MsgType.RuleFlow, instance.isDebug());
 		((ExecutionResponseImpl)context.getResponse()).addNodeName(name);
 		KnowledgeSession session=(KnowledgeSession)context.getWorkingMemory();
 		session.fireEvent(new ProcessBeforeNodeTriggeredEventImpl(this,instance,session));

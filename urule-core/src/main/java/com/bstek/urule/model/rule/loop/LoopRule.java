@@ -76,7 +76,7 @@ public class LoopRule extends Rule{
 			}
 		}
 
-		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage());
+		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage(),context.getDebugMessageItems());
 		if(loopTargetObj instanceof Collection){
 			Collection<?> collections=(Collection<?>)loopTargetObj;
 			String loopClazz=null;

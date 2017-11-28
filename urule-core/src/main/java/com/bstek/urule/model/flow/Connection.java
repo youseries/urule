@@ -46,7 +46,7 @@ public class Connection {
 		}
 		KnowledgeSession parentSession=(KnowledgeSession)context.getWorkingMemory();
 		List<Object> facts=parentSession.getAllFacts();
-		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage());
+		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage(),context.getDebugMessageItems());
 		for(Object fact:facts){
 			session.insert(fact);
 		}

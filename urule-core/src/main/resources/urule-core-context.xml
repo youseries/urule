@@ -14,6 +14,10 @@
 		</property>
 	</bean>
 	
+	<bean id="urule.defaultHtmlFileDebugWriter" class="com.bstek.urule.debug.DefaultHtmlFileDebugWriter">
+		<property name="path" value="${urule.defaultHtmlFileDebugPath}"></property>
+	</bean>
+	
 	<bean id="urule.knowledgeBuilder" class="com.bstek.urule.builder.KnowledgeBuilder">
 		<property name="reteBuilder" ref="urule.reteBuilder"></property>
 		<property name="rulesRebuilder" ref="urule.rulesRebuilder"></property>
@@ -117,6 +121,7 @@
 
 	<bean id="urule.utils" class="com.bstek.urule.Utils">
 		<property name="debug" value="${urule.debug}"></property>
+		<property name="debugToFile" value="${urule.debugToFile}"></property>
 	</bean>
 	
 	<bean id="urule.flowResourceBuilder" class="com.bstek.urule.builder.resource.FlowResourceBuilder">

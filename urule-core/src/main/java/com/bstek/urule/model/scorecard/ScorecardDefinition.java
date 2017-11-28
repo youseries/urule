@@ -32,6 +32,7 @@ public class ScorecardDefinition {
 	private Date effectiveDate;
 	private Date expiresDate;
 	private Boolean enabled;
+	private Boolean debug;
 	
 	private String attributeColName;
 	private String attributeColWidth;
@@ -89,6 +90,12 @@ public class ScorecardDefinition {
 	}
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+	public Boolean getDebug() {
+		return debug;
+	}
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
 	}
 	public String getAttributeColName() {
 		return attributeColName;

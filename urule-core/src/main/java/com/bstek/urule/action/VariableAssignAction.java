@@ -25,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.bstek.urule.RuleException;
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.library.Datatype;
 import com.bstek.urule.model.rule.Value;
 import com.bstek.urule.model.rule.lhs.LeftType;
@@ -87,7 +88,8 @@ public class VariableAssignAction extends AbstractAction {
 		}
 		Utils.setObjectProperty(targetFact, propertyName, obj);
 		if(debug && Utils.isDebug()){
-			System.out.println("###变量赋值："+label+"="+obj);
+			String msg="###变量赋值："+label+"="+obj;
+			context.debugMsg(msg, MsgType.VarAssign, debug);
 		}
 		return null;
 	}

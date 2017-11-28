@@ -91,6 +91,10 @@ public class ScorecardParser implements Parser<ScorecardDefinition> {
 		if(StringUtils.isNotEmpty(enabled)){
 			card.setEnabled(Boolean.valueOf(enabled));
 		}
+		String debug=element.attributeValue("debug");
+		if(StringUtils.isNotEmpty(debug)){
+			card.setDebug(Boolean.valueOf(debug));
+		}
 		
 		card.setAttributeColWidth(element.attributeValue("attr-col-width"));
 		card.setAttributeColName(element.attributeValue("attr-col-name"));

@@ -44,7 +44,7 @@ public abstract class BindingNode extends FlowNode {
 		KnowledgeSession parentSession=(KnowledgeSession)context.getWorkingMemory();
 		List<Object> facts=parentSession.getAllFacts();
 		KnowledgePackage knowledgePackage=knowledgePackageWrapper.getKnowledgePackage();
-		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackage);
+		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackage,context.getDebugMessageItems());
 		for(Object fact:facts){
 			session.insert(fact);
 		}

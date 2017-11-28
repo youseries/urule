@@ -15,10 +15,12 @@
  ******************************************************************************/
 package com.bstek.urule.runtime.rete;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
 
+import com.bstek.urule.debug.MessageItem;
 import com.bstek.urule.runtime.WorkingMemory;
 
 /**
@@ -29,8 +31,8 @@ public class EvaluationContextImpl extends ContextImpl implements EvaluationCont
 	private Activity prevActivity;
 	public EvaluationContextImpl(WorkingMemory workingMemory,
 			ApplicationContext applicationContext, 
-			Map<String, String> variableCategoryMap) {
-		super(workingMemory, applicationContext, variableCategoryMap);
+			Map<String, String> variableCategoryMap,List<MessageItem> debugMessageItems) {
+		super(workingMemory, applicationContext, variableCategoryMap,debugMessageItems);
 	}
 	@Override
 	public Activity getPrevActivity() {

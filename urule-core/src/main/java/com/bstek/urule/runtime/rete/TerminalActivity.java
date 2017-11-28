@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.runtime.KnowledgeSession;
 import com.bstek.urule.runtime.agenda.ActivationImpl;
@@ -41,8 +42,9 @@ public class TerminalActivity extends AbstractActivity {
 		result.add(tracker);
 		KnowledgeSession session = (KnowledgeSession)context.getWorkingMemory();
 		session.fireEvent(new ActivationCreatedEventImpl(ac,session));
-		if(rule.getDebug()!=null && rule.getDebug()){
-			//out debug info
+		if(rule.getDebug()!=null){
+			String msg="√√√规则【"+rule.getName()+"】成功匹配";
+			context.debugMsg(msg, MsgType.RuleMatch, rule.getDebug());
 		}
 		return result;
 	}

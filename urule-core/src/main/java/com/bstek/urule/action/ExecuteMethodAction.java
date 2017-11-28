@@ -25,6 +25,7 @@ import java.util.Set;
 
 import com.bstek.urule.RuleException;
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.library.Datatype;
 import com.bstek.urule.model.rule.Parameter;
 import com.bstek.urule.runtime.rete.Context;
@@ -84,7 +85,8 @@ public class ExecuteMethodAction extends AbstractAction {
 				}
 				Object value=method.invoke(obj, wrap.getValues());
 				if(debug && Utils.isDebug()){
-					System.out.println(info+"("+wrap.valuesToString()+")");
+					String msg=info+"("+wrap.valuesToString()+")";
+					context.debugMsg(msg, MsgType.ExecuteBeanMethod, debug);
 				}
 				if(value!=null){
 					return new ActionValueImpl(valueKey,value);					
@@ -100,7 +102,8 @@ public class ExecuteMethodAction extends AbstractAction {
 				}
 				Object value=method.invoke(obj);
 				if(debug && Utils.isDebug()){
-					System.out.println(info+"()");
+					String msg=info+"()";
+					context.debugMsg(msg, MsgType.ExecuteBeanMethod, debug);
 				}
 				if(value!=null){
 					return new ActionValueImpl(valueKey,value);					

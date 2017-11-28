@@ -22,6 +22,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.rule.lhs.EvaluateResponse;
 import com.bstek.urule.model.rule.lhs.NamedCriteria;
 
@@ -47,7 +48,7 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 		List<Object> allMatchedObjects=new ArrayList<Object>();
 		EvaluateResponse response=criteria.evaluate(context,obj,allMatchedObjects);
 		boolean result=response.getResult();
-		doDebug(response);
+		doDebug(response,context);
 		if(result){
 			if(StringUtils.isNotBlank(referenceName)){
 				variableMap.put(referenceName,obj);				
@@ -63,7 +64,7 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 		return null;
 	}
 	
-	private void doDebug(EvaluateResponse response){
+	private void doDebug(EvaluateResponse response,Context context){
 		if(!debug || !Utils.isDebug()){
 			return;
 		}
@@ -73,6 +74,7 @@ public class NamedCriteriaActivity  extends AbstractActivity{
 		String result=response.getResult() ? "满足" : "不满足";
 		sb.append(" =>"+result);
 		System.out.println(sb.toString());
+		context.debugMsg(sb.toString(), MsgType.Condition, debug);
 	}
 	
 	@Override

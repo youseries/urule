@@ -11,6 +11,16 @@
 		<property name="repositoryService" ref="urule.repositoryService"></property>
 	</bean>
 	
+	<bean id="urule.consoleServletHandler" class="com.bstek.urule.console.servlet.console.ConsoleServletHandler">
+		<property name="debugMessageHolder" ref="urule.debugMessageHolder"></property>
+	</bean>
+	
+	<bean id="urule.consoleDebugWriter" class="com.bstek.urule.console.servlet.console.ConsoleDebugWriter">
+		<property name="debugMessageHolder" ref="urule.debugMessageHolder"></property>
+	</bean>
+	
+	<bean id="urule.debugMessageHolder" class="com.bstek.urule.console.servlet.console.DebugMessageHolder"></bean>
+	
 	<bean id="urule.httpSessionKnowledgeCache" class="com.bstek.urule.console.servlet.respackage.HttpSessionKnowledgeCache"></bean>
 	
 	<bean id="urule.repositoryResourceProvider" class="com.bstek.urule.console.repository.RepositoryResourceProvider">

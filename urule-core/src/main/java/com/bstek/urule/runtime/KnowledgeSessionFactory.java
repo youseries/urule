@@ -14,6 +14,11 @@
  * the License.
  ******************************************************************************/
 package com.bstek.urule.runtime;
+
+import java.util.List;
+
+import com.bstek.urule.debug.MessageItem;
+
 /**
  * @author Jacky.gao
  * @since 2015年1月28日
@@ -29,12 +34,23 @@ public class KnowledgeSessionFactory {
 	}
 	
 	/**
+	 * 创建一个普通的KnowledgeSession对象，同时将上级调试信息集合传入，以便于后续调试输出
+	 * @param knowledgePackage 创建KnowledgeSession对象所需要的KnowledgePackage对象
+	 * @param debugMessageItems 上级调试信息集合
+	 * @return 返回一个新的KnowledgeSession对象
+	 */
+	public static KnowledgeSession newKnowledgeSession(KnowledgePackage knowledgePackage,List<MessageItem> debugMessageItems){
+		return new KnowledgeSessionImpl(knowledgePackage,debugMessageItems);
+	}	
+	
+	
+	/**
 	 * 创建一个普通的KnowledgeSession对象
 	 * @param knowledgePackages 创建KnowledgeSession对象所需要的KnowledgePackage集合对象
 	 * @return 返回一个新的KnowledgeSession对象
 	 */
 	public static KnowledgeSession newKnowledgeSession(KnowledgePackage[] knowledgePackages){
-		return new KnowledgeSessionImpl(knowledgePackages);
+		return new KnowledgeSessionImpl(knowledgePackages,null);
 	}
 	
 	/**

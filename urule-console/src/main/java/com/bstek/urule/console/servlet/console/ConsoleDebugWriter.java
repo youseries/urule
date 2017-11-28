@@ -13,28 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.bstek.urule.runtime.rete;
+package com.bstek.urule.console.servlet.console;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-
+import com.bstek.urule.debug.DebugWriter;
 import com.bstek.urule.debug.MessageItem;
-import com.bstek.urule.debug.MsgType;
-import com.bstek.urule.runtime.WorkingMemory;
-import com.bstek.urule.runtime.assertor.AssertorEvaluator;
 
 /**
  * @author Jacky.gao
- * @since 2015年1月8日
+ * @since 2017年11月28日
  */
-public interface Context {
-	AssertorEvaluator getAssertorEvaluator();
-	ValueCompute getValueCompute();
-	ApplicationContext getApplicationContext();
-	String getVariableCategoryClass(String variableCategory);
-	WorkingMemory getWorkingMemory();
-	Object parseExpression(String expression);
-	List<MessageItem> getDebugMessageItems();
-	void debugMsg(String msg,MsgType type,boolean debug);
+public class ConsoleDebugWriter implements DebugWriter {
+	private DebugMessageHolder debugMessageHolder;
+	@Override
+	public void write(List<MessageItem> items) throws IOException {
+		StringBuilder sb=new StringBuilder();
+		for(MessageItem item:items){
+			sb.append(item.toHtml());
+		}
+		String key=debugMessageHolder.generateKey();
+		System.out.println("Console key : "+key);
+		debugMessageHolder.putDebugMessage(key, sb.toString());
+	}
+	public void setDebugMessageHolder(DebugMessageHolder debugMessageHolder) {
+		this.debugMessageHolder = debugMessageHolder;
+	}
 }

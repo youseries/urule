@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
+import com.bstek.urule.runtime.rete.Context;
 
 /**
  * @author Jacky.gao
@@ -26,23 +28,27 @@ import com.bstek.urule.Utils;
  */
 public class ScorecardImpl implements Scorecard {
 	private String name;
+	private boolean debug;
 	private List<RowItem> rowItems;
 	
-	public ScorecardImpl(String name, List<RowItem> rowItems) {
+	public ScorecardImpl(String name, List<RowItem> rowItems,boolean debug) {
 		this.name = name;
 		this.rowItems = rowItems;
+		this.debug=debug;
 	}
 
-	public BigDecimal executeSum(){
+	public BigDecimal executeSum(Context context){
 		BigDecimal result=new BigDecimal(0);
 		for(RowItem row:rowItems){
 			BigDecimal score=Utils.toBigDecimal(row.getScore());
 			row.setActualScore(score);
 			result=result.add(score);
 		}
+		String msg="+++求和得分："+result;
+		context.debugMsg(msg, MsgType.ScoreCard, debug);
 		return result;
 	}
-	public BigDecimal executeWeightSum(){
+	public BigDecimal executeWeightSum(Context context){
 		BigDecimal result=new BigDecimal(0);
 		for(RowItem row:rowItems){
 			BigDecimal score=Utils.toBigDecimal(row.getScore());
@@ -51,6 +57,8 @@ public class ScorecardImpl implements Scorecard {
 			row.setActualScore(actualScore);
 			result=result.add(actualScore);
 		}
+		String msg="+++加权求和得分："+result;
+		context.debugMsg(msg, MsgType.ScoreCard, debug);
 		return result;
 	}
 	@Override

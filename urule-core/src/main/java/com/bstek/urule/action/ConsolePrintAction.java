@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bstek.urule.Utils;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.rule.Value;
 import com.bstek.urule.runtime.rete.Context;
 import com.bstek.urule.runtime.rete.ValueCompute;
@@ -39,12 +40,13 @@ public class ConsolePrintAction extends AbstractAction {
 		Object content=valueCompute.complexValueCompute(value, matchedObject, context,allMatchedObjects,variableMap);
 		if(content instanceof BigDecimal){
 			BigDecimal b=(BigDecimal)content;
-			System.out.println(b.floatValue());
+			context.debugMsg("☢☢☢控制台输出："+b.toPlainString(), MsgType.ConsoleOutput, true);
 		}else if(content instanceof Double){
 			Double d=(Double)content;
-			System.out.println(d.floatValue());
+			context.debugMsg("☢☢☢控制台输出："+d.toString(), MsgType.ConsoleOutput, true);
 		}else{
-			System.out.println(content);
+			String msg=(content==null ? "null" : content.toString());
+			context.debugMsg("☢☢☢控制台输出："+msg, MsgType.ConsoleOutput, true);
 		}
 		return null;
 	}

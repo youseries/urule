@@ -66,6 +66,7 @@ public class ScorecardResourceBuilder implements ResourceBuilder<ScoreRule> {
 		scoreRule.setExpiresDate(scorecard.getExpiresDate());
 		scoreRule.setEnabled(scorecard.getEnabled());
 		scoreRule.setSalience(scorecard.getSalience());
+		scoreRule.setDebug(scorecard.getDebug());
 
 		scoreRule.setScoringBean(scorecard.getScoringBean());
 		scoreRule.setScoringType(scorecard.getScoringType());
@@ -87,9 +88,11 @@ public class ScorecardResourceBuilder implements ResourceBuilder<ScoreRule> {
 			int attributeRowNumber=row.getRowNumber();
 			Rule rule = buildRule(cells, customCols,attributeVariableCategory, attributeRowNumber,attributeRowNumber);
 			rules.add(rule);
+			rule.setDebug(scorecard.getDebug());
 			for(ConditionRow conditionRow:conditionRows){
 				int conditionRowNumber=conditionRow.getRowNumber();
 				Rule r = buildRule(cells,customCols,attributeVariableCategory,attributeRowNumber,conditionRowNumber);
+				r.setDebug(scorecard.getDebug());
 				rules.add(r);
 			}
 		}

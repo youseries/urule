@@ -27,6 +27,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.bstek.urule.RuleException;
 import com.bstek.urule.Utils;
 import com.bstek.urule.action.ActionValue;
+import com.bstek.urule.debug.MsgType;
 import com.bstek.urule.model.library.Datatype;
 import com.bstek.urule.model.rule.Library;
 import com.bstek.urule.model.rule.Rule;
@@ -58,9 +59,13 @@ public class ScoreRule extends Rule{
 	public List<ActionValue> execute(Context context,Object matchedObject,List<Object> allMatchedObjects,Map<String,Object> variableMap){
 		KnowledgeSession parentSession=(KnowledgeSession)context.getWorkingMemory();
 		List<Object> facts=parentSession.getAllFacts();
-		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage());
+		KnowledgeSession session=KnowledgeSessionFactory.newKnowledgeSession(knowledgePackageWrapper.getKnowledgePackage(),context.getDebugMessageItems());
 		for(Object fact:facts){
 			session.insert(fact);
+		}
+		boolean isdebug=false;
+		if(this.getDebug()!=null){
+			isdebug=this.getDebug();
 		}
 		List<ActionValue> values=session.fireRules(parentSession.getParameters()).getActionValues();
 		Map<Integer,RowItemImpl> rowMap=new HashMap<Integer,RowItemImpl>();
@@ -70,6 +75,10 @@ public class ScoreRule extends Rule{
 			}
 			ScoreRuntimeValue scoreValue=(ScoreRuntimeValue)value.getValue();
 			int rowNumber=scoreValue.getRowNumber();
+			if(isdebug && Utils.isDebug()){
+				String msg="---行"+rowNumber+",得分："+scoreValue.getValue();
+				context.debugMsg(msg, MsgType.ScoreCard, isdebug);
+			}
 			RowItemImpl rowItem=null;
 			if(rowMap.containsKey(rowNumber)){
 				rowItem=rowMap.get(rowNumber);
@@ -88,13 +97,17 @@ public class ScoreRule extends Rule{
 		}
 		List<RowItem> items=new ArrayList<RowItem>();
 		items.addAll(rowMap.values());
-		ScorecardImpl card=new ScorecardImpl(getName(),items);
+		ScorecardImpl card=new ScorecardImpl(getName(),items,isdebug);
 		Object actualScore=null;
 		if(scoringType.equals(ScoringType.sum)){
-			actualScore=card.executeSum();
+			actualScore=card.executeSum(context);
 		}else if(scoringType.equals(ScoringType.weightsum)){
-			actualScore=card.executeWeightSum();
+			actualScore=card.executeWeightSum(context);
 		}else if(scoringType.equals(ScoringType.custom)){
+			if(isdebug && Utils.isDebug()){
+				String msg="---执行自定义评分卡得分计算Bean:"+scoringBean;
+				context.debugMsg(msg, MsgType.ScoreCard, isdebug);
+			}
 			ScoringStrategy scoringStrategy=(ScoringStrategy)context.getApplicationContext().getBean(scoringBean);
 			actualScore=scoringStrategy.calculate(card, context);
 		}
