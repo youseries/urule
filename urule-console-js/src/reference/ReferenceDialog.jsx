@@ -12,12 +12,12 @@ export default class ReferenceDialog extends Component{
         this.state={title:'',files:[]};
     }
     componentDidMount(){
-        event.eventEmitter.on(event.OPEN_REFERENCE_DIALOG,(file,searchText,info)=>{
+        event.eventEmitter.on(event.OPEN_REFERENCE_DIALOG,(data,info)=>{
             $(ReactDOM.findDOMNode(this)).modal('show');
-            const title=`引用文件[${file}]${info}的文件`;
+            const title=`引用文件[${data.path}]${info}的文件`;
             $.ajax({
                 url:window._server+'/common/loadReferenceFiles',
-                data:{path:file,searchText},
+                data:data,
                 type:'POST',
                 success:function (files) {
                     this.setState({files,title});

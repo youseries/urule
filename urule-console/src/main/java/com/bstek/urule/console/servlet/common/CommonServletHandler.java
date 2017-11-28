@@ -92,8 +92,13 @@ public class CommonServletHandler extends RenderPageServletHandler{
 	public void loadReferenceFiles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");
 		path=Utils.decodeURL(path);
-		String searchText=req.getParameter("searchText");
+		String searchText=buildSearchText(path,req,false);
 		List<String> files=repositoryService.getReferenceFiles(path,searchText);
+		searchText=buildSearchText(path,req,true);
+		List<String> scriptFiles=repositoryService.getReferenceFiles(path,searchText);
+		if(scriptFiles.size()>0){
+			files.addAll(scriptFiles);
+		}
 		List<RefFile> refFiles=new ArrayList<RefFile>();
 		for(String file:files){
 			RefFile ref=new RefFile();
@@ -126,6 +131,55 @@ public class CommonServletHandler extends RenderPageServletHandler{
 			ref.setName(name);
 		}
 		writeObjectToJson(resp, refFiles);
+	}
+	
+	private String buildSearchText(String path,HttpServletRequest req,boolean isScript){
+		StringBuilder sb=new StringBuilder();
+		if(path.endsWith(FileType.ActionLibrary.toString())){
+			if(isScript){
+				sb.append(req.getParameter("beanLabel"));
+				sb.append(".");
+				sb.append(req.getParameter("methodLabel"));
+			}else{				
+				sb.append("bean=\""+req.getParameter("beanName")+"\"");
+				sb.append(" bean-label=\""+req.getParameter("beanLabel")+"\"");
+				sb.append(" method-label=\""+req.getParameter("methodLabel")+"\"");
+				sb.append(" method-name=\""+req.getParameter("methodName")+"\"");
+			}
+			return sb.toString();
+		}else if(path.endsWith(FileType.ConstantLibrary.toString())){
+			if(isScript){
+				sb.append(req.getParameter("constCategoryLabel"));
+				sb.append(".");
+				sb.append(req.getParameter("constLabel"));
+			}else{
+				sb.append("const-category=\""+req.getParameter("constCategoryLabel")+"\"");
+				sb.append(" const=\""+req.getParameter("constName")+"\"");
+			}
+			return sb.toString();
+		}else if(path.endsWith(FileType.ParameterLibrary.toString())){
+			if(isScript){
+				sb.append("参数.");
+				sb.append(req.getParameter("varLabel"));
+			}else{
+				sb.append("var-category=\"参数\"");
+				sb.append(" var=\""+req.getParameter("varName")+"\"");
+			}
+			return sb.toString();
+		}else if(path.endsWith(FileType.VariableLibrary.toString())){
+			if(isScript){
+				sb.append(req.getParameter("varCategory"));
+				sb.append(".");
+				sb.append(req.getParameter("varLabel"));
+			}else{
+				sb.append("var-category=\""+req.getParameter("varCategory")+"\"");
+				sb.append(" var=\""+req.getParameter("varName")+"\"");
+			}
+			return sb.toString();
+			
+		}else{
+			throw new RuleException("Unknow file : "+ path);
+		}
 	}
 	
 	public void loadResourceTreeData(HttpServletRequest req, HttpServletResponse resp) throws Exception {

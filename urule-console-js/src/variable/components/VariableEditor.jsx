@@ -107,7 +107,13 @@ class VariableEditor extends Component{
                                     }
                                     const text=`var-category="${this.masterData.name}" var="${this.currentData.name}"`;
                                     const title=`变量"${this.masterData.name}.${this.currentData.name}"`;
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
+                                    const data={
+                                        path:file,
+                                        varCategory:this.masterData.name,
+                                        varLabel:this.currentData.label,
+                                        varName:this.currentData.name
+                                    };
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,data,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                             </div>
                         </div>

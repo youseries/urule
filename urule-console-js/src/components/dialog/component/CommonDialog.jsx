@@ -38,10 +38,10 @@ export default class CommonDialog extends Component{
                             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h5 className="modal-title" id="myModalLabel">
+                            <h3 className="modal-title" id="myModalLabel" style={{wordWrap:'break-word'}}>
                                 {this.props.title}
                                 <div className="text-danger" style={{fontSize:'12pt'}}>{this.props.info ? this.props.info : null}</div>
-                            </h5>
+                            </h3>
                         </div>
                         <div className="modal-body" style={{padding:'10px'}}>
                             {this.props.body}

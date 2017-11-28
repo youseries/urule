@@ -109,10 +109,15 @@ class ActionEditor extends Component{
                                         bootbox.alert('请先选择一条具体的动作方法');
                                         return;
                                     }
-                                    //const text=`const-category="${this.masterData.name}" const="${this.currentData.name}"`;
-                                    const text=`bean-name="${this.masterData.id}" bean-label="${this.masterData.name}" method-name="${this.currentData.methodName}"`;
                                     const title=`动作"${this.masterData.name}.${this.currentData.name}"`;
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
+                                    const data={
+                                        path:file,
+                                        beanName:this.masterData.id,
+                                        beanLabel:this.masterData.name,
+                                        methodName:this.currentData.methodName,
+                                        methodLabel:this.currentData.name
+                                    };
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,data,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                             </div>
                         </div>

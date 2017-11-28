@@ -73,9 +73,15 @@ class ConstantEditor extends React.Component{
                                         bootbox.alert('请先选择一条具体的常量');
                                         return;
                                     }
-                                    const text=`const-category="${this.masterData.name}" const="${this.currentData.name}"`;
                                     const title=`常量"${this.masterData.name}.${this.currentData.name}"`;
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
+                                    const data={
+                                        path:file,
+                                        constCategory:this.masterData.name,
+                                        constCategoryLabel:this.masterData.label,
+                                        constLabel:this.currentData.label,
+                                        constName:this.currentData.name
+                                    };
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,data,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                             </div>
                         </div>

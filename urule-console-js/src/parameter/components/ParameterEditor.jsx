@@ -49,9 +49,13 @@ class ParameterEditor extends Component{
                                         bootbox.alert('请先选择一条具体的参数');
                                         return;
                                     }
-                                    const text=`var-category="参数" var="${this.currentData.name}"`;
                                     const title=`参数"${this.currentData.name}"`;
-                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,file,text,title);
+                                    const data={
+                                        path:file,
+                                        varLabel:this.currentData.label,
+                                        varName:this.currentData.name
+                                    };
+                                    refEvent.eventEmitter.emit(refEvent.OPEN_REFERENCE_DIALOG,data,title);
                                 }}><i className="rf rf-link"></i> 查看引用</button>
                     </div>
                 </div>
