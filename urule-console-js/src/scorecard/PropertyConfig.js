@@ -57,6 +57,12 @@ export default class PropertyConfig{
                 defaultValue:true,
                 editorType:3,
                 onClick:onClick
+            },{
+                label:"允许调试信息输出",
+                name:"debug",
+                defaultValue:true,
+                editorType:3,
+                onClick:onClick
             }]
         });
         addProp.click(function(e){
@@ -73,6 +79,10 @@ export default class PropertyConfig{
         var loop=data["loop"];
         if(loop!=null){
             this.addProperty(new urule.RuleProperty(this,"loop",loop,3));
+        }
+        var debug=data["debug"];
+        if(debug!=null){
+            this.addProperty(new urule.RuleProperty(this,"debug",debug,3));
         }
         var effectiveDate=data["effectiveDate"];
         if(effectiveDate){

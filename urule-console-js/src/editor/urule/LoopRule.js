@@ -57,6 +57,10 @@ urule.LoopRule.prototype.initData=function(){
 	if(enabled!=null){
 		this.addProperty(new urule.RuleProperty(this,"enabled",enabled,3));
 	}
+	var debug=this.data["debug"];
+	if(debug!=null){
+		this.addProperty(new urule.RuleProperty(this,"debug",debug,3));
+	}
 	var activationGroup=this.data["activationGroup"];
 	if(activationGroup){
 		this.addProperty(new urule.RuleProperty(this,"activation-group",activationGroup,1));
@@ -247,6 +251,12 @@ urule.LoopRule.prototype.initHeader=function(){
 		},{
 			label:"是否启用",
 			name:"enabled",
+			defaultValue:true,
+			editorType:3,
+			onClick:onClick
+		},{
+			label:"允许调试信息输出",
+			name:"debug",
 			defaultValue:true,
 			editorType:3,
 			onClick:onClick
