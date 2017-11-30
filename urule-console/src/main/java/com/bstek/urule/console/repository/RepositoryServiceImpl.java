@@ -1046,10 +1046,15 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		} finally {
 		}
 	}
+	
+	@Override
+	public InputStream readFile(String path, String version) {
+		return readFile(path,version,true);
+	}
 
 	@Override
-	public InputStream readFile(String path,String version) {
-		if(!permissionService.fileHasReadPermission(path)){
+	public InputStream readFile(String path,String version,boolean withPermission) {
+		if(withPermission && !permissionService.fileHasReadPermission(path)){
 			throw new NoPermissionException();
 		}
 		

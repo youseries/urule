@@ -31,6 +31,12 @@ import com.bstek.urule.RuleException;
  */
 public class FileResourceProvider implements ResourceProvider,ApplicationContextAware {
 	private ApplicationContext applicationContext;
+	
+	@Override
+	public Resource provide(String path, String version, boolean withPermiossion) {
+		return provide(path,version);
+	}
+	@Override
 	public Resource provide(String path,String version) {
 		try {
 			InputStream inputStream=applicationContext.getResource(path).getInputStream();

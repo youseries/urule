@@ -36,7 +36,12 @@ public class DefaultKnowledgePackageService implements KnowledgePackageService{
 	private KnowledgeBuilder knowledgeBuilder;
 	private RepositoryService repositoryService;
 	
-	public KnowledgePackage buildKnowledgePackage(String packageInfo) throws IOException{
+	@Override
+	public KnowledgePackage buildKnowledgePackage(String packageInfo) throws IOException {
+		return buildKnowledgePackage(packageInfo,true);
+	}
+	@Override
+	public KnowledgePackage buildKnowledgePackage(String packageInfo,boolean withPermission) throws IOException{
 		try{
 			String[] info=packageInfo.split("/");
 			if(info.length!=2){
@@ -57,7 +62,7 @@ public class DefaultKnowledgePackageService implements KnowledgePackageService{
 			}
 			ResourceBase resourceBase=knowledgeBuilder.newResourceBase();
 			for(ResourceItem item:list){
-				resourceBase.addResource(item.getPath(),item.getVersion());
+				resourceBase.addResource(item.getPath(),item.getVersion(),withPermission);
 			}
 			KnowledgeBase knowledgeBase=knowledgeBuilder.buildKnowledgeBase(resourceBase);
 			KnowledgePackage knowledgePackage=knowledgeBase.getKnowledgePackage();

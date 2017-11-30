@@ -44,6 +44,7 @@ public interface RepositoryService {
 	List<RepositoryFile> loadProject(String companyId);
 	void fileRename(String path, String newPath,User user);
 	List<String> getReferenceFiles(String path,String searchText);
+	InputStream readFile(String path,String version,boolean withPermission);
 	InputStream readFile(String path,String version);
 	List<ResourcePackage> loadProjectResourcePackages(String project) throws Exception;
 	List<VersionFile> getVersionFiles(String path);

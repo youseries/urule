@@ -32,13 +32,19 @@ import com.bstek.urule.builder.resource.ResourceProvider;
 public class RepositoryResourceProvider implements ResourceProvider {
 	public static final String JCR="jcr:";
 	private RepositoryService repositoryService;
-	public Resource provide(String path,String version) {
+	
+	@Override
+	public Resource provide(String path, String version) {
+		return null;
+	}
+	@Override
+	public Resource provide(String path,String version,boolean withPermiossion) {
 		String newpath=path.substring(4,path.length());
 		InputStream inputStream=null;
 		if(StringUtils.isEmpty(version) || version.equals("LATEST")){
-			inputStream=repositoryService.readFile(newpath,null);			
+			inputStream=repositoryService.readFile(newpath,null,withPermiossion);											
 		}else{
-			inputStream=repositoryService.readFile(newpath,version);						
+			inputStream=repositoryService.readFile(newpath,version,withPermiossion);														
 		}
 		try {
 			String content=IOUtils.toString(inputStream,"utf-8");

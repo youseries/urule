@@ -58,7 +58,7 @@ public class LoadKnowledgeServletHandler  extends RenderPageServletHandler{
 		String timestamp=req.getParameter("timestamp");
 		KnowledgePackage knowledgePackage=CacheUtils.getKnowledgeCache().getKnowledge(packageId);
 		if(knowledgePackage==null){
-			knowledgePackage=knowledgePackageService.buildKnowledgePackage(packageId);
+			knowledgePackage=knowledgePackageService.buildKnowledgePackage(packageId,false);
 			CacheUtils.getKnowledgeCache().putKnowledge(packageId, knowledgePackage);
 		}
 		if(StringUtils.isNotEmpty(timestamp)){
