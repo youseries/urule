@@ -31,13 +31,13 @@ import com.bstek.urule.model.rule.lhs.Lhs;
  */
 public class LhsParser implements Parser<Lhs>,ApplicationContextAware {
 	private Collection<CriterionParser> criterionParsers;
-	public Lhs parse(Element element) {
+	public Lhs parse(Element element,boolean withPermission) {
 		Lhs lhs=new Lhs();
-		lhs.setCriterion(parseCriterion(element));
+		lhs.setCriterion(parseCriterion(element,withPermission));
 		return lhs;
 	}
 	
-	public Criterion parseCriterion(Element element){
+	public Criterion parseCriterion(Element element,boolean withPermission){
 		Criterion criterion=null;
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -47,7 +47,7 @@ public class LhsParser implements Parser<Lhs>,ApplicationContextAware {
 			String name=ele.getName();
 			for(CriterionParser parser:criterionParsers){
 				if(parser.support(name)){
-					criterion=(Criterion)parser.parse(ele);
+					criterion=(Criterion)parser.parse(ele,withPermission);
 					if(criterion!=null){
 						break;
 					}

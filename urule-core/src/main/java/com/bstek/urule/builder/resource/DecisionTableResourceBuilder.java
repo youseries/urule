@@ -26,8 +26,8 @@ import com.bstek.urule.parse.deserializer.DecisionTableDeserializer;
  */
 public class DecisionTableResourceBuilder implements ResourceBuilder<DecisionTable> {
 	private DecisionTableDeserializer decisionTableDeserializer;
-	public DecisionTable build(Element root) {
-		return decisionTableDeserializer.deserialize(root);
+	public DecisionTable build(Element root,boolean withPermission) {
+		return decisionTableDeserializer.deserialize(root,withPermission);
 	}
 	public ResourceType getType() {
 		return ResourceType.DecisionTable;

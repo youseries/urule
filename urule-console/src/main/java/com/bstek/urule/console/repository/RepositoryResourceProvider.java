@@ -35,7 +35,7 @@ public class RepositoryResourceProvider implements ResourceProvider {
 	
 	@Override
 	public Resource provide(String path, String version) {
-		return null;
+		return provide(path,version,true);
 	}
 	@Override
 	public Resource provide(String path,String version,boolean withPermiossion) {

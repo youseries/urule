@@ -25,7 +25,7 @@ import com.bstek.urule.action.ConsolePrintAction;
  * @since 2014年12月23日
  */
 public class ConsolePrintActionParser extends ActionParser {
-	public Action parse(Element element) {
+	public Action parse(Element element,boolean withPermission) {
 		ConsolePrintAction action=new ConsolePrintAction();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -33,7 +33,7 @@ public class ConsolePrintActionParser extends ActionParser {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				action.setValue(valueParser.parse(ele));
+				action.setValue(valueParser.parse(ele,withPermission));
 				break;
 			}
 		}

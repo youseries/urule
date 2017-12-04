@@ -37,7 +37,7 @@ public class ConditionTreeNodeParser implements Parser<ConditionTreeNode> {
 	private VariableTreeNodeParser variableTreeNodeParser;
 	private ActionTreeNodeParser actionTreeNodeParser;
 	@Override
-	public ConditionTreeNode parse(Element element) {
+	public ConditionTreeNode parse(Element element,boolean withPermission) {
 		ConditionTreeNode node=new ConditionTreeNode();
 		node.setNodeType(TreeNodeType.condition);
 		node.setOp(Op.valueOf(element.attributeValue("op")));
@@ -51,17 +51,17 @@ public class ConditionTreeNodeParser implements Parser<ConditionTreeNode> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(valueParser.support(name)){
-				node.setValue(valueParser.parse(ele));
+				node.setValue(valueParser.parse(ele,withPermission));
 			}else if(support(name)){
-				ConditionTreeNode cn=parse(ele);
+				ConditionTreeNode cn=parse(ele,withPermission);
 				cn.setParentNode(node);
 				conditionTreeNodes.add(cn);
 			}else if(variableTreeNodeParser.support(name)){
-				VariableTreeNode vn=variableTreeNodeParser.parse(ele);
+				VariableTreeNode vn=variableTreeNodeParser.parse(ele,withPermission);
 				vn.setParentNode(node);
 				variableTreeNodes.add(vn);
 			}else if(actionTreeNodeParser.support(name)){
-				ActionTreeNode an=actionTreeNodeParser.parse(ele);
+				ActionTreeNode an=actionTreeNodeParser.parse(ele,withPermission);
 				an.setParentNode(node);
 				actionTreeNodes.add(an);
 			}

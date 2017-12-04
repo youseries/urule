@@ -27,8 +27,8 @@ import com.bstek.urule.parse.ActionLibraryParser;
 public class ActionLibraryDeserializer implements Deserializer<ActionLibrary> {
 	public static final String BEAN_ID="urule.actionLibraryDeserializer";
 	private ActionLibraryParser actionLibraryParser;
-	public ActionLibrary deserialize(Element root) {
-		return actionLibraryParser.parse(root);
+	public ActionLibrary deserialize(Element root,boolean withPermission) {
+		return actionLibraryParser.parse(root,withPermission);
 	}
 	public boolean support(Element root) {
 		return actionLibraryParser.support(root.getName());

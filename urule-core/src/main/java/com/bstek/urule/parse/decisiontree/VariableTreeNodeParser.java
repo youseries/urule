@@ -34,7 +34,7 @@ public class VariableTreeNodeParser implements Parser<VariableTreeNode> {
 	private LeftParser leftParser;
 	private ConditionTreeNodeParser conditionTreeNodeParser;
 	@Override
-	public VariableTreeNode parse(Element element) {
+	public VariableTreeNode parse(Element element,boolean withPermission) {
 		VariableTreeNode node=new VariableTreeNode();
 		node.setNodeType(TreeNodeType.variable);
 		List<ConditionTreeNode> conditionTreeNodes=new ArrayList<ConditionTreeNode>();
@@ -45,9 +45,9 @@ public class VariableTreeNodeParser implements Parser<VariableTreeNode> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(name.equals("left")){
-				node.setLeft(leftParser.parse(ele));
+				node.setLeft(leftParser.parse(ele,withPermission));
 			}else if(conditionTreeNodeParser.support(name)){
-				ConditionTreeNode cn=conditionTreeNodeParser.parse(ele);
+				ConditionTreeNode cn=conditionTreeNodeParser.parse(ele,withPermission);
 				cn.setParentNode(node);
 				conditionTreeNodes.add(cn);
 			}

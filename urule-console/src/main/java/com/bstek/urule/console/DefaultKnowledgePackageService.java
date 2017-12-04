@@ -64,7 +64,7 @@ public class DefaultKnowledgePackageService implements KnowledgePackageService{
 			for(ResourceItem item:list){
 				resourceBase.addResource(item.getPath(),item.getVersion(),withPermission);
 			}
-			KnowledgeBase knowledgeBase=knowledgeBuilder.buildKnowledgeBase(resourceBase);
+			KnowledgeBase knowledgeBase=knowledgeBuilder.buildKnowledgeBase(resourceBase,withPermission);
 			KnowledgePackage knowledgePackage=knowledgeBase.getKnowledgePackage();
 			return knowledgePackage;
 		}catch(Exception ex){

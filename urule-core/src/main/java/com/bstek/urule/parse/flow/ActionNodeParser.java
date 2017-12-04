@@ -24,7 +24,7 @@ import com.bstek.urule.model.flow.ActionNode;
  * @since 2014年12月23日
  */
 public class ActionNodeParser extends FlowNodeParser<ActionNode> {
-	public ActionNode parse(Element element) {
+	public ActionNode parse(Element element,boolean withPermission) {
 		ActionNode action=new ActionNode(element.attributeValue("name"));
 		action.setActionBean(element.attributeValue("action-bean"));
 		action.setEventBean(element.attributeValue("event-bean"));

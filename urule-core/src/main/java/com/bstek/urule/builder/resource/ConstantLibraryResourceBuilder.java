@@ -26,8 +26,8 @@ import com.bstek.urule.parse.deserializer.ConstantLibraryDeserializer;
  */
 public class ConstantLibraryResourceBuilder implements ResourceBuilder<ConstantLibrary> {
 	private ConstantLibraryDeserializer constantLibraryDeserializer;
-	public ConstantLibrary build(Element root) {
-		return constantLibraryDeserializer.deserialize(root);
+	public ConstantLibrary build(Element root,boolean withPermission) {
+		return constantLibraryDeserializer.deserialize(root,withPermission);
 	}
 	public boolean support(Element root) {
 		return constantLibraryDeserializer.support(root);

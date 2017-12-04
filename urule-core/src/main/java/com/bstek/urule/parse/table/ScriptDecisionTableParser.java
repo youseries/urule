@@ -30,7 +30,7 @@ public class ScriptDecisionTableParser implements Parser<ScriptDecisionTable> {
 	private RowParser rowParser;
 	private ColumnParser columnParser;
 	private ScriptCellParser scriptCellParser;
-	public ScriptDecisionTable parse(Element element) {
+	public ScriptDecisionTable parse(Element element,boolean withPermission) {
 		ScriptDecisionTable table =new ScriptDecisionTable();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -39,11 +39,11 @@ public class ScriptDecisionTableParser implements Parser<ScriptDecisionTable> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(rowParser.support(name)){
-				table.addRow(rowParser.parse(ele));
+				table.addRow(rowParser.parse(ele,withPermission));
 			}else if(columnParser.support(name)){
-				table.addColumn(columnParser.parse(ele));
+				table.addColumn(columnParser.parse(ele,withPermission));
 			}else if(scriptCellParser.support(name)){
-				table.addCell(scriptCellParser.parse(ele));
+				table.addCell(scriptCellParser.parse(ele,withPermission));
 			}if(name.equals("import-variable-library")){
 				table.addLibrary(new Library(ele.attributeValue("path"),null,LibraryType.Variable));
 			}else if(name.equals("import-constant-library")){

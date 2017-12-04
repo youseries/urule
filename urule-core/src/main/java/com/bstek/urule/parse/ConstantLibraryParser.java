@@ -31,7 +31,7 @@ import com.bstek.urule.model.library.constant.ConstantLibrary;
  */
 public class ConstantLibraryParser implements Parser<ConstantLibrary> {
 	public static final String BEAN_ID="urule.constantLibraryParser";
-	public ConstantLibrary parse(Element element) {
+	public ConstantLibrary parse(Element element,boolean withPermission) {
 		List<ConstantCategory> categories=new ArrayList<ConstantCategory>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){

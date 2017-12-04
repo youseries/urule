@@ -27,7 +27,7 @@ import com.bstek.urule.model.rule.lhs.CommonFunctionParameter;
  */
 public class CommonFunctionActionParser extends ActionParser {
 	@Override
-	public Action parse(Element element) {
+	public Action parse(Element element,boolean withPermission) {
 		ExecuteCommonFunctionAction action=new ExecuteCommonFunctionAction();
 		action.setLabel(element.attributeValue("function-label"));
 		action.setName(element.attributeValue("function-name"));
@@ -51,7 +51,7 @@ public class CommonFunctionActionParser extends ActionParser {
 				if(!e.getName().equals("value")){
 					continue;
 				}
-				p.setObjectParameter(valueParser.parse(e));
+				p.setObjectParameter(valueParser.parse(e,withPermission));
 			}
 			action.setParameter(p);
 		}

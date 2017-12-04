@@ -80,7 +80,7 @@ public class RuleFlowDesignerServletHandler extends RenderPageServletHandler {
 			inputStream=repositoryService.readFile(file,version);
 		}
 		Element root=parseXml(inputStream);
-		FlowDefinition fd = flowDeserializer.deserialize(root);
+		FlowDefinition fd = flowDeserializer.deserialize(root,true);
 		inputStream.close();
 		writeObjectToJson(resp, new FlowDefinitionWrapper(fd));
 	}

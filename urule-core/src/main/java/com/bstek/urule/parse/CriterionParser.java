@@ -32,7 +32,7 @@ import com.bstek.urule.model.rule.lhs.Criterion;
 public abstract class CriterionParser extends AbstractParser<Criterion> implements ApplicationContextAware {
 	protected Collection<CriterionParser> criterionParsers;
 	
-	protected List<Criterion> parseCriterion(Element element){
+	protected List<Criterion> parseCriterion(Element element,boolean withPermission){
 		List<Criterion> list=null;
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -43,7 +43,7 @@ public abstract class CriterionParser extends AbstractParser<Criterion> implemen
 			for(CriterionParser parser:criterionParsers){
 				if(parser.support(name)){
 					if(list==null)list=new ArrayList<Criterion>();
-					Criterion criterion=parser.parse(ele);
+					Criterion criterion=parser.parse(ele,withPermission);
 					if(criterion!=null){
 						list.add(criterion);						
 					}

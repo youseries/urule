@@ -26,8 +26,8 @@ import com.bstek.urule.parse.flow.FlowDefinitionParser;
 public class FlowDeserializer implements Deserializer<FlowDefinition>{
 	public static final String BEAN_ID="urule.flowDeserializer";
 	private FlowDefinitionParser flowDefinitionParser;
-	public FlowDefinition deserialize(Element root) {
-		return (FlowDefinition)flowDefinitionParser.parse(root);
+	public FlowDefinition deserialize(Element root,boolean withPermission) {
+		return (FlowDefinition)flowDefinitionParser.parse(root,withPermission);
 	}
 	public boolean support(Element root) {
 		if(flowDefinitionParser.support(root.getName())){

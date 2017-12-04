@@ -28,9 +28,9 @@ import com.bstek.urule.model.rule.loop.LoopTarget;
  */
 public class LoopRuleParser extends AbstractRuleParser<LoopRule> {
 	private ValueParser valueParser;
-	public LoopRule parse(Element element) {
+	public LoopRule parse(Element element,boolean withPermission) {
 		LoopRule rule=new LoopRule();
-		parseRule(rule, element);
+		parseRule(rule, element,withPermission);
 		
 		LoopStart loopStart=new LoopStart();
 		rule.setLoopStart(loopStart);
@@ -43,9 +43,9 @@ public class LoopRuleParser extends AbstractRuleParser<LoopRule> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(name.equals("loop-start")){
-				loopStart.setActions(rhsParser.parseActions(ele));
+				loopStart.setActions(rhsParser.parseActions(ele,withPermission));
 			}else if(name.equals("loop-end")){
-				loopEnd.setActions(rhsParser.parseActions(ele));
+				loopEnd.setActions(rhsParser.parseActions(ele,withPermission));
 			}else if(name.equals("loop-target")){
 				LoopTarget loopTarget=new LoopTarget();
 				rule.setLoopTarget(loopTarget);			
@@ -55,7 +55,7 @@ public class LoopRuleParser extends AbstractRuleParser<LoopRule> {
 					}
 					Element e=(Element)eleObj;
 					if(valueParser.support(e.getName())){
-						loopTarget.setValue(valueParser.parse(e));
+						loopTarget.setValue(valueParser.parse(e,withPermission));
 						break;
 					}
 				}

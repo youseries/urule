@@ -23,7 +23,7 @@ import org.dom4j.Element;
  * @since 2014年12月22日
  */
 public interface ResourceBuilder<T>{
-	T build(Element root);
+	T build(Element root,boolean withPermission);
 	boolean support(Element root);
 	ResourceType getType();
 }

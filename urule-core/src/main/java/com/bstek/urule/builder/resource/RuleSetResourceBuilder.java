@@ -26,8 +26,8 @@ import com.bstek.urule.parse.deserializer.RuleSetDeserializer;
  */
 public class RuleSetResourceBuilder implements ResourceBuilder<RuleSet> {
 	private RuleSetDeserializer ruleSetDeserializer;
-	public RuleSet build(Element root) {
-		return ruleSetDeserializer.deserialize(root);
+	public RuleSet build(Element root,boolean withPermission) {
+		return ruleSetDeserializer.deserialize(root,withPermission);
 	}
 	public boolean support(Element root) {
 		return ruleSetDeserializer.support(root);

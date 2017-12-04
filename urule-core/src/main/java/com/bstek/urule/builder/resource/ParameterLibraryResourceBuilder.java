@@ -30,12 +30,12 @@ import com.bstek.urule.parse.deserializer.ParameterLibraryDeserializer;
 public class ParameterLibraryResourceBuilder implements ResourceBuilder<VariableCategory> {
 	private ParameterLibraryDeserializer parameterLibraryDeserializer;
 	@Override
-	public VariableCategory build(Element root) {
+	public VariableCategory build(Element root,boolean withPermission) {
 		VariableCategory category=new VariableCategory();
 		category.setName(VariableCategory.PARAM_CATEGORY);
 		category.setClazz(HashMap.class.getName());
 		category.setType(CategoryType.Clazz);
-		category.setVariables(parameterLibraryDeserializer.deserialize(root));
+		category.setVariables(parameterLibraryDeserializer.deserialize(root,withPermission));
 		return category;
 	}
 	@Override

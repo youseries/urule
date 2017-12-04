@@ -82,13 +82,16 @@ import com.bstek.urule.model.rule.loop.LoopTarget;
 public class RulesRebuilder {
 	private ResourceLibraryBuilder resourceLibraryBuilder;
 	public void rebuildRules(List<Library> libraries, List<Rule> rules) {
+		rebuildRules(libraries,rules,true);
+	}
+	public void rebuildRules(List<Library> libraries, List<Rule> rules,boolean withPermission) {
 		if(libraries==null){
 			return;
 		}
 		if(rules==null){
 			return;
 		}
-		ResourceLibrary resLibraries=resourceLibraryBuilder.buildResourceLibrary(libraries);
+		ResourceLibrary resLibraries=resourceLibraryBuilder.buildResourceLibrary(libraries,withPermission);
 		for(Rule rule:rules){
 			Map<String,String> namedMap=new HashMap<String,String>();
 			if(rule.getLhs()!=null){

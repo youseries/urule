@@ -27,7 +27,7 @@ import com.bstek.urule.model.rule.lhs.LeftType;
  * @since 2014年12月23日
  */
 public class VariableAssignActionParser extends ActionParser {
-	public Action parse(Element element) {
+	public Action parse(Element element,boolean withPermission) {
 		VariableAssignAction action=new VariableAssignAction();
 		String referenceName=element.attributeValue("reference-name");
 		if(StringUtils.isNotEmpty(referenceName)){
@@ -59,7 +59,7 @@ public class VariableAssignActionParser extends ActionParser {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				action.setValue(valueParser.parse(ele));
+				action.setValue(valueParser.parse(ele,withPermission));
 				break;
 			}
 		}

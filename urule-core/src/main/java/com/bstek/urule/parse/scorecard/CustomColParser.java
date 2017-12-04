@@ -26,7 +26,7 @@ import com.bstek.urule.parse.Parser;
  */
 public class CustomColParser implements Parser<CustomCol> {
 	@Override
-	public CustomCol parse(Element element) {
+	public CustomCol parse(Element element,boolean withPermission) {
 		CustomCol col=new CustomCol();
 		col.setColNumber(Integer.parseInt(element.attributeValue("col-number")));
 		col.setName(element.attributeValue("name"));

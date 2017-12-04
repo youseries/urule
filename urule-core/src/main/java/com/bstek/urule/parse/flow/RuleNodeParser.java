@@ -25,7 +25,7 @@ import com.bstek.urule.model.flow.RuleNode;
  */
 public class RuleNodeParser extends FlowNodeParser<RuleNode> {
 	@Override
-	public RuleNode parse(Element element) {
+	public RuleNode parse(Element element,boolean withPermission) {
 		RuleNode node=new RuleNode(element.attributeValue("name"));
 		node.setFile(element.attributeValue("file"));
 		node.setVersion(element.attributeValue("version"));

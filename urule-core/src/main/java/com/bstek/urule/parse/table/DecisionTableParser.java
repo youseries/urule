@@ -47,7 +47,7 @@ public class DecisionTableParser implements Parser<DecisionTable> {
 	private ColumnParser columnParser;
 	private CellParser cellParser;
 	private RulesRebuilder rulesRebuilder;
-	public DecisionTable parse(Element element) {
+	public DecisionTable parse(Element element,boolean withPermission) {
 		DecisionTable table =new DecisionTable();
 		String salience=element.attributeValue("salience");
 		if(StringUtils.isNotEmpty(salience)){
@@ -85,11 +85,11 @@ public class DecisionTableParser implements Parser<DecisionTable> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(rowParser.support(name)){
-				table.addRow(rowParser.parse(ele));
+				table.addRow(rowParser.parse(ele,withPermission));
 			}else if(columnParser.support(name)){
-				table.addColumn(columnParser.parse(ele));
+				table.addColumn(columnParser.parse(ele,withPermission));
 			}else if(cellParser.support(name)){
-				table.addCell(cellParser.parse(ele));
+				table.addCell(cellParser.parse(ele,withPermission));
 			}if(name.equals("import-variable-library")){
 				table.addLibrary(new Library(ele.attributeValue("path"),null,LibraryType.Variable));
 			}else if(name.equals("import-constant-library")){

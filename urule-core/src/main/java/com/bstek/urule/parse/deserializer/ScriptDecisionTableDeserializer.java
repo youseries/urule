@@ -27,8 +27,8 @@ import com.bstek.urule.parse.table.ScriptDecisionTableParser;
 public class ScriptDecisionTableDeserializer implements Deserializer<ScriptDecisionTable>{
 	public static final String BEAN_ID="urule.scriptDecisionTableDeserializer";
 	private ScriptDecisionTableParser scriptDecisionTableParser;
-	public ScriptDecisionTable deserialize(Element root) {
-		return scriptDecisionTableParser.parse(root);
+	public ScriptDecisionTable deserialize(Element root,boolean withPermission) {
+		return scriptDecisionTableParser.parse(root,withPermission);
 	}
 	public boolean support(Element root) {
 		return scriptDecisionTableParser.support(root.getName());

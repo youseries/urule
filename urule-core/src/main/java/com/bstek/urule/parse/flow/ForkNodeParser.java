@@ -24,7 +24,7 @@ import com.bstek.urule.model.flow.ForkNode;
  * @since 2014年12月23日
  */
 public class ForkNodeParser extends FlowNodeParser<ForkNode> {
-	public ForkNode parse(Element element) {
+	public ForkNode parse(Element element,boolean withPermission) {
 		ForkNode fork=new ForkNode(element.attributeValue("name"));
 		fork.setConnections(parseConnections(element));
 		fork.setEventBean(element.attributeValue("event-bean"));

@@ -26,7 +26,7 @@ import com.bstek.urule.model.library.variable.Variable;
  * @since 2014年12月23日
  */
 public class VariableParser implements Parser<Variable> {
-	public Variable parse(Element element) {
+	public Variable parse(Element element,boolean withPermission) {
 		Variable variable=new Variable();
 		variable.setName(element.attributeValue("name"));
 		variable.setLabel(element.attributeValue("label"));

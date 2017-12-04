@@ -24,7 +24,7 @@ import com.bstek.urule.model.flow.EndNode;
  * @since 2014年12月23日
  */
 public class EndNodeParser extends FlowNodeParser<EndNode> {
-	public EndNode parse(Element element) {
+	public EndNode parse(Element element,boolean withPermission) {
 		EndNode end=new EndNode(element.attributeValue("name"));
 		end.setConnections(parseConnections(element));
 		end.setEventBean(element.attributeValue("event-bean"));

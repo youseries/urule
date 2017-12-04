@@ -27,7 +27,7 @@ import com.bstek.urule.model.rule.ComplexArithmetic;
 public class ComplexArithmeticParser implements Parser<ComplexArithmetic> {
 	private ValueParser valueParser;
 	private ParenParser parenParser;
-	public ComplexArithmetic parse(Element element) {
+	public ComplexArithmetic parse(Element element,boolean withPermission) {
 		ComplexArithmetic arithmetic=new ComplexArithmetic();
 		ArithmeticType arithmeticType=ArithmeticType.valueOf(element.attributeValue("type"));
 		arithmetic.setType(arithmeticType);
@@ -37,9 +37,9 @@ public class ComplexArithmeticParser implements Parser<ComplexArithmetic> {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				arithmetic.setValue(valueParser.parse(ele));
+				arithmetic.setValue(valueParser.parse(ele,withPermission));
 			}else if(parenParser.support(ele.getName())){
-				arithmetic.setValue(parenParser.parse(ele));
+				arithmetic.setValue(parenParser.parse(ele,withPermission));
 			}
 		}
 		return arithmetic;

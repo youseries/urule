@@ -26,8 +26,8 @@ import com.bstek.urule.parse.deserializer.FlowDeserializer;
  */
 public class FlowResourceBuilder implements ResourceBuilder<FlowDefinition> {
 	private FlowDeserializer flowDeserializer;
-	public FlowDefinition build(Element root) {
-		return flowDeserializer.deserialize(root);
+	public FlowDefinition build(Element root,boolean withPermission) {
+		return flowDeserializer.deserialize(root,withPermission);
 	}
 	public ResourceType getType() {
 		return ResourceType.Flow;

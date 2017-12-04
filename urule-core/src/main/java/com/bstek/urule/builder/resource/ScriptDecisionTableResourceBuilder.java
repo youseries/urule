@@ -26,8 +26,8 @@ import com.bstek.urule.parse.deserializer.ScriptDecisionTableDeserializer;
  */
 public class ScriptDecisionTableResourceBuilder implements ResourceBuilder<ScriptDecisionTable> {
 	private ScriptDecisionTableDeserializer scriptDecisionTableDeserializer;
-	public ScriptDecisionTable build(Element root) {
-		return scriptDecisionTableDeserializer.deserialize(root);
+	public ScriptDecisionTable build(Element root,boolean withPermission) {
+		return scriptDecisionTableDeserializer.deserialize(root,withPermission);
 	}
 	public ResourceType getType() {
 		return ResourceType.ScriptDecisionTable;

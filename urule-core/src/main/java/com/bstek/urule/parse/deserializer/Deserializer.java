@@ -21,6 +21,6 @@ import org.dom4j.Element;
  * @since 2014年12月23日
  */
 public interface Deserializer<T>{
-	T deserialize(Element root);
+	T deserialize(Element root,boolean withPermission);
 	boolean support(Element root);
 }

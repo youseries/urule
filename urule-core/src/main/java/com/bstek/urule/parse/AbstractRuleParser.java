@@ -33,7 +33,7 @@ public abstract class AbstractRuleParser<T> implements Parser<T> {
 	protected LhsParser lhsParser;
 	protected RhsParser rhsParser;
 	private OtherParser otherParser;
-	public void parseRule(Rule rule,Element element) {
+	public void parseRule(Rule rule,Element element,boolean withPermission) {
 		rule.setName(element.attributeValue("name"));
 		String salience=element.attributeValue("salience");
 		if(StringUtils.isNotEmpty(salience)){
@@ -81,11 +81,11 @@ public abstract class AbstractRuleParser<T> implements Parser<T> {
 			}
 			Element ele=(Element)obj;
 			if(lhsParser.support(ele.getName())){
-				rule.setLhs(lhsParser.parse(ele));				
+				rule.setLhs(lhsParser.parse(ele,withPermission));				
 			}else if(rhsParser.support(ele.getName())){
-				rule.setRhs(rhsParser.parse(ele));				
+				rule.setRhs(rhsParser.parse(ele,withPermission));				
 			}else if(otherParser.support(ele.getName())){
-				rule.setOther(otherParser.parse(ele));
+				rule.setOther(otherParser.parse(ele,withPermission));
 			}else if(ele.getName().equals("remark")){
 				rule.setRemark(ele.getText());
 			}

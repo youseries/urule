@@ -101,7 +101,7 @@ public class XmlServletHandler extends WriteJsonServletHandler implements Applic
 						Element element=parseXml(inputStream);
 						for(Deserializer<?> des:deserializers){
 							if(des.support(element)){
-								result.add(des.deserialize(element));
+								result.add(des.deserialize(element,true));
 								if(des instanceof ActionLibraryDeserializer){
 									isaction=true;
 								}

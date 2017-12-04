@@ -33,7 +33,7 @@ public class CardCellParser implements Parser<CardCell> {
 	private ValueParser valueParser;
 	private JointParser jointParser;
 	@Override
-	public CardCell parse(Element element) {
+	public CardCell parse(Element element,boolean withPermission) {
 		CardCell cell=new CardCell();
 		cell.setType(CellType.valueOf(element.attributeValue("type")));
 		cell.setCol(Integer.valueOf(element.attributeValue("col")));
@@ -51,9 +51,9 @@ public class CardCellParser implements Parser<CardCell> {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				cell.setValue(valueParser.parse(ele));
+				cell.setValue(valueParser.parse(ele,withPermission));
 			}else if(jointParser.support(ele.getName())){
-				cell.setJoint(jointParser.parse(ele));
+				cell.setJoint(jointParser.parse(ele,withPermission));
 			}
 		}
 		return cell;
