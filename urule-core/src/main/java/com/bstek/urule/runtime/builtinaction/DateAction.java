@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bstek.urule.RuleException;
 import com.bstek.urule.model.library.action.annotation.ActionBean;
 import com.bstek.urule.model.library.action.annotation.ActionMethod;
@@ -35,6 +37,9 @@ public class DateAction {
 	@ActionMethod(name="解析字符串为日期")
 	@ActionMethodParameter(names={"日期字符串","格式"})
 	public Date formatString(String dateStr,String pattern){
+		if(StringUtils.isBlank(dateStr)){
+			return null;
+		}
 		SimpleDateFormat sd=new SimpleDateFormat(pattern);
 		try {
 			return sd.parse(dateStr);
@@ -52,12 +57,18 @@ public class DateAction {
 	@ActionMethod(name="格式化日期")
 	@ActionMethodParameter(names={"目标日期","格式"})
 	public String format(Date date,String pattern){
+		if(date==null){
+			return null;
+		}
 		SimpleDateFormat sd=new SimpleDateFormat(pattern);
 		return sd.format(date);
 	}
 	@ActionMethod(name="加日期")
 	@ActionMethodParameter(names={"目标日期","年数","月数","天数","小时","分钟","秒数"})
 	public Date addDate(Date date,int years,int months,int days,int hours,int minutes,int seconds){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.YEAR, years);
@@ -71,6 +82,9 @@ public class DateAction {
 	@ActionMethod(name="日期加年")
 	@ActionMethodParameter(names={"目标日期","年数"})
 	public Date addDateForYear(Date date,int years){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.YEAR, years);
@@ -80,6 +94,9 @@ public class DateAction {
 	@ActionMethod(name="日期加月")
 	@ActionMethodParameter(names={"目标日期","月数"})
 	public Date addDateForMonth(Date date,int months){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.MONTH, months);
@@ -88,6 +105,9 @@ public class DateAction {
 	@ActionMethod(name="日期加天")
 	@ActionMethodParameter(names={"目标日期","天数"})
 	public Date addDateForDay(Date date,int days){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.DAY_OF_MONTH, days);
@@ -97,6 +117,9 @@ public class DateAction {
 	@ActionMethod(name="日期加小时")
 	@ActionMethodParameter(names={"目标日期","小时数"})
 	public Date addDateForHour(Date date,int hours){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.HOUR_OF_DAY, hours);
@@ -106,6 +129,9 @@ public class DateAction {
 	@ActionMethod(name="日期加分钟")
 	@ActionMethodParameter(names={"目标日期","分钟数"})
 	public Date addDateForMinute(Date date,int minutes){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.MINUTE, minutes);
@@ -114,6 +140,9 @@ public class DateAction {
 	@ActionMethod(name="日期加秒")
 	@ActionMethodParameter(names={"目标日期","秒数"})
 	public Date addDateForSecond(Date date,int seconds){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.SECOND, seconds);
@@ -122,6 +151,9 @@ public class DateAction {
 	@ActionMethod(name="减日期")
 	@ActionMethodParameter(names={"目标日期","年数","月数","天数","小时","分钟","秒数"})
 	public Date subDate(Date date,int years,int months,int days,int hours,int minutes,int seconds){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.YEAR, -years);
@@ -135,6 +167,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减年")
 	@ActionMethodParameter(names={"目标日期","年数"})
 	public Date subDateForYear(Date date,int years){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.YEAR, -years);
@@ -143,6 +178,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减月")
 	@ActionMethodParameter(names={"目标日期","月数"})
 	public Date subDateForMonth(Date date,int months){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.MONTH, -months);
@@ -151,6 +189,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减天")
 	@ActionMethodParameter(names={"目标日期","天数"})
 	public Date subDateForDay(Date date,int days){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.DAY_OF_MONTH, -days);
@@ -159,6 +200,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减小时")
 	@ActionMethodParameter(names={"目标日期","小时"})
 	public Date subDateForHour(Date date,int hours){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.HOUR_OF_DAY, -hours);
@@ -167,6 +211,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减分钟")
 	@ActionMethodParameter(names={"目标日期","分钟"})
 	public Date subDateForMinute(Date date,int minutes){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.MINUTE, -minutes);
@@ -175,6 +222,9 @@ public class DateAction {
 	@ActionMethod(name="减日期减秒")
 	@ActionMethodParameter(names={"目标日期","秒数"})
 	public Date subDateForSecond(Date date,int seconds){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.SECOND, -seconds);
@@ -183,7 +233,10 @@ public class DateAction {
 	
 	@ActionMethod(name="取年份")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getYear(Date date){
+	public Object getYear(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.YEAR);
@@ -191,7 +244,10 @@ public class DateAction {
 	
 	@ActionMethod(name="取月份")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getMonth(Date date){
+	public Object getMonth(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.MONTH);
@@ -199,42 +255,60 @@ public class DateAction {
 	
 	@ActionMethod(name="取星期")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getWeek(Date date){
+	public Object getWeek(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.DAY_OF_WEEK);
 	}
 	@ActionMethod(name="取天")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getay(Date date){
+	public Object getay(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.DAY_OF_MONTH);
 	}
 	@ActionMethod(name="取小时")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getHour(Date date){
+	public Object getHour(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.HOUR_OF_DAY);
 	}
 	@ActionMethod(name="取分钟")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getMinute(Date date){
+	public Object getMinute(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.MINUTE);
 	}
 	@ActionMethod(name="取秒")
 	@ActionMethodParameter(names={"目标日期"})
-	public int getSecond(Date date){
+	public Object getSecond(Date date){
+		if(date==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.SECOND);
 	}
 	@ActionMethod(name="日期相减返回毫秒")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifMillSecond(Date d1,Date d2){
+	public Object dateDifMillSecond(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -245,7 +319,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回秒")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifSecond(Date d1,Date d2){
+	public Object dateDifSecond(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -256,7 +333,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回分钟")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifMinute(Date d1,Date d2){
+	public Object dateDifMinute(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -267,7 +347,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回小时")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifHour(Date d1,Date d2){
+	public Object dateDifHour(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -278,7 +361,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回天")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifDay(Date d1,Date d2){
+	public Object dateDifDay(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -289,7 +375,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回星期")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public long dateDifWeek(Date d1,Date d2){
+	public Object dateDifWeek(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
@@ -300,7 +389,10 @@ public class DateAction {
 	}
 	@ActionMethod(name="日期相减返回月")
 	@ActionMethodParameter(names={"日期","减去的日期"})
-	public int dateDifMonth(Date d1,Date d2){
+	public Object dateDifMonth(Date d1,Date d2){
+		if(d1==null || d2==null){
+			return null;
+		}
 		Calendar c=Calendar.getInstance();
 		c.setTime(d1);
 		Calendar c1=Calendar.getInstance();
