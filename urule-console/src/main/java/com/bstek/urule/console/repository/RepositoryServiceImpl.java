@@ -940,11 +940,15 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 		if(!permissionService.isAdmin()){
 			throw new NoPermissionException();
 		}
-		createFileNode(path, content, user.getUsername(), true);
+		createFileNode(path, content, user, true);
 	}
 	
 	
-	private void createFileNode(String path, String content,String createUser,boolean isFile){
+	private void createFileNode(String path, String content,User user,boolean isFile){
+		String createUser="SYS";
+		if(user!=null){
+			createUser=user.getUsername();
+		}
 		repositoryInteceptor.createFile(path,content);
 		Node rootNode=getRootNode();
 		path = processPath(path);
