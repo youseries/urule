@@ -292,8 +292,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
      * <code>url</code> have been specified and optionally deduces a valid
      * database type. Should be overridden by subclasses that use a different way to
      * create a connection and therefore require other arguments.
-     *
-     * @see #getConnection()
      * @throws JournalException if initialization fails
      */
     protected void init() throws JournalException {
@@ -394,7 +392,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
     }
 
     /**
-     * {@inheritDoc}
      * <p>
      * This journal is locked by incrementing the current value in the table
      * named <code>GLOBAL_REVISION</code>, which effectively write-locks this
@@ -428,10 +425,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
     protected void doUnlock(boolean successful) {
         endBatch(successful);
     }
@@ -453,8 +446,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
      * Save away the locked revision inside the newly appended record.
      */
     protected void appending(AppendRecord record) {
@@ -462,8 +453,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
      * We have already saved away the revision for this record.
      */
     protected void append(AppendRecord record, InputStream in, int length)
@@ -479,9 +468,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void close() {
         if (janitorThread != null) {
             janitorThread.interrupt();

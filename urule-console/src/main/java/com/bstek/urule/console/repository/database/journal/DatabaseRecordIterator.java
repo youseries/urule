@@ -70,19 +70,11 @@ public class DatabaseRecordIterator implements RecordIterator {
      * Flag indicating whether EOF was reached.
      */
     private boolean isEOF;
-
-    /**
-     * Create a new instance of this class.
-     */
     public DatabaseRecordIterator(ResultSet rs, NamespaceResolver resolver, NamePathResolver npResolver) {
         this.rs = rs;
         this.resolver = resolver;
         this.npResolver = npResolver;
     }
-
-    /**
-     * {@inheritDoc}
-     */
     public boolean hasNext() {
         try {
             if (!isEOF && record == null) {
@@ -117,9 +109,6 @@ public class DatabaseRecordIterator implements RecordIterator {
         return lastRecord;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void close() {
         if (lastRecord != null) {
             close(lastRecord);

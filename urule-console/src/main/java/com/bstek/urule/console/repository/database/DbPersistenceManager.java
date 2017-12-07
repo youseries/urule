@@ -1074,9 +1074,6 @@ public class DbPersistenceManager extends AbstractBundlePersistenceManager imple
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public String toString() {
         return name;
     }

@@ -270,7 +270,6 @@ public class DerbyPersistenceManager extends DbPersistenceManager {
      * database.
      *
      * @throws SQLException if an error occurs
-     * @see DatabasePersistenceManager#closeConnection(Connection)
      */
     public void close() throws Exception {
         super.close();
