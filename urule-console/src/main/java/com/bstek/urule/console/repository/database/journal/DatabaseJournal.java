@@ -538,9 +538,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
             + "set REVISION_ID = ? where JOURNAL_ID = ?";
     }
 
-    /**
-     * Bean getters
-     */
     public String getDriver() {
         return driver;
     }
@@ -593,9 +590,6 @@ public class DatabaseJournal extends AbstractJournal implements DatabaseAware{
         return janitorNextRun.get(Calendar.HOUR_OF_DAY);
     }
 
-    /**
-     * Bean setters
-     */
     public void setDriver(String driver) {
         this.driver = driver;
     }
