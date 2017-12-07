@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.bstek.urule.console.repository.database.manager;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;

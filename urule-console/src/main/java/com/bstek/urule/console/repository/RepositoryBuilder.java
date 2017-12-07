@@ -289,7 +289,7 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 	}
 	
 	private void initRepositoryFromSpringDatasource() throws Exception{
-		System.out.println("Init repository from spring datasource ["+repositoryDatasourceName+"] with database type [RepositoryBuilder.databaseType]...");
+		System.out.println("Init repository from spring datasource ["+repositoryDatasourceName+"] with database type ["+RepositoryBuilder.databaseType+"]...");
 		String xml="classpath:com/bstek/urule/console/repository/database/configs/"+RepositoryBuilder.databaseType+".xml";
 		initRepositoryByXml(xml);
 	}
