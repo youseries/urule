@@ -101,6 +101,8 @@
 	<bean id="urule.repositoryBuilder" class="com.bstek.urule.console.repository.RepositoryBuilder">
 		<property name="repositoryXml" value="${urule.repository.xml}"></property>
 		<property name="repoHomeDir" value="${urule.repository.dir}"></property>
+		<property name="repositoryDatasourceName" value="${urule.repository.datasourcename}"></property>
+		<property name="databaseType" value="${urule.repository.databasetype}"></property>
 	</bean>
 	
 	<bean id="urule.repositoryService" class="com.bstek.urule.console.repository.RepositoryServiceImpl">

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Repository PUBLIC "-//The Apache Software Foundation//DTD Jackrabbit 1.5//EN" "http://jackrabbit.apache.org/dtd/repository-1.5.dtd">
+<Repository>
+  <FileSystem class="com.bstek.urule.console.repository.database.system.MSSqlFileSystem">
+      <param name="schemaObjectPrefix" value="repo_"/>
+  </FileSystem>
+  <Security appName="Jackrabbit">
+    <AccessManager class="org.apache.jackrabbit.core.security.simple.SimpleAccessManager"></AccessManager>
+    <LoginModule class="org.apache.jackrabbit.core.security.simple.SimpleLoginModule">
+      <param name="anonymousId" value="anonymous" />
+      <param name="adminId" value="admin" />
+    </LoginModule>
+  </Security>
+  <DataStore class="com.bstek.urule.console.repository.database.DatabaseDataStore">
+      <param name="schemaObjectPrefix" value="repo_ds_"/>
+  </DataStore>
+  <Workspaces rootPath="${rep.home}/workspaces" defaultWorkspace="default" />
+  <Workspace name="default">
+    <FileSystem class="com.bstek.urule.console.repository.database.system.MSSqlFileSystem">
+      <param name="schemaObjectPrefix" value="repo_${wsp.name}_"/>
+    </FileSystem>
+    <PersistenceManager class="com.bstek.urule.console.repository.database.manager.MSSqlPersistenceManager">
+      <param name="schemaObjectPrefix" value="repo_pm_${wsp.name}_"/>
+    </PersistenceManager>
+  </Workspace>
+  <Versioning rootPath="${rep.home}/version">
+    <FileSystem class="com.bstek.urule.console.repository.database.system.MSSqlFileSystem">
+      <param name="schemaObjectPrefix" value="repo_fsver_"/>
+    </FileSystem>
+    <PersistenceManager class="com.bstek.urule.console.repository.database.manager.MSSqlPersistenceManager">
+      <param name="schemaObjectPrefix" value="repo_ver_"/>
+    </PersistenceManager>
+  </Versioning>
+  
+	<Cluster syncDelay="5000">
+	    <Journal class="com.bstek.urule.console.repository.database.journal.MSSqlDatabaseJournal">
+	      <param name="schemaObjectPrefix" value="journal_"/>
+	    </Journal>
+	</Cluster>
+</Repository>

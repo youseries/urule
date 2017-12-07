@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -74,6 +75,9 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 	private RepositoryImpl repository;
 	private String repositoryXml;
 	private ApplicationContext applicationContext;
+	private String repositoryDatasourceName;
+	public static String databaseType;
+	public static DataSource datasource;
 	private Logger log=Logger.getLogger(RepositoryBuilder.class.getName());
 	public RepositoryImpl getRepository() {
 		return repository;
@@ -165,10 +169,11 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 		return loginModuleConfig;
 	}
 	
-	private void initRepositoryByXml()throws Exception {
+	private void initRepositoryByXml(String xml)throws Exception {
+		log.info("Build repository from user custom xml file...");
 		InputStream inputStream=null;
 		try{
-			inputStream=this.applicationContext.getResource(repositoryXml).getInputStream();
+			inputStream=this.applicationContext.getResource(xml).getInputStream();
 			String tempRepoHomeDir=System.getProperty("java.io.tmpdir");
 			if(StringUtils.isNotBlank(tempRepoHomeDir) && tempRepoHomeDir.length()>1){
 				if(tempRepoHomeDir.endsWith("/") || tempRepoHomeDir.endsWith("\\")){
@@ -263,19 +268,32 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 		log.info("Use \""+repoHomeDir+"\" as urule repository home directory.");
 	}
 	public void afterPropertiesSet() throws Exception {
+		if(StringUtils.isNotBlank(repositoryDatasourceName)){
+			RepositoryBuilder.datasource=(DataSource)this.applicationContext.getBean(repositoryDatasourceName);
+		}
 		if(StringUtils.isNotBlank(repoHomeDir) && !repoHomeDir.equals("${urule.repository.dir}")){
 			initRepositoryDir(applicationContext);			
-		}
-		if(StringUtils.isEmpty(repositoryXml)){
+		}else if(StringUtils.isNotBlank(repositoryXml)){
+			initRepositoryByXml(repositoryXml);
+		}else if(RepositoryBuilder.datasource!=null){
+			if(RepositoryBuilder.databaseType==null){
+				throw new RuleException("You need config \"urule.repository.databasetype\" property when use spring datasource!");
+			}
+			initRepositoryFromSpringDatasource();
+		}else{
 			if(StringUtils.isBlank(repoHomeDir)){
 				throw new RuleException("You need config \"urule.repository.dir\" property for set repository home dir.");
 			}
 			initDefaultRepository();
-		}else{
-			log.info("Build repository from user custom xml file...");
-			initRepositoryByXml();
 		}
 	}
+	
+	private void initRepositoryFromSpringDatasource() throws Exception{
+		System.out.println("Init repository from spring datasource ["+repositoryDatasourceName+"] with database type [RepositoryBuilder.databaseType]...");
+		String xml="classpath:com/bstek/urule/console/repository/database/configs/"+RepositoryBuilder.databaseType+".xml";
+		initRepositoryByXml(xml);
+	}
+	
 	public void setRepoHomeDir(String repoHomeDir) {
 		this.repoHomeDir = repoHomeDir;
 	}
@@ -283,6 +301,13 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 	
 	public void setRepositoryXml(String repositoryXml) {
 		this.repositoryXml = repositoryXml;
+	}
+	
+	public void setDatabaseType(String databaseType) {
+		RepositoryBuilder.databaseType = databaseType;
+	}
+	public void setRepositoryDatasourceName(String repositoryDatasourceName) {
+		this.repositoryDatasourceName = repositoryDatasourceName;
 	}
 	
 	public void destroy(){
