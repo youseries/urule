@@ -273,7 +273,8 @@ public class RepositoryBuilder implements InitializingBean,ApplicationContextAwa
 		}
 		if(StringUtils.isNotBlank(repoHomeDir) && !repoHomeDir.equals("${urule.repository.dir}")){
 			initRepositoryDir(applicationContext);			
-		}else if(StringUtils.isNotBlank(repositoryXml)){
+		}
+		if(StringUtils.isNotBlank(repositoryXml)){
 			initRepositoryByXml(repositoryXml);
 		}else if(RepositoryBuilder.datasource!=null){
 			if(RepositoryBuilder.databaseType==null){
