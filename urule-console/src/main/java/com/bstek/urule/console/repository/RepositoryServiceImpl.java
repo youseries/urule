@@ -937,8 +937,10 @@ public class RepositoryServiceImpl implements RepositoryService, ApplicationCont
 	}
 
 	public void createFile(String path, String content,User user) {
-		if(!permissionService.isAdmin()){
-			throw new NoPermissionException();
+		if(user!=null){			
+			if(!permissionService.isAdmin()){
+				throw new NoPermissionException();
+			}
 		}
 		createFileNode(path, content, user, true);
 	}
