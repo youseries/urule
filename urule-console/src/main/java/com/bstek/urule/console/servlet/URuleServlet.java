@@ -46,7 +46,7 @@ public class URuleServlet extends HttpServlet{
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		WebApplicationContext applicationContext=WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+		WebApplicationContext applicationContext = getApplicationContext();
 		Collection<ServletHandler> handlers=applicationContext.getBeansOfType(ServletHandler.class).values();
 		for(ServletHandler handler:handlers){
 			String url=handler.url();
@@ -56,7 +56,10 @@ public class URuleServlet extends HttpServlet{
 			handlerMap.put(url, handler);
 		}
 	}
-	
+
+	public WebApplicationContext getApplicationContext() {
+		return WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+	}
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestHolder.set(req, resp);
