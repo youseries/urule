@@ -38,7 +38,7 @@ public class DefaultKnowledgePackageService implements KnowledgePackageService{
 	
 	@Override
 	public KnowledgePackage buildKnowledgePackage(String packageInfo) throws IOException {
-		return buildKnowledgePackage(packageInfo,true);
+		return buildKnowledgePackage(packageInfo,false);
 	}
 	@Override
 	public KnowledgePackage buildKnowledgePackage(String packageInfo,boolean withPermission) throws IOException{
