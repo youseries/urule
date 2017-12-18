@@ -99,7 +99,7 @@ public interface KnowledgeSession extends WorkingMemory{
 	 * 执行将日志信息写入到日志文件操作，要看到日志文件我们需要设置urule.debugToFile属性值为true，<br>
 	 * 同时定义输出文件目录属性urule.defaultHtmlFileDebugPath，这样在urule.debug属性为true情况下就会向这个目录下写入日志文件,<br>
 	 * 需要的时候，可以通过实现com.bstek.urule.debug.DebugWriter接口定义自己的日志输出文件，这样就可以将日志输出到任何地方
-	 * @throws IOException
+	 * @throws IOException 抛出IO异常
 	 */
 	void writeLogFile() throws IOException;
 }

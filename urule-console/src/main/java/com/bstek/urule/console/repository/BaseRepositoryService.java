@@ -248,6 +248,10 @@ public abstract class BaseRepositoryService implements RepositoryReader,Applicat
 		return session.getRootNode();
 	}
 	
+	public void setRepositoryBuilder(RepositoryBuilder repositoryBuilder) {
+		this.repositoryBuilder = repositoryBuilder;
+	}
+	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		try {
