@@ -129,10 +129,12 @@ public class JsonUtils {
 	public static CommonFunctionParameter parseCommonFunctionParameter(JsonNode node){
 		CommonFunctionParameter parameter=new CommonFunctionParameter();
 		JsonNode parameterNode=node.get("parameter");
-		parameter.setName(JsonUtils.getJsonValue(parameterNode, "name"));
-		parameter.setProperty(JsonUtils.getJsonValue(parameterNode, "property"));
-		parameter.setPropertyLabel(JsonUtils.getJsonValue(parameterNode, "propertyLabel"));
-		parameter.setObjectParameter(JsonUtils.parseValueNode(parameterNode.get("objectParameter")));
+		if(parameterNode!=null){
+			parameter.setName(JsonUtils.getJsonValue(parameterNode, "name"));
+			parameter.setProperty(JsonUtils.getJsonValue(parameterNode, "property"));
+			parameter.setPropertyLabel(JsonUtils.getJsonValue(parameterNode, "propertyLabel"));
+			parameter.setObjectParameter(JsonUtils.parseValueNode(parameterNode.get("objectParameter")));
+		}
 		return parameter;
 	}
 	
