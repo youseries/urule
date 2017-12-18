@@ -28,8 +28,8 @@ public class DecisionTreeDeserializer implements Deserializer<DecisionTree> {
 	public static final String BEAN_ID="urule.decisionTreeDeserializer";
 	private DecisionTreeParser decisionTreeParser;
 	@Override
-	public DecisionTree deserialize(Element root,boolean withPermission) {
-		return decisionTreeParser.parse(root,withPermission);
+	public DecisionTree deserialize(Element root) {
+		return decisionTreeParser.parse(root);
 	}
 	public void setDecisionTreeParser(DecisionTreeParser decisionTreeParser) {
 		this.decisionTreeParser = decisionTreeParser;

@@ -30,8 +30,8 @@ public class ParameterLibraryDeserializer implements Deserializer<List<Variable>
 	public static final String BEAN_ID="urule.parameterLibraryDeserializer";
 	private ParameterLibraryParser parameterLibraryParser;
 	@Override
-	public List<Variable> deserialize(Element root,boolean withPermission) {
-		return parameterLibraryParser.parse(root,withPermission);
+	public List<Variable> deserialize(Element root) {
+		return parameterLibraryParser.parse(root);
 	}
 	@Override
 	public boolean support(Element root) {

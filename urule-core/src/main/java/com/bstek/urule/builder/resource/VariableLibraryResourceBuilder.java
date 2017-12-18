@@ -26,9 +26,9 @@ import com.bstek.urule.parse.deserializer.VariableLibraryDeserializer;
  */
 public class VariableLibraryResourceBuilder implements ResourceBuilder<VariableLibrary> {
 	private VariableLibraryDeserializer variableLibraryDeserializer;
-	public VariableLibrary build(Element root,boolean withPermission) {
+	public VariableLibrary build(Element root) {
 		VariableLibrary lib=new VariableLibrary();
-		lib.setVariableCategories(variableLibraryDeserializer.deserialize(root,withPermission));
+		lib.setVariableCategories(variableLibraryDeserializer.deserialize(root));
 		return lib;
 	}
 

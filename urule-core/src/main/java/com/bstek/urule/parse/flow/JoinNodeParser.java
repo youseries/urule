@@ -24,7 +24,7 @@ import com.bstek.urule.model.flow.JoinNode;
  * @since 2014年12月23日
  */
 public class JoinNodeParser extends FlowNodeParser<JoinNode> {
-	public JoinNode parse(Element element,boolean withPermission) {
+	public JoinNode parse(Element element) {
 		JoinNode join=new JoinNode(element.attributeValue("name"));
 		join.setConnections(parseConnections(element));
 		join.setEventBean(element.attributeValue("event-bean"));

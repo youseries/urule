@@ -30,7 +30,7 @@ import com.bstek.urule.model.rule.Other;
  */
 public class OtherParser implements Parser<Other>,ApplicationContextAware {
 	private Collection<ActionParser> actionParsers;
-	public Other parse(Element element,boolean withPermission) {
+	public Other parse(Element element) {
 		Other other=new Other();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -40,7 +40,7 @@ public class OtherParser implements Parser<Other>,ApplicationContextAware {
 			String name=ele.getName();
 			for(ActionParser actionParser:actionParsers){
 				if(actionParser.support(name)){
-					other.addAction(actionParser.parse(ele,withPermission));
+					other.addAction(actionParser.parse(ele));
 					break;
 				}
 			}

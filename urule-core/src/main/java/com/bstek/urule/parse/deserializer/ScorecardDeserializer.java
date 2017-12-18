@@ -28,8 +28,8 @@ public class ScorecardDeserializer implements Deserializer<ScorecardDefinition> 
 	public static final String BEAN_ID="urule.scorecardDeserializer";
 	private ScorecardParser scorecardParser;
 	@Override
-	public ScorecardDefinition deserialize(Element root,boolean withPermission) {
-		ScorecardDefinition card=scorecardParser.parse(root,withPermission);
+	public ScorecardDefinition deserialize(Element root) {
+		ScorecardDefinition card=scorecardParser.parse(root);
 		return card;
 	}
 	

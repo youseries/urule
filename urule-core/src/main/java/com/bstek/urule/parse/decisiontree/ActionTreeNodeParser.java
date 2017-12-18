@@ -37,7 +37,7 @@ import com.bstek.urule.parse.Parser;
 public class ActionTreeNodeParser implements Parser<ActionTreeNode>,ApplicationContextAware {
 	private Collection<ActionParser> actionParsers;
 	@Override
-	public ActionTreeNode parse(Element element,boolean withPermission) {
+	public ActionTreeNode parse(Element element) {
 		ActionTreeNode node=new ActionTreeNode();
 		node.setNodeType(TreeNodeType.action);
 		List<Action> actions=new ArrayList<Action>();
@@ -50,7 +50,7 @@ public class ActionTreeNodeParser implements Parser<ActionTreeNode>,ApplicationC
 			
 			for(ActionParser actionParser:actionParsers){
 				if(actionParser.support(name)){
-					actions.add(actionParser.parse(ele,withPermission));
+					actions.add(actionParser.parse(ele));
 					break;
 				}
 			}

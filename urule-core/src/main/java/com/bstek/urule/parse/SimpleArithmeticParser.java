@@ -26,7 +26,7 @@ import com.bstek.urule.model.rule.SimpleArithmeticValue;
  * @since 2014年12月23日
  */
 public class SimpleArithmeticParser implements Parser<SimpleArithmetic> {
-	public SimpleArithmetic parse(Element element,boolean withPermission) {
+	public SimpleArithmetic parse(Element element) {
 		SimpleArithmetic arithmetic=new SimpleArithmetic();
 		ArithmeticType arithmeticType=ArithmeticType.valueOf(element.attributeValue("type"));
 		arithmetic.setType(arithmeticType);
@@ -39,7 +39,7 @@ public class SimpleArithmeticParser implements Parser<SimpleArithmetic> {
 			}
 			Element ele=(Element)obj;
 			if(this.support(ele.getName())){
-				value.setArithmetic(this.parse(ele,withPermission));
+				value.setArithmetic(this.parse(ele));
 				break;
 			}
 		}

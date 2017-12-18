@@ -27,8 +27,8 @@ import com.bstek.urule.model.rule.lhs.Or;
  * @since 2014年12月23日
  */
 public class JunctionParser extends CriterionParser {
-	public Criterion parse(Element element,boolean withPermission) {
-		List<Criterion> list=parseCriterion(element,withPermission);
+	public Criterion parse(Element element) {
+		List<Criterion> list=parseCriterion(element);
 		if(list==null || list.size()==0){
 			return null;
 		}

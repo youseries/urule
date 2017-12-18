@@ -27,7 +27,7 @@ import com.bstek.urule.model.library.action.SpringBean;
  * @since 2014年12月23日
  */
 public class SpringBeanParser implements Parser<SpringBean> {
-	public SpringBean parse(Element element,boolean withPermission) {
+	public SpringBean parse(Element element) {
 		SpringBean bean=new SpringBean();
 		bean.setId(element.attributeValue("id"));
 		for(Object obj:element.elements()){

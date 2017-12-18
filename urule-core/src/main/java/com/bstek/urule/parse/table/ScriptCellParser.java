@@ -25,7 +25,7 @@ import com.bstek.urule.parse.Parser;
  * @since 2015年1月19日
  */
 public class ScriptCellParser implements Parser<ScriptCell>{
-	public ScriptCell parse(Element element,boolean withPermission) {
+	public ScriptCell parse(Element element) {
 		ScriptCell cell=new ScriptCell();
 		cell.setRow(Integer.valueOf(element.attributeValue("row")));
 		cell.setCol(Integer.valueOf(element.attributeValue("col")));

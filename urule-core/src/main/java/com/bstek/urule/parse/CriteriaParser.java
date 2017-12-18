@@ -28,7 +28,7 @@ import com.bstek.urule.model.rule.lhs.Criterion;
 public class CriteriaParser extends CriterionParser {
 	private ValueParser valueParser;
 	private LeftParser leftParser;
-	public Criterion parse(Element element,boolean withPermission) {
+	public Criterion parse(Element element) {
 		Criteria criteria=new Criteria();
 		Op op=Op.valueOf(element.attributeValue("op"));
 		criteria.setOp(op);
@@ -39,9 +39,9 @@ public class CriteriaParser extends CriterionParser {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(name.equals("value")){
-				criteria.setValue(valueParser.parse(ele,withPermission));
+				criteria.setValue(valueParser.parse(ele));
 			}else if(name.equals("left")){
-				criteria.setLeft(leftParser.parse(ele,withPermission));
+				criteria.setLeft(leftParser.parse(ele));
 			}
 		}
 		return criteria;

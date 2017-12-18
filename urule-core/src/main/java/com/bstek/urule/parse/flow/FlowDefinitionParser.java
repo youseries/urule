@@ -38,7 +38,7 @@ import com.bstek.urule.parse.Parser;
 @SuppressWarnings("rawtypes")
 public class FlowDefinitionParser implements Parser<FlowDefinition>,ApplicationContextAware {
 	private Collection<FlowNodeParser> nodeParsers;
-	public FlowDefinition parse(Element element,boolean withPermission) {
+	public FlowDefinition parse(Element element) {
 		FlowDefinition flow=new FlowDefinition();
 		flow.setId(element.attributeValue("id"));
 		String debug=element.attributeValue("debug");
@@ -63,7 +63,7 @@ public class FlowDefinitionParser implements Parser<FlowDefinition>,ApplicationC
 			}else{
 				for(FlowNodeParser parser:nodeParsers){
 					if(parser.support(ele.getName())){
-						nodes.add((FlowNode)parser.parse(ele,withPermission));
+						nodes.add((FlowNode)parser.parse(ele));
 						break;
 					}
 				}

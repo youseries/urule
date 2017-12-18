@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+import com.bstek.urule.RuleException;
 import com.bstek.urule.Utils;
 import com.bstek.urule.builder.ResourceLibraryBuilder;
 import com.bstek.urule.console.repository.RepositoryService;
@@ -72,13 +73,15 @@ public class ULEditorServletHandler extends RenderPageServletHandler{
 		OutputStream outputStream=resp.getOutputStream();
 		String version=req.getParameter("version");
 		InputStream inputStream=null;
-		if(StringUtils.isEmpty(version)){
-			inputStream=repositoryService.readFile(file,null);
-		}else{
-			inputStream=repositoryService.readFile(file,version);			
-		}
 		try{
+			if(StringUtils.isEmpty(version)){
+				inputStream=repositoryService.readFile(file,null);
+			}else{
+				inputStream=repositoryService.readFile(file,version);			
+			}
 			IOUtils.copy(inputStream, outputStream);
+		}catch(Exception ex){
+			throw new RuleException(ex);
 		}finally{
 			outputStream.close();
 			inputStream.close();

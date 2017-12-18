@@ -29,7 +29,7 @@ import com.bstek.urule.model.library.variable.Variable;
 public class ParameterLibraryParser implements Parser<List<Variable>> {
 	private VariableParser variableParser;
 	@Override
-	public List<Variable> parse(Element element,boolean withPermission) {
+	public List<Variable> parse(Element element) {
 		List<Variable> variables=new ArrayList<Variable>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -38,7 +38,7 @@ public class ParameterLibraryParser implements Parser<List<Variable>> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(name.equals("parameter")){
-				variables.add(variableParser.parse(ele,withPermission));
+				variables.add(variableParser.parse(ele));
 			}
 		}
 		return variables;

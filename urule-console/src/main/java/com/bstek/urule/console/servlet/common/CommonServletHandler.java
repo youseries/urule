@@ -87,50 +87,58 @@ public class CommonServletHandler extends RenderPageServletHandler{
 		String versionComment=req.getParameter("versionComment");
 		Boolean newVersion = Boolean.valueOf(req.getParameter("newVersion"));
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
-		repositoryService.saveFile(file,content,user,newVersion,versionComment);
+		try{
+			repositoryService.saveFile(file,content,newVersion,versionComment,user);			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	public void loadReferenceFiles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path=req.getParameter("path");
 		path=Utils.decodeURL(path);
 		String searchText=buildSearchText(path,req,false);
-		List<String> files=repositoryService.getReferenceFiles(path,searchText);
-		searchText=buildSearchText(path,req,true);
-		List<String> scriptFiles=repositoryService.getReferenceFiles(path,searchText);
-		if(scriptFiles.size()>0){
-			files.addAll(scriptFiles);
-		}
-		List<RefFile> refFiles=new ArrayList<RefFile>();
-		for(String file:files){
-			RefFile ref=new RefFile();
-			refFiles.add(ref);
-			ref.setPath(file);
-			if(file.endsWith(FileType.Ruleset.toString())){
-				ref.setEditor("/ruleseteditor");
-				ref.setType("决策集");
-			}else if(file.endsWith(FileType.UL.toString())){
-				ref.setEditor("/uleditor");
-				ref.setType("脚本决策集");
-			}else if(file.endsWith(FileType.DecisionTable.toString())){
-				ref.setEditor("/decisiontableeditor");
-				ref.setType("决策表");
-			}else if(file.endsWith(FileType.ScriptDecisionTable.toString())){
-				ref.setEditor("/scriptdecisiontableeditor");
-				ref.setType("脚本决策表");
-			}else if(file.endsWith(FileType.DecisionTree.toString())){
-				ref.setEditor("/decisiontreeeditor");			
-				ref.setType("决策树");
-			}else if(file.endsWith(FileType.RuleFlow.toString())){
-				ref.setEditor("/ruleflowdesigner");			
-				ref.setType("决策流");
+		try{
+			List<String> files=repositoryService.getReferenceFiles(path,searchText);
+			searchText=buildSearchText(path,req,true);
+			List<String> scriptFiles=repositoryService.getReferenceFiles(path,searchText);
+			if(scriptFiles.size()>0){
+				files.addAll(scriptFiles);
 			}
-			int pos=file.lastIndexOf("/");
-			String name=file;
-			if(pos>-1){
-				name=file.substring(pos+1,file.length());
+			List<RefFile> refFiles=new ArrayList<RefFile>();
+			for(String file:files){
+				RefFile ref=new RefFile();
+				refFiles.add(ref);
+				ref.setPath(file);
+				if(file.endsWith(FileType.Ruleset.toString())){
+					ref.setEditor("/ruleseteditor");
+					ref.setType("决策集");
+				}else if(file.endsWith(FileType.UL.toString())){
+					ref.setEditor("/uleditor");
+					ref.setType("脚本决策集");
+				}else if(file.endsWith(FileType.DecisionTable.toString())){
+					ref.setEditor("/decisiontableeditor");
+					ref.setType("决策表");
+				}else if(file.endsWith(FileType.ScriptDecisionTable.toString())){
+					ref.setEditor("/scriptdecisiontableeditor");
+					ref.setType("脚本决策表");
+				}else if(file.endsWith(FileType.DecisionTree.toString())){
+					ref.setEditor("/decisiontreeeditor");			
+					ref.setType("决策树");
+				}else if(file.endsWith(FileType.RuleFlow.toString())){
+					ref.setEditor("/ruleflowdesigner");			
+					ref.setType("决策流");
+				}
+				int pos=file.lastIndexOf("/");
+				String name=file;
+				if(pos>-1){
+					name=file.substring(pos+1,file.length());
+				}
+				ref.setName(name);
 			}
-			ref.setName(name);
+			writeObjectToJson(resp, refFiles);
+		}catch(Exception ex){
+			throw new RuleException(ex);
 		}
-		writeObjectToJson(resp, refFiles);
 	}
 	
 	private String buildSearchText(String path,HttpServletRequest req,boolean isScript){
@@ -202,8 +210,12 @@ public class CommonServletHandler extends RenderPageServletHandler{
 		}else{
 			types=new FileType[]{FileType.UL,FileType.Ruleset,FileType.RuleFlow,FileType.DecisionTable,FileType.ScriptDecisionTable,FileType.DecisionTree,FileType.Scorecard};
 		}
-		Repository repo=repositoryService.loadRepository(project,user.getCompanyId(),false,types,searchFileName);	
-		writeObjectToJson(resp, repo.getRootFile());
+		try{
+			Repository repo=repositoryService.loadRepository(project,user,false,types,searchFileName);	
+			writeObjectToJson(resp, repo.getRootFile());			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	
 	public void loadFunctions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -258,23 +270,27 @@ public class CommonServletHandler extends RenderPageServletHandler{
 					if(subpaths.length==2){
 						version=subpaths[1];
 					}
-					InputStream inputStream=null;
-					if(StringUtils.isEmpty(version)){
-						inputStream=repositoryService.readFile(path,null);
-					}else{
-						inputStream=repositoryService.readFile(path,version);			
-					}
-					Element element=parseXml(inputStream);
-					for(Deserializer<?> des:deserializers){
-						if(des.support(element)){
-							result.add(des.deserialize(element,true));
-							if(des instanceof ActionLibraryDeserializer){
-								isaction=true;
-							}
-							break;
+					try{
+						InputStream inputStream=null;
+						if(StringUtils.isEmpty(version)){
+							inputStream=repositoryService.readFile(path,null);
+						}else{
+							inputStream=repositoryService.readFile(path,version);			
 						}
+						Element element=parseXml(inputStream);
+						for(Deserializer<?> des:deserializers){
+							if(des.support(element)){
+								result.add(des.deserialize(element));
+								if(des instanceof ActionLibraryDeserializer){
+									isaction=true;
+								}
+								break;
+							}
+						}
+						inputStream.close();
+					}catch(Exception ex){
+						throw new RuleException(ex);
 					}
-					inputStream.close();
 				}
 			}
 		}

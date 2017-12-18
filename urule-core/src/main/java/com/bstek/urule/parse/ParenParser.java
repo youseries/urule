@@ -27,7 +27,7 @@ public class ParenParser implements Parser<ParenValue> {
 	private ValueParser valueParser;
 	private ComplexArithmeticParser arithmeticParser;
 	@Override
-	public ParenValue parse(Element element,boolean withPermission) {
+	public ParenValue parse(Element element) {
 		ParenValue value=new ParenValue();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -35,9 +35,9 @@ public class ParenParser implements Parser<ParenValue> {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				value.setValue(valueParser.parse(ele,withPermission));
+				value.setValue(valueParser.parse(ele));
 			}else if(arithmeticParser.support(ele.getName())){
-				value.setArithmetic(arithmeticParser.parse(ele,withPermission));
+				value.setArithmetic(arithmeticParser.parse(ele));
 			}
 		}
 		return value;

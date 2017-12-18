@@ -41,7 +41,7 @@ import com.bstek.urule.model.rule.lhs.CommonFunctionParameter;
  */
 public class ValueParser extends AbstractParser<Value> {
 	private ComplexArithmeticParser arithmeticParser;
-	public Value parse(Element element,boolean withPermission) {
+	public Value parse(Element element) {
 		AbstractValue av=null;
 		ValueType type=ValueType.valueOf(element.attributeValue("type"));
 		if(type.equals(ValueType.Input)){
@@ -88,7 +88,7 @@ public class ValueParser extends AbstractParser<Value> {
 			mv.setMethodName(methodName);
 			String methodLabel=element.attributeValue("method-label");
 			mv.setMethodLabel(methodLabel);
-			List<Parameter> parameters = parseParameters(element,this,withPermission);
+			List<Parameter> parameters = parseParameters(element,this);
 			mv.setParameters(parameters);
 			av=mv;
 		}else if(type.equals(ValueType.CommonFunction)){
@@ -115,7 +115,7 @@ public class ValueParser extends AbstractParser<Value> {
 					if(!e.getName().equals("value")){
 						continue;
 					}
-					p.setObjectParameter(this.parse(e,withPermission));
+					p.setObjectParameter(this.parse(e));
 				}
 				value.setParameter(p);
 			}
@@ -150,7 +150,7 @@ public class ValueParser extends AbstractParser<Value> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(arithmeticParser.support(name)){
-				av.setArithmetic(arithmeticParser.parse(ele,withPermission));
+				av.setArithmetic(arithmeticParser.parse(ele));
 				break;
 			}
 		}

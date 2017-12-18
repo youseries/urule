@@ -74,15 +74,19 @@ public class RuleFlowDesignerServletHandler extends RenderPageServletHandler {
 		String file=req.getParameter("file");
 		String version=req.getParameter("version");
 		file=Utils.decodeURL(file);
-		if(StringUtils.isEmpty(version)){
-			inputStream=repositoryService.readFile(file,null);
-		}else{
-			inputStream=repositoryService.readFile(file,version);
+		try{
+			if(StringUtils.isEmpty(version)){
+				inputStream=repositoryService.readFile(file,null);
+			}else{
+				inputStream=repositoryService.readFile(file,version);
+			}
+			Element root=parseXml(inputStream);
+			FlowDefinition fd = flowDeserializer.deserialize(root);
+			inputStream.close();
+			writeObjectToJson(resp, new FlowDefinitionWrapper(fd));
+		}catch(Exception ex){
+			throw new RuleException(ex);
 		}
-		Element root=parseXml(inputStream);
-		FlowDefinition fd = flowDeserializer.deserialize(root,true);
-		inputStream.close();
-		writeObjectToJson(resp, new FlowDefinitionWrapper(fd));
 	}
 	
 	protected Element parseXml(InputStream stream){

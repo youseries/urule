@@ -30,8 +30,8 @@ import com.bstek.urule.parse.VariableLibraryParser;
 public class VariableLibraryDeserializer implements Deserializer<List<VariableCategory>>{
 	public static final String BEAN_ID="urule.variableLibraryDeserializer";
 	private VariableLibraryParser variableLibraryParser;
-	public List<VariableCategory> deserialize(Element root,boolean withPermission) {
-		return variableLibraryParser.parse(root,withPermission);
+	public List<VariableCategory> deserialize(Element root) {
+		return variableLibraryParser.parse(root);
 	}
 	public boolean support(Element root) {
 		if(variableLibraryParser.support(root.getName())){

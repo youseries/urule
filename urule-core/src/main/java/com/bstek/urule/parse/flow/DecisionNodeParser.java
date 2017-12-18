@@ -30,7 +30,7 @@ import com.bstek.urule.model.flow.DecisionType;
  * @since 2014年12月23日
  */
 public class DecisionNodeParser extends FlowNodeParser<DecisionNode> {
-	public DecisionNode parse(Element element,boolean withPermission) {
+	public DecisionNode parse(Element element) {
 		DecisionNode decision=new DecisionNode(element.attributeValue("name"));
 		decision.setEventBean(element.attributeValue("event-bean"));
 		String decitionType=element.attributeValue("decision-type");

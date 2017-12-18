@@ -27,8 +27,8 @@ import com.bstek.urule.parse.RuleSetParser;
 public class RuleSetDeserializer implements Deserializer<RuleSet>{
 	public static final String BEAN_ID="urule.ruleSetDeserializer";
 	private RuleSetParser ruleSetParser;
-	public RuleSet deserialize(Element root,boolean withPermission) {
-		return ruleSetParser.parse(root,withPermission);
+	public RuleSet deserialize(Element root) {
+		return ruleSetParser.parse(root);
 	}
 	public boolean support(Element root) {
 		if(ruleSetParser.support(root.getName())){

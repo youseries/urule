@@ -25,7 +25,7 @@ import com.bstek.urule.model.flow.ScriptNode;
  */
 public class ScriptNodeParser extends FlowNodeParser<ScriptNode> {
 	@Override
-	public ScriptNode parse(Element element,boolean withPermission) {
+	public ScriptNode parse(Element element) {
 		ScriptNode node =new ScriptNode();
 		node.setName(element.attributeValue("name"));
 		node.setEventBean(element.attributeValue("event-bean"));

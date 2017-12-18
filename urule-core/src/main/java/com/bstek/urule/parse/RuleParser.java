@@ -24,9 +24,9 @@ import com.bstek.urule.model.rule.Rule;
  * @since 2014年12月23日
  */
 public class RuleParser extends AbstractRuleParser<Rule> {
-	public Rule parse(Element element,boolean withPermission) {
+	public Rule parse(Element element) {
 		Rule rule=new Rule();
-		parseRule(rule, element,withPermission);
+		parseRule(rule, element);
 		return rule;
 	}
 	public boolean support(String name) {

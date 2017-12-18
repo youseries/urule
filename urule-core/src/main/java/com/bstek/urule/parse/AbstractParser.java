@@ -29,7 +29,7 @@ import com.bstek.urule.model.rule.Value;
  * @since 2015年2月28日
  */
 public abstract  class AbstractParser<T> implements Parser<T> {
-	protected List<Parameter> parseParameters(Element element,ValueParser valueParser,boolean withPermission) {
+	protected List<Parameter> parseParameters(Element element,ValueParser valueParser) {
 		List<Parameter> parameters=new ArrayList<Parameter>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -46,7 +46,7 @@ public abstract  class AbstractParser<T> implements Parser<T> {
 					}
 					Element e=(Element)o;
 					if(valueParser.support(e.getName())){
-						Value value=valueParser.parse(e,withPermission);
+						Value value=valueParser.parse(e);
 						parameter.setValue(value);
 						break;
 					}

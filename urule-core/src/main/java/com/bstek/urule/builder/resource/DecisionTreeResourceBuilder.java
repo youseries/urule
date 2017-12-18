@@ -27,8 +27,8 @@ import com.bstek.urule.parse.deserializer.DecisionTreeDeserializer;
 public class DecisionTreeResourceBuilder implements ResourceBuilder<DecisionTree> {
 	private DecisionTreeDeserializer decisionTreeDeserializer;
 	@Override
-	public DecisionTree build(Element root,boolean withPermission) {
-		return decisionTreeDeserializer.deserialize(root,withPermission);
+	public DecisionTree build(Element root) {
+		return decisionTreeDeserializer.deserialize(root);
 	}
 	@Override
 	public ResourceType getType() {

@@ -50,7 +50,7 @@ public class DecisionTreeParser implements Parser<DecisionTree> {
 	private VariableTreeNodeParser variableTreeNodeParser;
 	private RulesRebuilder rulesRebuilder;
 	@Override
-	public DecisionTree parse(Element element,boolean withPermission) {
+	public DecisionTree parse(Element element) {
 		DecisionTree tree=new DecisionTree();
 		
 		String salience=element.attributeValue("salience");
@@ -92,7 +92,7 @@ public class DecisionTreeParser implements Parser<DecisionTree> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(variableTreeNodeParser.support(name)){
-				tree.setVariableTreeNode(variableTreeNodeParser.parse(ele,withPermission));
+				tree.setVariableTreeNode(variableTreeNodeParser.parse(ele));
 			}if(name.equals("import-variable-library")){
 				libs.add(new Library(ele.attributeValue("path"),null,LibraryType.Variable));
 			}else if(name.equals("import-constant-library")){

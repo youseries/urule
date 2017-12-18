@@ -35,7 +35,7 @@ public class RuleSetParser implements Parser<RuleSet> {
 	private RuleParser ruleParser;
 	private LoopRuleParser loopRuleParser;
 	private RulesRebuilder rulesRebuilder;
-	public RuleSet parse(Element element,boolean withPermission) {
+	public RuleSet parse(Element element) {
 		RuleSet ruleSet=new RuleSet();
 		String parameterLibrary=element.attributeValue("parameter-library");
 		if(StringUtils.isNotEmpty(parameterLibrary)){
@@ -52,9 +52,9 @@ public class RuleSetParser implements Parser<RuleSet> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(ruleParser.support(name)){
-				rules.add(ruleParser.parse(ele,withPermission));
+				rules.add(ruleParser.parse(ele));
 			}else if(loopRuleParser.support(name)){
-				rules.add(loopRuleParser.parse(ele,withPermission));
+				rules.add(loopRuleParser.parse(ele));
 			}else if(name.equals("import-variable-library")){
 				ruleSet.addLibrary(new Library(ele.attributeValue("path"),null,LibraryType.Variable));
 			}else if(name.equals("import-constant-library")){
@@ -68,7 +68,7 @@ public class RuleSetParser implements Parser<RuleSet> {
 			}
 		}
 		ruleSet.setRules(rules);
-		rulesRebuilder.rebuildRules(ruleSet.getLibraries(), rules,withPermission);
+		rulesRebuilder.rebuildRules(ruleSet.getLibraries(), rules);
 		return ruleSet;
 	}
 	public void setRulesRebuilder(RulesRebuilder rulesRebuilder) {

@@ -59,9 +59,6 @@ public class KnowledgeBuilder extends AbstractBuilder{
 	private DSLRuleSetBuilder dslRuleSetBuilder;
 	public static final String BEAN_ID="urule.knowledgeBuilder";
 	public KnowledgeBase buildKnowledgeBase(ResourceBase resourceBase) throws IOException{
-		return buildKnowledgeBase(resourceBase,true);
-	}
-	public KnowledgeBase buildKnowledgeBase(ResourceBase resourceBase,boolean withPermission) throws IOException{
 		KnowledgePackageService knowledgePackageService=(KnowledgePackageService)applicationContext.getBean(KnowledgePackageService.BEAN_ID);
 		List<Rule> rules=new ArrayList<Rule>();
 		Map<String,Library> libMap=new HashMap<String,Library>();
@@ -80,7 +77,7 @@ public class KnowledgeBuilder extends AbstractBuilder{
 				if(!builder.support(root)){
 					continue;
 				}
-				Object object=builder.build(root,withPermission);
+				Object object=builder.build(root);
 				ResourceType type=builder.getType();
 				if(type.equals(ResourceType.RuleSet)){
 					RuleSet ruleSet=(RuleSet)object;
@@ -128,7 +125,7 @@ public class KnowledgeBuilder extends AbstractBuilder{
 				break;
 			}
 		}
-		ResourceLibrary resourceLibrary=resourceLibraryBuilder.buildResourceLibrary(libMap.values(),withPermission);
+		ResourceLibrary resourceLibrary=resourceLibraryBuilder.buildResourceLibrary(libMap.values());
 		buildLoopRules(rules, resourceLibrary);
 		Rete rete=reteBuilder.buildRete(rules, resourceLibrary);
 		return new KnowledgeBase(rete,flowMap,retriveNoLhsRules(rules));

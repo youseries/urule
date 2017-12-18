@@ -159,12 +159,16 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		String oldFullPath=req.getParameter("oldFullPath");
 		newFullPath=Utils.decodeURL(newFullPath);
 		oldFullPath=Utils.decodeURL(oldFullPath);
-		InputStream inputStream=repositoryService.readFile(oldFullPath, null);
-		String content=IOUtils.toString(inputStream, "utf-8");
-		inputStream.close();
-		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
-		repositoryService.createFile(newFullPath, content,user);
-		loadProjects(req, resp);
+		try{
+			InputStream inputStream=repositoryService.readFile(oldFullPath, null);
+			String content=IOUtils.toString(inputStream, "utf-8");
+			inputStream.close();
+			User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
+			repositoryService.createFile(newFullPath, content,user);
+			loadProjects(req, resp);
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	
 	public void createFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -236,7 +240,11 @@ public class FrameServletHandler extends RenderPageServletHandler{
 			content.append("</" + name + ">");
 		}
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
-		repositoryService.createFile(path, content.toString(),user);
+		try{
+			repositoryService.createFile(path, content.toString(),user);			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 		RepositoryFile newFileInfo=new RepositoryFile();
 		newFileInfo.setFullPath(path);
 		if(fileType.equals(FileType.VariableLibrary)){
@@ -315,8 +323,12 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		projectName=Utils.decodeURL(projectName);
 		projectName=projectName.trim();
 		Map<String,Object> result=new HashMap<String,Object>();
-		result.put("valid", !repositoryService.fileExistCheck(projectName));
-		writeObjectToJson(resp, result);
+		try{
+			result.put("valid", !repositoryService.fileExistCheck(projectName));
+			writeObjectToJson(resp, result);
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	public void fileExistCheck(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fullFileName=req.getParameter("fullFileName");
@@ -326,11 +338,15 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		fullFileName=Utils.decodeURL(fullFileName);
 		fullFileName=fullFileName.trim();
 		Map<String,Object> result=new HashMap<String,Object>();
-		result.put("valid", !repositoryService.fileExistCheck(fullFileName));
-		writeObjectToJson(resp, result);
+		try{
+			result.put("valid", !repositoryService.fileExistCheck(fullFileName));
+			writeObjectToJson(resp, result);			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	
-	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void deleteFile(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String path=req.getParameter("path");
 		path=Utils.decodeURL(path);
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
@@ -341,20 +357,20 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		}
 	}
 	
-	public void lockFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void lockFile(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String file=req.getParameter("file");
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
 		repositoryService.lockPath(file, user);
 		loadProjects(req, resp);
 	}
-	public void unlockFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void unlockFile(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String file=req.getParameter("file");
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
 		repositoryService.unlockPath(file, user);
 		loadProjects(req, resp);
 	}
 	
-	public void exportProjectBackupFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void exportProjectBackupFile(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String path=req.getParameter("path");
 		String projectPath=Utils.decodeURL(path);
 		if(StringUtils.isEmpty(projectPath)){
@@ -372,7 +388,7 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		outputStream.close();
 	}
 	
-	public void createProject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void createProject(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String projectName=req.getParameter("newProjectName");
 		projectName=Utils.decodeURL(projectName);
 		boolean classify = getClassify(req,resp);
@@ -382,7 +398,7 @@ public class FrameServletHandler extends RenderPageServletHandler{
 	}
 
 	
-	public void loadProjects(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void loadProjects(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req,resp));
 		boolean classify = getClassify(req,resp);
 		String projectName=req.getParameter("projectName");
@@ -403,7 +419,7 @@ public class FrameServletHandler extends RenderPageServletHandler{
 				types=new FileType[]{FileType.RuleFlow};
 			}
 		}
-		Repository repo=repositoryService.loadRepository(projectName, user.getCompanyId(),classify,types,searchFileName);
+		Repository repo=repositoryService.loadRepository(projectName, user,classify,types,searchFileName);			
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("repo", repo);
 		map.put("classify", classify);
@@ -434,14 +450,13 @@ public class FrameServletHandler extends RenderPageServletHandler{
 		return classify;
 	}
 	
-	public void fileRename(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void fileRename(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String path=req.getParameter("path");
 		path=Utils.decodeURL(path);
 		String newPath=req.getParameter("newPath");
 		newPath=Utils.decodeURL(newPath);
-		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
-		repositoryService.fileRename(path, newPath,user);
-		loadProjects(req, resp);
+		repositoryService.fileRename(path, newPath);
+		loadProjects(req, resp);			
 	}
 	
 	public void setRepositoryService(RepositoryService repositoryService) {

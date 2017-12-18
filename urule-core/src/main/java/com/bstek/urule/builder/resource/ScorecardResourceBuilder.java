@@ -58,8 +58,8 @@ public class ScorecardResourceBuilder implements ResourceBuilder<ScoreRule> {
 	private ScorecardDeserializer scorecardDeserializer;
 	private RulesRebuilder rulesRebuilder;
 	@Override
-	public ScoreRule build(Element root,boolean withPermission) {
-		ScorecardDefinition scorecard = scorecardDeserializer.deserialize(root,withPermission);
+	public ScoreRule build(Element root) {
+		ScorecardDefinition scorecard = scorecardDeserializer.deserialize(root);
 		ScoreRule scoreRule=new ScoreRule();
 		scoreRule.setName(scorecard.getName());
 		scoreRule.setEffectiveDate(scorecard.getEffectiveDate());

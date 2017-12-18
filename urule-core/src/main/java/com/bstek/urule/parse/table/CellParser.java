@@ -35,7 +35,7 @@ public class CellParser implements Parser<Cell>,ApplicationContextAware {
 	private JointParser jointParser;
 	private ValueParser valueParser;
 	private Collection<ActionParser> actionParsers;
-	public Cell parse(Element element,boolean withPermission) {
+	public Cell parse(Element element) {
 		Cell cell=new Cell();
 		cell.setRow(Integer.valueOf(element.attributeValue("row")));
 		cell.setCol(Integer.valueOf(element.attributeValue("col")));
@@ -47,13 +47,13 @@ public class CellParser implements Parser<Cell>,ApplicationContextAware {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(jointParser.support(name)){
-				cell.setJoint(jointParser.parse(ele,withPermission));
+				cell.setJoint(jointParser.parse(ele));
 			}else if(valueParser.support(name)){
-				cell.setValue(valueParser.parse(ele,withPermission));
+				cell.setValue(valueParser.parse(ele));
 			}else{
 				for(ActionParser parser:actionParsers){
 					if(parser.support(name)){
-						cell.setAction(parser.parse(ele,withPermission));
+						cell.setAction(parser.parse(ele));
 						break;
 					}
 				}

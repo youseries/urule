@@ -41,11 +41,8 @@ import com.bstek.urule.runtime.BuiltInActionLibraryBuilder;
  */
 public class ResourceLibraryBuilder extends AbstractBuilder{
 	private BuiltInActionLibraryBuilder builtInActionLibraryBuilder;
-	public ResourceLibrary buildResourceLibrary(Collection<Library> libraries){
-		return buildResourceLibrary(libraries,true);
-	}
 	@SuppressWarnings("unchecked")
-	public ResourceLibrary buildResourceLibrary(Collection<Library> libraries,boolean withPermission){
+	public ResourceLibrary buildResourceLibrary(Collection<Library> libraries){
 		if(libraries==null){
 			libraries=Collections.EMPTY_LIST;
 		}
@@ -55,7 +52,7 @@ public class ResourceLibraryBuilder extends AbstractBuilder{
 		List<VariableCategory> parameterVariableCategories=new ArrayList<VariableCategory>();
 		ResourceBase resourceBase=newResourceBase();
 		for(Library lib:libraries){
-			resourceBase.addResource(lib.getPath(),lib.getVersion(),withPermission);
+			resourceBase.addResource(lib.getPath(),lib.getVersion());
 		}
 		for(Resource resource:resourceBase.getResources()){
 			String content=resource.getContent();
@@ -64,7 +61,7 @@ public class ResourceLibraryBuilder extends AbstractBuilder{
 				if(!builder.support(root)){
 					continue;
 				}
-				Object object=builder.build(root,withPermission);
+				Object object=builder.build(root);
 				ResourceType type=builder.getType();
 				if(type.equals(ResourceType.ActionLibrary)){
 					ActionLibrary al=(ActionLibrary)object;

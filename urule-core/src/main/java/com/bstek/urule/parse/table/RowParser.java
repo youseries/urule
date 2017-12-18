@@ -25,7 +25,7 @@ import com.bstek.urule.parse.Parser;
  * @since 2015年1月19日
  */
 public class RowParser implements Parser<Row> {
-	public Row parse(Element element,boolean withPermission) {
+	public Row parse(Element element) {
 		Row row=new Row();
 		row.setHeight(Integer.valueOf(element.attributeValue("height")));
 		row.setNum(Integer.valueOf(element.attributeValue("num")));

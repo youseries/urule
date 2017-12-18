@@ -52,7 +52,7 @@ public class ScorecardParser implements Parser<ScorecardDefinition> {
 	private CustomColParser customColParser=new CustomColParser();
 	private RulesRebuilder rulesRebuilder;
 	@Override
-	public ScorecardDefinition parse(Element element,boolean withPermission) {
+	public ScorecardDefinition parse(Element element) {
 		ScorecardDefinition card=new ScorecardDefinition();
 		card.setName(element.attributeValue("name"));
 		card.setScoringType(ScoringType.valueOf(element.attributeValue("scoring-type")));
@@ -124,11 +124,11 @@ public class ScorecardParser implements Parser<ScorecardDefinition> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(cardCellParser.support(name)){
-				cells.add(cardCellParser.parse(ele,withPermission));
+				cells.add(cardCellParser.parse(ele));
 			}else if(attributeRowParser.support(name)){
-				rows.add(attributeRowParser.parse(ele,withPermission));
+				rows.add(attributeRowParser.parse(ele));
 			}else if(customColParser.support(name)){
-				cols.add(customColParser.parse(ele,withPermission));
+				cols.add(customColParser.parse(ele));
 			}else if(name.equals("import-variable-library")){
 				card.addLibrary(new Library(ele.attributeValue("path"),null,LibraryType.Variable));
 			}else if(name.equals("import-constant-library")){

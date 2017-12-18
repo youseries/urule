@@ -36,7 +36,7 @@ public class LeftParser extends AbstractParser<Left> {
 	private SimpleArithmeticParser arithmeticParser;
 	private ValueParser valueParser;
 	@Override
-	public Left parse(Element element,boolean withPermission) {
+	public Left parse(Element element) {
 		Left left=new Left();
 		String type=element.attributeValue("type");
 		if(StringUtils.isNotEmpty(type)){
@@ -49,16 +49,16 @@ public class LeftParser extends AbstractParser<Left> {
 			left.setLeftPart(buildVariableLeftPart(element));
 			break;
 		case function:
-			left.setLeftPart(buildFunctionLeftPart(element,withPermission));
+			left.setLeftPart(buildFunctionLeftPart(element));
 			break;
 		case method:
-			left.setLeftPart(buildMethodLeftPart(element,withPermission));
+			left.setLeftPart(buildMethodLeftPart(element));
 			break;
 		case parameter:
 			left.setLeftPart(buildVariableLeftPart(element));
 			break;
 		case commonfunction:
-			left.setLeftPart(buildCommonFunctionLeftPart(element,withPermission));
+			left.setLeftPart(buildCommonFunctionLeftPart(element));
 		case NamedReference:
 			throw new RuleException("Not support reference type.");
 		case all:
@@ -76,14 +76,14 @@ public class LeftParser extends AbstractParser<Left> {
 			}
 			Element ele=(Element)obj;
 			if(arithmeticParser.support(ele.getName())){
-				left.setArithmetic(arithmeticParser.parse(ele,withPermission));
+				left.setArithmetic(arithmeticParser.parse(ele));
 			}
 		}
 		return left;
 	}
 
 	
-	private CommonFunctionLeftPart buildCommonFunctionLeftPart(Element element,boolean withPermission){
+	private CommonFunctionLeftPart buildCommonFunctionLeftPart(Element element){
 		CommonFunctionLeftPart part=new CommonFunctionLeftPart();
 		part.setName(element.attributeValue("function-name"));
 		part.setLabel(element.attributeValue("function-label"));
@@ -107,27 +107,27 @@ public class LeftParser extends AbstractParser<Left> {
 				if(!e.getName().equals("value")){
 					continue;
 				}
-				p.setObjectParameter(valueParser.parse(e,withPermission));
+				p.setObjectParameter(valueParser.parse(e));
 			}
 			part.setParameter(p);
 		}
 		return part;
 	}
 	
-	private MethodLeftPart buildMethodLeftPart(Element element,boolean withPermission){
+	private MethodLeftPart buildMethodLeftPart(Element element){
 		MethodLeftPart part=new MethodLeftPart();
 		part.setBeanId(element.attributeValue("bean-name"));
 		part.setBeanLabel(element.attributeValue("bean-label"));
 		part.setMethodLabel(element.attributeValue("method-label"));
 		part.setMethodName(element.attributeValue("method-name"));
-		part.setParameters(parseParameters(element, valueParser,withPermission));
+		part.setParameters(parseParameters(element, valueParser));
 		return part;
 	}
 	
-	private FunctionLeftPart buildFunctionLeftPart(Element element,boolean withPermission){
+	private FunctionLeftPart buildFunctionLeftPart(Element element){
 		FunctionLeftPart part=new FunctionLeftPart();
 		part.setName(element.attributeValue("name"));
-		part.setParameters(parseParameters(element, valueParser,withPermission));
+		part.setParameters(parseParameters(element, valueParser));
 		return part;
 	}
 	

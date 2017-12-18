@@ -28,7 +28,7 @@ import com.bstek.urule.model.library.variable.VariableCategory;
  */
 public class VariableLibraryParser implements Parser<List<VariableCategory>> {
 	private VariableCategoryParser variableCategoryParser;
-	public List<VariableCategory> parse(Element element,boolean withPermission) {
+	public List<VariableCategory> parse(Element element) {
 		List<VariableCategory> variableCategories=new ArrayList<VariableCategory>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -37,7 +37,7 @@ public class VariableLibraryParser implements Parser<List<VariableCategory>> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(variableCategoryParser.support(name)){
-				variableCategories.add(variableCategoryParser.parse(ele,withPermission));
+				variableCategories.add(variableCategoryParser.parse(ele));
 			}
 		}
 		return variableCategories;

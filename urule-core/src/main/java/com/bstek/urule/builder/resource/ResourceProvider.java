@@ -21,6 +21,5 @@ package com.bstek.urule.builder.resource;
  */
 public interface ResourceProvider {
 	Resource provide(String path,String version);
-	Resource provide(String path,String version,boolean withPermiossion);
 	boolean support(String path);
 }

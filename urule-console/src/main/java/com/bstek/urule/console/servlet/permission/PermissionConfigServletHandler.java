@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+import com.bstek.urule.RuleException;
 import com.bstek.urule.console.EnvironmentUtils;
 import com.bstek.urule.console.User;
 import com.bstek.urule.console.exception.NoPermissionException;
@@ -64,45 +65,50 @@ public class PermissionConfigServletHandler extends RenderPageServletHandler{
 			writer.close();
 		}
 	}
+	
 	public void loadResourceSecurityConfigs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String companyId=EnvironmentUtils.getLoginUser(new RequestContext(req, resp)).getCompanyId();
-		List<UserPermission> permissions=repositoryService.loadResourceSecurityConfigs(companyId);
-		List<User> users=EnvironmentUtils.getEnvironmentProvider().getUsers();
-		if(users==null)users=new ArrayList<User>();
-		List<UserPermission> result=new ArrayList<UserPermission>();
-		for(User user:users){
-			if(user.isAdmin()){
-				continue;
-			}
-			if(companyId!=null){
-				if(user.getCompanyId()==null){
+		try{
+			List<UserPermission> permissions=repositoryService.loadResourceSecurityConfigs(companyId);
+			List<User> users=EnvironmentUtils.getEnvironmentProvider().getUsers();
+			if(users==null)users=new ArrayList<User>();
+			List<UserPermission> result=new ArrayList<UserPermission>();
+			for(User user:users){
+				if(user.isAdmin()){
 					continue;
 				}
-				if(!user.getCompanyId().equals(companyId)){
+				if(companyId!=null){
+					if(user.getCompanyId()==null){
+						continue;
+					}
+					if(!user.getCompanyId().equals(companyId)){
+						continue;
+					}
+				}
+				boolean exist=false;
+				for(UserPermission p:permissions){
+					if(p.getUsername().equals(user.getUsername())){
+						exist=true;
+						break;
+					}
+				}
+				if(exist){
 					continue;
 				}
+				UserPermission up=new UserPermission();
+				up.setProjectConfigs(new ArrayList<ProjectConfig>());
+				up.setUsername(user.getUsername());
+				result.add(up);
 			}
-			boolean exist=false;
-			for(UserPermission p:permissions){
-				if(p.getUsername().equals(user.getUsername())){
-					exist=true;
-					break;
-				}
+			result.addAll(permissions);
+			List<RepositoryFile> projects=repositoryService.loadProjects(companyId);
+			for(UserPermission p:result){
+				buildProjectConfigs(projects, p);
 			}
-			if(exist){
-				continue;
-			}
-			UserPermission up=new UserPermission();
-			up.setProjectConfigs(new ArrayList<ProjectConfig>());
-			up.setUsername(user.getUsername());
-			result.add(up);
+			writeObjectToJson(resp, result);
+		}catch(Exception ex){
+			throw new RuleException(ex);
 		}
-		result.addAll(permissions);
-		List<RepositoryFile> projects=repositoryService.loadProject(companyId);
-		for(UserPermission p:result){
-			buildProjectConfigs(projects, p);
-		}
-		writeObjectToJson(resp, result);
 	}
 	
 	private void buildProjectConfigs(List<RepositoryFile> projects,UserPermission p){
@@ -133,8 +139,12 @@ public class PermissionConfigServletHandler extends RenderPageServletHandler{
 		String companyId=user.getCompanyId();
 		String content=req.getParameter("content");
 		String path=RepositoryServiceImpl.RESOURCE_SECURITY_CONFIG_FILE+(companyId==null ? "" : companyId);
-		repositoryService.saveFile(path, content, user, false,null);
-		permissionStore.refreshPermissionStore();
+		try{
+			repositoryService.saveFile(path, content, false,null,user);
+			permissionStore.refreshPermissionStore();			
+		}catch(Exception ex){
+			throw new RuleException(ex);
+		}
 	}
 	
 	public void setRepositoryService(RepositoryService repositoryService) {

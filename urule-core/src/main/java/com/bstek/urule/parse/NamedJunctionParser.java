@@ -34,7 +34,7 @@ import com.bstek.urule.model.rule.lhs.NamedJunction;
  */
 public class NamedJunctionParser extends CriterionParser {
 	private ValueParser valueParser;
-	public Criterion parse(Element element,boolean withPermission) {
+	public Criterion parse(Element element) {
 		NamedJunction junction=new NamedJunction();
 		junction.setReferenceName(element.attributeValue("reference-name"));
 		junction.setVariableCategory(element.attributeValue("var-category"));
@@ -50,12 +50,12 @@ public class NamedJunctionParser extends CriterionParser {
 			if(!name.equals("named-criteria")){
 				continue;
 			}
-			items.add(parseNamedItem(ele,withPermission));
+			items.add(parseNamedItem(ele));
 		}
 		return junction;
 	}
 	
-	private NamedItem parseNamedItem(Element element,boolean withPermission){
+	private NamedItem parseNamedItem(Element element){
 		NamedItem item=new NamedItem();
 		String variable=element.attributeValue("var");
 		if(StringUtils.isNotEmpty(variable)){
@@ -76,7 +76,7 @@ public class NamedJunctionParser extends CriterionParser {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				item.setValue(valueParser.parse(ele,withPermission));
+				item.setValue(valueParser.parse(ele));
 				break;
 			}
 		}

@@ -33,12 +33,12 @@ import com.bstek.urule.model.rule.Rhs;
  */
 public class RhsParser implements Parser<Rhs>,ApplicationContextAware {
 	private Collection<ActionParser> actionParsers;
-	public Rhs parse(Element element,boolean withPermission) {
+	public Rhs parse(Element element) {
 		Rhs rhs=new Rhs();
-		rhs.setActions(parseActions(element,withPermission));
+		rhs.setActions(parseActions(element));
 		return rhs;
 	}
-	public List<Action> parseActions(Element element,boolean withPermission){
+	public List<Action> parseActions(Element element){
 		List<Action> actions=new ArrayList<Action>();
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -48,7 +48,7 @@ public class RhsParser implements Parser<Rhs>,ApplicationContextAware {
 			String name=ele.getName();
 			for(ActionParser actionParser:actionParsers){
 				if(actionParser.support(name)){
-					actions.add(actionParser.parse(ele,withPermission));
+					actions.add(actionParser.parse(ele));
 					break;
 				}
 			}

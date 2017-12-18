@@ -24,7 +24,7 @@ import com.bstek.urule.model.flow.StartNode;
  * @since 2014年12月23日
  */
 public class StartNodeParser extends FlowNodeParser<StartNode> {
-	public StartNode parse(Element element,boolean withPermission) {
+	public StartNode parse(Element element) {
 		StartNode start=new StartNode(element.attributeValue("name"));
 		start.setConnections(parseConnections(element));
 		start.setEventBean(element.attributeValue("event-bean"));

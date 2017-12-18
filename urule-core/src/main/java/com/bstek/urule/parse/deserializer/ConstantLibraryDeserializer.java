@@ -27,8 +27,8 @@ import com.bstek.urule.parse.ConstantLibraryParser;
 public class ConstantLibraryDeserializer implements Deserializer<ConstantLibrary> {
 	public static final String BEAN_ID="urule.constantLibraryDeserializer";
 	private ConstantLibraryParser constantLibraryParser;
-	public ConstantLibrary deserialize(Element root,boolean withPermission) {
-		return constantLibraryParser.parse(root,withPermission);
+	public ConstantLibrary deserialize(Element root) {
+		return constantLibraryParser.parse(root);
 	}
 	public boolean support(Element root) {
 		return constantLibraryParser.support(root.getName());

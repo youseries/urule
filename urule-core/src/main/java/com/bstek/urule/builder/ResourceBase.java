@@ -34,14 +34,11 @@ public class ResourceBase {
 		this.providers=providers;
 	}
 	public ResourceBase addResource(String path,String version){
-		return addResource(path,version,true);
-	}
-	public ResourceBase addResource(String path,String version,boolean withPermission){
 		boolean support=false;
 		for(ResourceProvider provider:providers){
 			if(provider.support(path)){
 				support=true;
-				resources.add(provider.provide(path,version,withPermission));
+				resources.add(provider.provide(path,version));
 				break;
 			}
 		}

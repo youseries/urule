@@ -18,7 +18,6 @@ package com.bstek.urule.console.repository;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.jcr.Node;
@@ -28,9 +27,7 @@ import javax.jcr.RepositoryException;
 import org.apache.tika.io.IOUtils;
 
 import com.bstek.urule.RuleException;
-import com.bstek.urule.console.User;
 import com.bstek.urule.console.repository.model.FileType;
-import com.bstek.urule.console.repository.updater.ReferenceUpdater;
 
 /**
  * @author Jacky.gao
@@ -38,33 +35,11 @@ import com.bstek.urule.console.repository.updater.ReferenceUpdater;
  */
 public class RepositoryRefactor {
 	private RepositoryService repositoryService;
-	private Collection<ReferenceUpdater> updaters;
-	public RepositoryRefactor(RepositoryService repositoryService,Collection<ReferenceUpdater> updaters) {
+	public RepositoryRefactor(RepositoryService repositoryService) {
 		this.repositoryService=repositoryService;
-		this.updaters=updaters;
-	}
-	public void rename(Node rootNode,String path,String newpath,User user){
-		List<String> referenceFiles=getFiles(rootNode,path);
-		for(String nodePath:referenceFiles){
-			for(ReferenceUpdater updater:updaters){
-				if(updater.support(nodePath)){
-					InputStream inputStream=repositoryService.readFile(newpath,null);
-					try {
-						String content = IOUtils.toString(inputStream);
-						inputStream.close();
-						String newContent=updater.update(path, path, content);
-						if(newContent!=null){
-							repositoryService.saveFile(newpath,newContent,user,false,null);
-						}
-					} catch (IOException e) {
-						throw new RuleException(e);
-					}
-				}
-			}
-		}
 	}
 	
-	public List<String> getReferenceFiles(Node rootNode,String path,String searchText){
+	public List<String> getReferenceFiles(Node rootNode,String path,String searchText) throws Exception{
 		List<String> referenceFiles=new ArrayList<String>();
 		List<String> files=getFiles(rootNode, path);
 		for(String nodePath:files){

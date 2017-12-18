@@ -27,8 +27,8 @@ import com.bstek.urule.parse.deserializer.ActionLibraryDeserializer;
  */
 public class ActionLibraryResourceBuilder implements ResourceBuilder<ActionLibrary> {
 	private ActionLibraryDeserializer actionLibraryDeserializer;
-	public ActionLibrary build(Element root,boolean withPermission) {
-		return actionLibraryDeserializer.deserialize(root,withPermission);
+	public ActionLibrary build(Element root) {
+		return actionLibraryDeserializer.deserialize(root);
 	}
 
 	public void setActionLibraryDeserializer(ActionLibraryDeserializer actionLibraryDeserializer) {

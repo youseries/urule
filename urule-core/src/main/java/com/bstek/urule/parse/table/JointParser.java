@@ -30,7 +30,7 @@ import com.bstek.urule.parse.ValueParser;
  */
 public class JointParser implements Parser<Joint> {
 	private ValueParser valueParser;
-	public Joint parse(Element element,boolean withPermission) {
+	public Joint parse(Element element) {
 		Joint joint=new Joint();
 		joint.setType(JointType.valueOf(element.attributeValue("type")));
 		for(Object obj:element.elements()){
@@ -39,14 +39,14 @@ public class JointParser implements Parser<Joint> {
 			}
 			Element ele=(Element)obj;
 			if(ele.getName().equals("condition")){
-				joint.addCondition(parseCondition(ele,withPermission));
+				joint.addCondition(parseCondition(ele));
 			}else if(support(ele.getName())){
-				joint.addJoint(parse(ele,withPermission));
+				joint.addJoint(parse(ele));
 			}
 		}
 		return joint;
 	}
-	public Condition parseCondition(Element element,boolean withPermission) {
+	public Condition parseCondition(Element element) {
 		Condition condition=new Condition();
 		condition.setOp(Op.valueOf(element.attributeValue("op")));
 		for(Object obj:element.elements()){
@@ -55,7 +55,7 @@ public class JointParser implements Parser<Joint> {
 			}
 			Element ele=(Element)obj;
 			if(valueParser.support(ele.getName())){
-				condition.setValue(valueParser.parse(ele,withPermission));
+				condition.setValue(valueParser.parse(ele));
 				break;
 			}
 		}

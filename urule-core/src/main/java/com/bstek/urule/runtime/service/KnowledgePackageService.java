@@ -26,5 +26,4 @@ import com.bstek.urule.runtime.KnowledgePackage;
 public interface KnowledgePackageService {
 	public static final String BEAN_ID="urule.knowledgePackageService";
 	KnowledgePackage buildKnowledgePackage(String packageInfo) throws IOException;
-	KnowledgePackage buildKnowledgePackage(String packageInfo,boolean withPermission) throws IOException;
 }

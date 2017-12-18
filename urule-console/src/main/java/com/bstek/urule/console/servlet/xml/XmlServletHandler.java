@@ -91,25 +91,29 @@ public class XmlServletHandler extends WriteJsonServletHandler implements Applic
 					if(subpaths.length==2){
 						version=subpaths[1];
 					}
-					InputStream inputStream=null;
-					if(StringUtils.isEmpty(version)){
-						inputStream=repositoryService.readFile(path,null);
-					}else{
-						inputStream=repositoryService.readFile(path,version);			
-					}
 					try{
-						Element element=parseXml(inputStream);
-						for(Deserializer<?> des:deserializers){
-							if(des.support(element)){
-								result.add(des.deserialize(element,true));
-								if(des instanceof ActionLibraryDeserializer){
-									isaction=true;
-								}
-								break;
-							}
+						InputStream inputStream=null;
+						if(StringUtils.isEmpty(version)){
+							inputStream=repositoryService.readFile(path,null);
+						}else{
+							inputStream=repositoryService.readFile(path,version);			
 						}
-					}finally{
-						inputStream.close();
+						try{
+							Element element=parseXml(inputStream);
+							for(Deserializer<?> des:deserializers){
+								if(des.support(element)){
+									result.add(des.deserialize(element));
+									if(des instanceof ActionLibraryDeserializer){
+										isaction=true;
+									}
+									break;
+								}
+							}
+						}finally{
+							inputStream.close();
+						}
+					}catch(Exception ex){
+						throw new RuleException(ex);
 					}
 				}
 			}

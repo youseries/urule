@@ -27,8 +27,8 @@ import com.bstek.urule.parse.table.DecisionTableParser;
 public class DecisionTableDeserializer implements Deserializer<DecisionTable>{
 	public static final String BEAN_ID="urule.decisionTableDeserializer";
 	private DecisionTableParser decisionTableParser;
-	public DecisionTable deserialize(Element root,boolean withPermission) {
-		return decisionTableParser.parse(root,withPermission);
+	public DecisionTable deserialize(Element root) {
+		return decisionTableParser.parse(root);
 	}
 	public boolean support(Element root) {
 		return decisionTableParser.support(root.getName());

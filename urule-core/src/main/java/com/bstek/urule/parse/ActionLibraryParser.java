@@ -28,7 +28,7 @@ import com.bstek.urule.model.library.action.SpringBean;
  * @since 2014年12月23日
  */
 public class ActionLibraryParser implements Parser<ActionLibrary> {
-	public ActionLibrary parse(Element element,boolean withPermission) {
+	public ActionLibrary parse(Element element) {
 		ActionLibrary lib=new ActionLibrary();
 		for(Object obj:element.elements()){
 			if(obj==null){

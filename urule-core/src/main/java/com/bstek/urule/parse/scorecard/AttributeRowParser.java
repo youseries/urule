@@ -30,7 +30,7 @@ import com.bstek.urule.parse.Parser;
  */
 public class AttributeRowParser implements Parser<AttributeRow> {
 	@Override
-	public AttributeRow parse(Element element,boolean withPermission) {
+	public AttributeRow parse(Element element) {
 		AttributeRow row=new AttributeRow();
 		row.setRowNumber(Integer.valueOf(element.attributeValue("row-number")));
 		List<ConditionRow> rows=new ArrayList<ConditionRow>();

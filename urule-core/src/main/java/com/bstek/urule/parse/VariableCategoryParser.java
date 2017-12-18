@@ -26,7 +26,7 @@ import com.bstek.urule.model.library.variable.VariableCategory;
  */
 public class VariableCategoryParser implements Parser<VariableCategory> {
 	private VariableParser variableParser;
-	public VariableCategory parse(Element element,boolean withPermission) {
+	public VariableCategory parse(Element element) {
 		VariableCategory category=new VariableCategory();
 		category.setName(element.attributeValue("name"));
 		category.setClazz(element.attributeValue("clazz"));
@@ -38,7 +38,7 @@ public class VariableCategoryParser implements Parser<VariableCategory> {
 			Element ele=(Element)obj;
 			String name=ele.getName();
 			if(variableParser.support(name)){
-				category.addVariable(variableParser.parse(ele,withPermission));
+				category.addVariable(variableParser.parse(ele));
 			}
 		}
 		return category;

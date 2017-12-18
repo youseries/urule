@@ -199,20 +199,24 @@ public class PermissionServiceImpl implements PermissionStore,PermissionService 
 	private ProjectConfig loadProjectPermission(String project){
 		User user=EnvironmentUtils.getLoginUser(RequestHolder.newRequestContext());
 		String companyId=user.getCompanyId();
-		List<UserPermission> permissions=repositoryService.loadResourceSecurityConfigs(companyId);
-		ProjectConfig target=null;
-		for(UserPermission p:permissions){
-			if(p.getUsername().equals(user.getUsername())){
-				for(ProjectConfig pc:p.getProjectConfigs()){
-					if(pc.getProject().equals(project)){
-						target=pc;
-						break;
+		try{
+			List<UserPermission> permissions=repositoryService.loadResourceSecurityConfigs(companyId);
+			ProjectConfig target=null;
+			for(UserPermission p:permissions){
+				if(p.getUsername().equals(user.getUsername())){
+					for(ProjectConfig pc:p.getProjectConfigs()){
+						if(pc.getProject().equals(project)){
+							target=pc;
+							break;
+						}
 					}
+					break;
 				}
-				break;
 			}
+			return target;
+		}catch(Exception ex){
+			throw new RuleException(ex);
 		}
-		return target;
 	}
 	@Override
 	public void refreshPermissionStore() {

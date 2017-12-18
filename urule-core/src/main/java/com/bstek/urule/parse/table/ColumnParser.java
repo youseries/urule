@@ -28,7 +28,7 @@ import com.bstek.urule.parse.Parser;
  * @since 2015年1月19日
  */
 public class ColumnParser implements Parser<Column> {
-	public Column parse(Element element,boolean withPermission) {
+	public Column parse(Element element) {
 		Column col=new Column();
 		col.setNum(Integer.valueOf(element.attributeValue("num")));
 		col.setType(ColumnType.valueOf(element.attributeValue("type")));
