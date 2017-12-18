@@ -16,6 +16,7 @@
 package com.bstek.urule.runtime;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -200,7 +201,7 @@ public class ElCalculator {
         	case '/':
         		first=Utils.toBigDecimal(firstValue);
         		second=Utils.toBigDecimal(secondValue);
-        		result=first.divide(second);
+        		result=first.divide(second,10,RoundingMode.HALF_UP);
         		break;
         	case '%':
         		first=Utils.toBigDecimal(firstValue);
