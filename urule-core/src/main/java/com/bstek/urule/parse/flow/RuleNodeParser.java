@@ -33,6 +33,7 @@ public class RuleNodeParser extends FlowNodeParser<RuleNode> {
 		node.setY(element.attributeValue("y"));
 		node.setWidth(element.attributeValue("width"));
 		node.setHeight(element.attributeValue("height"));
+		node.setEventBean(element.attributeValue("event-bean"));
 		node.setConnections(parseConnections(element));
 		return node;
 	}
