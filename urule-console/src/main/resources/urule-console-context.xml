@@ -98,7 +98,7 @@
 		</property>
 	</bean>
 	
-	<bean id="urule.repositoryBuilder" class="com.bstek.urule.console.repository.RepositoryBuilder">
+	<bean id="urule.repositoryBuilder" class="com.bstek.urule.console.repository.RepositoryBuilder" destroy-method="destroy">
 		<property name="repositoryXml" value="${urule.repository.xml}"></property>
 		<property name="repoHomeDir" value="${urule.repository.dir}"></property>
 		<property name="repositoryDatasourceName" value="${urule.repository.datasourcename}"></property>

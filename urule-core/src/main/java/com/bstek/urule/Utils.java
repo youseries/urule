@@ -206,6 +206,8 @@ public class Utils implements ApplicationContextAware{
 	}
 	
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		functionDescriptorMap.clear();
+		functionDescriptorLabelMap.clear();
 		Collection<FunctionDescriptor> functionDescriptors=applicationContext.getBeansOfType(FunctionDescriptor.class).values();
 		for(FunctionDescriptor fun:functionDescriptors){
 			if(fun.isDisabled()){
