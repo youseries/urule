@@ -1,13 +1,12 @@
 package com.bstek.urule.springboot;
 
 import com.bstek.urule.URulePropertyPlaceholderConfigurer;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,9 +22,10 @@ public class PropertiesConfiguration extends URulePropertyPlaceholderConfigurer 
 
     public static final String SPRING_CONFIG_LOCATION = "spring.config.location";
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @Autowired
+    private ResourceLoader resourceLoader;
 
+    public void afterPropertiesSet() throws Exception {
         // 外部配置定位
         List<Resource> resources = new ArrayList<>();
         String springConfigLocation = System.getProperty(SPRING_CONFIG_LOCATION);
@@ -33,19 +33,7 @@ public class PropertiesConfiguration extends URulePropertyPlaceholderConfigurer 
             String[] configFiles = springConfigLocation.split(",|;");
 
             for (String configFile : configFiles) {
-                String trimConfigFile = StringUtils.trim(configFile);
-
-                if (trimConfigFile.startsWith(ResourceUtils.FILE_URL_PREFIX)) {
-                    resources.add(new FileSystemResource(trimConfigFile));
-                } else if (trimConfigFile.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX)) {
-                    resources.add(new ClassPathResource(trimConfigFile));
-                } else {
-                    Resource resource = new FileSystemResource(trimConfigFile);
-                    if (!resource.exists()) {
-                        resource = new ClassPathResource(trimConfigFile);
-                    }
-                    resources.add(resource);
-                }
+                resources.add(resourceLoader.getResource(configFile));
             }
         } else {
             resources.add(new ClassPathResource("application.properties"));
@@ -61,7 +49,7 @@ public class PropertiesConfiguration extends URulePropertyPlaceholderConfigurer 
                     propertiesList.add(properties);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("extra properties init failed", e);
             }
         }
         super.setPropertiesArray(propertiesList.toArray(new Properties[propertiesList.size()]));
