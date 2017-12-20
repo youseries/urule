@@ -16,8 +16,10 @@ import java.util.Properties;
 /**
  * @author Jacky.gao
  * @since 2016年10月12日
+ * @see com.bstek.urule.springboot.SpringBootPropertyPlaceholderAutoConfiguration
  */
-@Configuration
+@Deprecated
+//@Configuration
 public class PropertiesConfiguration extends URulePropertyPlaceholderConfigurer implements InitializingBean {
 
     public static final String SPRING_CONFIG_LOCATION = "spring.config.location";

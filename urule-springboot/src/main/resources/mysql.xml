@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Repository PUBLIC "-//The Apache Software Foundation//DTD Jackrabbit 2.6//EN" "view-source:http://jackrabbit.apache.org/dtd/repository-2.6-elements.dtd">
+<Repository>
+    <DataSources>
+        <DataSource name="dataSource">
+            <param name="driver" value="com.mysql.jdbc.Driver" />
+            <param name="url" value="jdbc:mysql://localhost:3306/urule?useUnicode=true&amp;characterEncoding=UTF-8" />
+            <param name="user" value="root" />
+            <param name="password" value="123456" />
+            <param name="databaseType" value="mysql"/>
+            <param name="maxPoolSize" value="10"/>
+        </DataSource>
+    </DataSources>
+    <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
+        <param name="dataSourceName" value="dataSource"/>
+        <param name="schemaObjectPrefix" value="repo_"/>
+    </FileSystem>
+    <Security appName="Jackrabbit">
+        <AccessManager class="org.apache.jackrabbit.core.security.simple.SimpleAccessManager"/>
+        <LoginModule class="org.apache.jackrabbit.core.security.simple.SimpleLoginModule">
+            <param name="anonymousId" value="anonymous" />
+            <param name="adminId" value="admin" />
+        </LoginModule>
+    </Security>
+    <DataStore class="org.apache.jackrabbit.core.data.db.DbDataStore">
+        <param name="dataSourceName" value="dataSource"/>
+        <param name="schemaObjectPrefix" value="repo_ds_"/>
+    </DataStore>
+    <Workspaces rootPath="${rep.home}/workspaces" defaultWorkspace="default" />
+    <Workspace name="default">
+        <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
+            <param name="dataSourceName" value="dataSource"/>
+            <param name="schemaObjectPrefix" value="repo_${wsp.name}_"/>
+        </FileSystem>
+        <PersistenceManager class="org.apache.jackrabbit.core.persistence.pool.MySqlPersistenceManager">
+            <param name="dataSourceName" value="dataSource"/>
+            <param name="schemaObjectPrefix" value="repo_pm_${wsp.name}_"/>
+        </PersistenceManager>
+    </Workspace>
+    <Versioning rootPath="${rep.home}/version">
+        <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
+            <param name="dataSourceName" value="dataSource"/>
+            <param name="schemaObjectPrefix" value="repo_fsver_"/>
+        </FileSystem>
+        <PersistenceManager class="org.apache.jackrabbit.core.persistence.pool.MySqlPersistenceManager">
+            <param name="dataSourceName" value="dataSource"/>
+            <param name="schemaObjectPrefix" value="repo_ver_"/>
+        </PersistenceManager>
+    </Versioning>
+</Repository>
