@@ -92,6 +92,14 @@ urule.ComparisonOperator=function(menuCallFun){
 			label : "不匹配正则表达式",
 			name:"NotMatch",
 			onClick : onClick
+		}, {
+			label : "包含",
+			name:"Contain",
+			onClick : onClick
+		}, {
+			label : "不包含",
+			name:"NotContain",
+			onClick : onClick
 		}]
 	});
 	this.container.click(function(e){
@@ -247,6 +255,22 @@ urule.ComparisonOperator.prototype.setOperator=function(operator){
 	case "NotMatch":
 		this.operator="NotMatch";
 		URule.setDomContent(this.container,"不匹配正则表达式");
+		if(this.inputType){
+			this.inputType.getContainer().remove();
+		}
+		this.inputType=new urule.InputType();
+		break;
+	case "Contain":
+		this.operator="Contain";
+		URule.setDomContent(this.container,"包含");
+		if(this.inputType){
+			this.inputType.getContainer().remove();
+		}
+		this.inputType=new urule.InputType();
+		break;
+	case "NotContain":
+		this.operator="NotContain";
+		URule.setDomContent(this.container,"不包含");
 		if(this.inputType){
 			this.inputType.getContainer().remove();
 		}

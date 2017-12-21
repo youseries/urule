@@ -57,6 +57,10 @@ public class DSLUtils {
 			return Op.EqualsIgnoreCase;
 		}else if(ctx.NotEqualsIgnoreCase()!=null){
 			return Op.NotEqualsIgnoreCase;
+		}else if(ctx.Contain()!=null){
+			return Op.Contain;
+		}else if(ctx.NotContain()!=null){
+			return Op.NotContain;
 		}
 		throw new RuleException("Operator ["+ctx+"] is invalid.");
 	}

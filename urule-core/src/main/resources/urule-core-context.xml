@@ -256,6 +256,8 @@
 	<bean id="urule.notNullAssertor" class="com.bstek.urule.runtime.assertor.NotNullAssertor"></bean>
 	<bean id="urule.equalsIgnoreCaseAssertor" class="com.bstek.urule.runtime.assertor.EqualsIgnoreCaseAssertor"></bean>
 	<bean id="urule.notEqualsIgnoreCaseAssertor" class="com.bstek.urule.runtime.assertor.NotEqualsIgnoreCaseAssertor"></bean>
+	<bean id="urule.containAssertor" class="com.bstek.urule.runtime.assertor.ContainAssertor"></bean>
+	<bean id="urule.notContainAssertor" class="com.bstek.urule.runtime.assertor.NotContainAssertor"></bean>
 	
 	<bean id="urule.reteBuilder" class="com.bstek.urule.model.rete.builder.ReteBuilder"></bean>
 	
