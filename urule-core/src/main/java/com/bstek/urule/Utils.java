@@ -153,11 +153,12 @@ public class Utils implements ApplicationContextAware{
 			} else if (val == null) {
 				throw new IllegalArgumentException("Null can not to BigDecimal.");
 			} else if (val instanceof String) {
-				String string = (String) val;
-				if ("".equals(string.trim())) {
+				String str = (String) val;
+				if ("".equals(str.trim())) {
 					return BigDecimal.valueOf(0);
 				}
-				return new BigDecimal(string);
+				str=str.trim();
+				return new BigDecimal(str);
 			} else if (val instanceof Number) {
 				return new BigDecimal(val.toString());
 			} else if (val instanceof Character) {
