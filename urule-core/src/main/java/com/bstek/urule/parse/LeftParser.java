@@ -59,6 +59,7 @@ public class LeftParser extends AbstractParser<Left> {
 			break;
 		case commonfunction:
 			left.setLeftPart(buildCommonFunctionLeftPart(element));
+			break;
 		case NamedReference:
 			throw new RuleException("Not support reference type.");
 		case all:
