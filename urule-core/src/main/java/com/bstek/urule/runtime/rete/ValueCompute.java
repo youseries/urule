@@ -73,9 +73,6 @@ public class ValueCompute {
 	
 	private Object compute(Value value,Context context,Object matchedFact,List<Object> allMatchedObjects,Map<String,Object> variableMap){
 		Object leftObj=fetchValue(value,context,matchedFact,allMatchedObjects,variableMap);
-		if(leftObj==null){
-			return null;
-		}
 		ComplexArithmetic arithmetic=value.getArithmetic();
 		if(arithmetic==null){
 			return leftObj;
