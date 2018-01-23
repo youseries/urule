@@ -17,7 +17,7 @@
     "flowdesigner": "^1.1.55",
     "flux": "^2.1.1",
     "font-awesome": "^4.6.1",
-    "jquery": "^2.2.3",
+    "jquery": "^3.3.1",
     "object-assign": "^4.1.0",
     "raphael": "^2.2.1",
     "react": "^15.4.1",
