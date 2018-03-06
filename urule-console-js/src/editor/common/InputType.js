@@ -50,6 +50,7 @@ urule.InputType=function(endInfo,tip,functionProperty,rule){
 			onClick : onClick
 		}]
 	});
+	/*
 	if(this.rule){
 		self.menu.menuItems.push({
 			label:"选择命名变量",
@@ -57,6 +58,7 @@ urule.InputType=function(endInfo,tip,functionProperty,rule){
 			onClick : onClick
 		});
 	}
+	*/
 	self.menu.menuItems.push({
 		label : "选择方法",
 		name  : "Method",

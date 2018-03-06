@@ -57,7 +57,7 @@ urule.AssignmentAction=function(rule){
 					"color":"white"
 				});
 			}
-		},{
+		}/*,{
 			label:"选择命名变量",
 			onClick:function(){
 				self.leftVariable.getContainer().hide();
@@ -69,7 +69,7 @@ urule.AssignmentAction=function(rule){
 					"color":"white"
 				});
 			}
-		}]
+		}*/]
 	});
 	this.label.click(function(e){
 		self.menu.show(e);
