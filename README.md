@@ -15,7 +15,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>决策树</td><td>有</td><td>有</td></tr>
     <tr><td>决策流</td><td>有</td><td>有</td></tr>
     <tr><td>决策表</td><td>有</td><td>有</td></tr>
-    <tr><td>交叉决策表</td><td>有</td><td><font color="#f44336" size=30>无</font></td></tr>
+    <tr><td>交叉决策表</td><td>有</td><td><font color="Hotpink">无</font></td></tr>
     <tr><td>文件名、项目名重构</td><td>有</td><td>无</td></tr>
     <tr><td>参数名、变量常量名重构</td><td>有</td><td>无</td></tr>
     <tr><td>大数据批量处理性能调优</td><td>有</td><td>无</td></tr>
