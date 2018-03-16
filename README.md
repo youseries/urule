@@ -9,7 +9,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
   </tr>
 </thead>
   <tbody>
-    <tr><td>特性</td><td>URULE PRO版</td><td>URULE开源版</td></tr>
+    <tr><td>特性</td><td>[URULE PRO版](http://www.bstek.com/products/urule)</td><td>URULE开源版</td></tr>
     <tr><td>向导式决策集</td><td>有</td><td>有</td></tr
       ><tr><td>脚本式决策集</td><td>有</td><td>有</td></tr>
     <tr><td>决策树</td><td>有</td><td>有</td></tr>
