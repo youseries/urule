@@ -61,6 +61,10 @@ Match : 'Match'|'\u5339\u914d';
 
 NotMatch : 'NotMatch'|'\u4e0d\u5339\u914d';
 
+Contain : 'Contain'|'\u5305\u542b';
+
+NotContain : 'NotContain'|'\u4e0d\u5305\u542b';
+
 EqualsIgnoreCase : 'EqualsIgnoreCase'|'\u5ffd\u7565\u5927\u5c0f\u5199\u7b49\u4e8e';
 
 NotEqualsIgnoreCase : 'NotEqualsIgnoreCase'|'\u5ffd\u7565\u5927\u5c0f\u5199\u4e0d\u7b49\u4e8e';

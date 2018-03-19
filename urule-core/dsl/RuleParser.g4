@@ -252,4 +252,6 @@ op
 	| NotMatch
 	| EqualsIgnoreCase
 	| NotEqualsIgnoreCase
+	| Contain
+	| NotContain
 ;	  
