@@ -66,6 +66,7 @@ public class ClientConfigServletHandler extends RenderPageServletHandler{
 		project=Utils.decodeURL(project);
 		String file=project+"/"+RepositoryServiceImpl.CLIENT_CONFIG_FILE;
 		String content=req.getParameter("content");
+		content=Utils.decodeURL(content);
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
 		try{
 			repositoryService.saveFile(file, content, false,null,user);			

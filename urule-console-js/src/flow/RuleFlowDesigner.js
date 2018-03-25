@@ -59,6 +59,7 @@ export default class RuleFlowDesigner extends FlowDesigner{
             xml+=figure.toXML();
         }
         xml+='</rule-flow>';
+        xml=encodeURI(xml);
         return xml;
     }
 

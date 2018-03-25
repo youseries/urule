@@ -106,6 +106,7 @@ DecisionTree.prototype.initToolbar=function(){
             return;
         }
         xml+="</decision-tree>";
+        xml=encodeURI(xml);
         var url=(uruleServer || "" )+"urule?action=savexml&file="+file+"";
         var dialog=$("<div style='width:100px;height:50px'>文件保存中...</div>");
         $.ajax({

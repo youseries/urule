@@ -28,6 +28,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.bstek.urule.RuleException;
+import com.bstek.urule.Utils;
 import com.bstek.urule.console.EnvironmentUtils;
 import com.bstek.urule.console.User;
 import com.bstek.urule.console.exception.NoPermissionException;
@@ -138,6 +139,7 @@ public class PermissionConfigServletHandler extends RenderPageServletHandler{
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));
 		String companyId=user.getCompanyId();
 		String content=req.getParameter("content");
+		content=Utils.decodeURL(content);
 		String path=RepositoryServiceImpl.RESOURCE_SECURITY_CONFIG_FILE+(companyId==null ? "" : companyId);
 		try{
 			repositoryService.saveFile(path, content, false,null,user);

@@ -56,6 +56,7 @@ export function saveData(data,newVersion,file){
         return;
     }
     xml+='</parameter-library>';
+    xml=encodeURI(xml);
     let postData={content:xml,file,newVersion};
     const url=window._server+'/common/saveFile';
     if(newVersion){

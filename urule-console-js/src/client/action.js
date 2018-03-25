@@ -41,6 +41,7 @@ export function save(data,project) {
         return;
     }
     xml+="</client-config>";
+    xml=encodeURI(xml);
     $.ajax({
         url:window._server+'/clientconfig/save',
         type:'POST',

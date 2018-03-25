@@ -70,6 +70,7 @@ export function saveData(data,newVersion,project) {
         xml+='</res-package>';
     });
     xml+='</res-packages>';
+    xml=encodeURI(xml);
     $.ajax({
         url:window._server+'/packageeditor/saveResourcePackages',
         type:'POST',
