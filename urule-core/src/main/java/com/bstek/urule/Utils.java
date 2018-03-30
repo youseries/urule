@@ -57,9 +57,11 @@ public class Utils implements ApplicationContextAware{
 			return str;
 		}
 		try {
-			return URLDecoder.decode(URLDecoder.decode(str,"utf-8"),"utf-8");
+			str=URLDecoder.decode(str,"utf-8");
+			str=URLDecoder.decode(str,"utf-8");
+			return str;
 		} catch (UnsupportedEncodingException e) {
-			throw new RuleException(e);
+			return str;
 		}
 	}
 	
