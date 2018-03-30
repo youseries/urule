@@ -213,6 +213,7 @@ public class KnowledgeSessionImpl implements KnowledgeSession{
 	}
 	
 	private void clearInitParameters(){
+		List<String> stringList=new ArrayList<String>();
 		for(String key:initParameters.keySet()) {
 			Object obj=initParameters.get(key);
 			if(obj==null){
@@ -228,7 +229,12 @@ public class KnowledgeSessionImpl implements KnowledgeSession{
 				initParameters.put(key, 0);
 			}else if(obj instanceof Boolean) {
 				initParameters.put(key, false);				
+			}else if(obj instanceof String) {
+				stringList.add(key);
 			}
+		}
+		for(String key:stringList) {
+			initParameters.remove(key);
 		}
 	}
 	
