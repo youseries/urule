@@ -105,6 +105,10 @@ public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
 			if(enabled!=null){
 				rule.setEnabled(Boolean.valueOf(enabled));
 			}
+			String debug=JsonUtils.getJsonValue(ruleNode, "debug");
+			if(debug!=null){
+				rule.setDebug(Boolean.valueOf(debug));
+			}
 			String expiresDateText=JsonUtils.getJsonValue(ruleNode, "expiresDate");
 			if(expiresDateText!=null){
 				rule.setExpiresDate(sd.parse(expiresDateText));
