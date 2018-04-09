@@ -26,6 +26,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
 # 链接
 
 文档视频教程地址：[http://wiki.bsdn.org/display/urule2/urule2+Home](http://wiki.bsdn.org/display/urule2/urule2+Home)
+URule PRO版在线示例：[http://112.124.15.63:8084/index.html](http://112.124.15.63:8084/index.html)
 
 # QQ群
 
