@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.bstek.urule.model.rete.builder;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.bstek.urule.model.Node;
@@ -39,8 +40,16 @@ public abstract class CriterionBuilder{
 		String objectType=context.getObjectType(criteria);
 		if(prevNode!=null && !(prevNode instanceof NamedCriteriaNode)){
 			CriteriaNode targetNode=null;
-			String prevObjectType=context.getObjectType(prevNode.getCriteria());
-			if(objectType.equals(prevObjectType)){
+			boolean match=false;
+			if(objectType.equals(ObjectTypeNode.NON_CLASS)){
+				match=true;
+			}else{
+				String prevObjectType=context.getObjectType(prevNode.getCriteria());
+				if(objectType.equals(prevObjectType)){
+					match=true;
+				}
+			}
+			if(match){
 				List<ReteNode> prevChildrenNodes=prevNode.getChildrenNodes();
 				targetNode = fetchSameCriteriaNode(criteria, prevChildrenNodes);
 				if(targetNode==null){
@@ -52,6 +61,9 @@ public abstract class CriterionBuilder{
 			}
 			return targetNode;
 		}else{
+			if(objectType.equals(ObjectTypeNode.NON_CLASS)){
+				objectType=HashMap.class.getName();
+			}
 			CriteriaNode criteriaNode=buildCriteriaNode(criteria,context,objectType);
 			return criteriaNode;
 		}
