@@ -20,7 +20,6 @@ import java.util.List;
 import com.bstek.urule.action.ActionValue;
 import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.RuleInfo;
-import com.bstek.urule.runtime.rete.EvaluationContext;
 
 /**
  * @author Jacky.gao
@@ -31,7 +30,6 @@ public interface RuleBox{
 	boolean add(Activation activation);
 	RuleBox next();
 	List<Rule> getRules();
-	void reevaluate(Object obj,EvaluationContext context);
 	void retract(Object obj);
 	void clean();
 }

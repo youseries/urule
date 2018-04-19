@@ -334,7 +334,6 @@ public class KnowledgeSessionImpl implements KnowledgeSession{
 		for(ReteInstance reteInstance:reteInstanceList){
 			reteInstance.resetForReevaluate(obj);
 		}
-		agenda.reevaluate(obj, evaluationContext);
 		evaluationRete(obj);
 		buildElseRules(false);
 	}

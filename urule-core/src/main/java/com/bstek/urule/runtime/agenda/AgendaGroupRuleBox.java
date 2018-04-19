@@ -26,7 +26,6 @@ import com.bstek.urule.action.ActionValue;
 import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.RuleInfo;
 import com.bstek.urule.runtime.rete.Context;
-import com.bstek.urule.runtime.rete.EvaluationContext;
 /**
  * 以agenda-group属性划分的组，如果该属性相同，则划到这个组当中，<br>
  * 默认情况下，引擎在执行这些有agenda-group属性的规则时，需要某个组得到了焦点，<br>
@@ -91,13 +90,6 @@ public class AgendaGroupRuleBox extends AbstractRuleBox {
 		}
 	}
 	
-	@Override
-	public void reevaluate(Object obj,EvaluationContext context) {
-		for(AgendaGroup group:agendaGroupMap.values()){
-			List<Activation> activations=group.getActivations();
-			super.reevaluate(obj, activations, context);			
-		}
-	}
 	
 	@Override
 	public boolean add(Activation activation) {

@@ -21,7 +21,6 @@ import java.util.List;
 import com.bstek.urule.action.ActionValue;
 import com.bstek.urule.model.rule.RuleInfo;
 import com.bstek.urule.runtime.rete.Context;
-import com.bstek.urule.runtime.rete.EvaluationContext;
 /**
  * 所有未定义activation-group及agenda-group的满足条件的规则都放在此处
  * @author Jacky.gao
@@ -76,11 +75,7 @@ public class ActivationRuleBox extends AbstractRuleBox{
 	public void retract(Object obj){
 		super.retract(obj, activations);
 	}
-	
-	@Override
-	public void reevaluate(Object obj,EvaluationContext context) {
-		super.reevaluate(obj, activations, context);			
-	}
+
 	
 	@Override
 	public boolean add(Activation activation) {

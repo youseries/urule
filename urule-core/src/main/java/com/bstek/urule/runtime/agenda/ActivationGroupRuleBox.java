@@ -26,7 +26,6 @@ import com.bstek.urule.action.ActionValue;
 import com.bstek.urule.model.rule.Rule;
 import com.bstek.urule.model.rule.RuleInfo;
 import com.bstek.urule.runtime.rete.Context;
-import com.bstek.urule.runtime.rete.EvaluationContext;
 /**
  * 规则以activation-group属性进行分组，该属性相同且满足所有条件的规则都会划到此组中,<br>
  * 这样，在执行时这个组中规则只要有一个执行，那么其它的规则将不再执行，因此也叫互斥组。
@@ -92,14 +91,6 @@ public class ActivationGroupRuleBox extends AbstractRuleBox {
 		}
 	}
 	
-	@Override
-	public void reevaluate(Object obj,EvaluationContext context) {
-		for(ActivationGroup group:activationGroupMap.values()){
-			List<Activation> activations=group.getActivations();
-			super.reevaluate(obj, activations, context);			
-		}
-	}
-
 	public boolean add(Activation activation) {
 		boolean shouldAdd=this.activationShouldAdd(activation);
 		if(!shouldAdd){

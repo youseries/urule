@@ -26,7 +26,6 @@ import com.bstek.urule.runtime.WorkingMemory;
 import com.bstek.urule.runtime.response.ExecutionResponseImpl;
 import com.bstek.urule.runtime.response.RuleExecutionResponse;
 import com.bstek.urule.runtime.rete.Context;
-import com.bstek.urule.runtime.rete.EvaluationContext;
 import com.bstek.urule.runtime.rete.FactTracker;
 import com.bstek.urule.runtime.rete.ReteInstance;
 /**
@@ -97,12 +96,6 @@ public class Agenda {
 	public void retract(Object obj){
 		for(RuleBox ruleBox:ruleBoxes){
 			ruleBox.retract(obj);
-		}
-	}
-	
-	public void reevaluate(Object obj,EvaluationContext context){
-		for(RuleBox ruleBox:ruleBoxes){
-			ruleBox.reevaluate(obj, context);
 		}
 	}
 	
