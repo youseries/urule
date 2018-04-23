@@ -1,8 +1,10 @@
 /**
- * Created by Jacky.gao on 2016/5/17.
+ * Created by Jacky.Gao on 2018-04-23.
+ * Base on Webpack4
  */
-var webpack = require('webpack');
-module.exports = {
+const path=require('path');
+module.exports={
+    mode:'development',
     entry: {
         frame:'./src/frame/index.jsx',
         variableEditor:'./src/variable/index.jsx',
@@ -20,29 +22,37 @@ module.exports = {
         scoreCardTable:'./src/scorecard/index.jsx',
         permissionConfigEditor:'./src/permission/index.jsx'
     },
-    output: {
-        path: '../urule-console/src/main/resources/urule-asserts/js',
-        filename: '[name].bundle.js'
+    output:{
+        path:path.resolve('../urule-console/src/main/resources/urule-asserts/js'),
+        filename:'[name].bundle.js'
     },
-    module: {
-        loaders: [
+    module:{
+        rules:[
             {
                 test: /\.(jsx|js)?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015'],
-                    compact:true
+                exclude: /node_modules/,
+                loader: "babel-loader",
+                options:{
+                    "presets": [
+                        "react","env"
+                    ]
                 }
             },
             {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
+                test:/\.css$/,
+                use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
             },
             {
                 test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
-                loader: 'url-loader?limit=1000000&name=[name]-[hash].[ext]'
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000000
+                        }
+                    }
+                ]
             }
         ]
     }
-}
+};
