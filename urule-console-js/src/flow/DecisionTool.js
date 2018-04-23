@@ -139,10 +139,6 @@ export default class DecisionTool extends BaseTool{
             }
 
             decisionTypeSelect.change(function(){
-                self.decisionItems.splice(0,self.decisionItems.length-1);
-                for(let conn of self.fromConnections){
-                    self.decisionItems.push({connection:'',content:''});
-                }
                 self.decisionType=$(this).val();
                 if(self.decisionType==='Criteria'){
                     percentTable.hide();
