@@ -61,7 +61,7 @@ export default class QuickStart extends Component{
                         <td><i className="glyphicon glyphicon-remove" style={{fontSize:'20px',color:'red'}}></i></td>
                     </tr>
                     <tr>
-                        <td>大数据批量处理性能调优</td>
+                        <td>性能调优</td>
                         <td><i className="glyphicon glyphicon-ok" style={{fontSize:'20px',color:'green'}}></i></td>
                         <td><i className="glyphicon glyphicon-remove" style={{fontSize:'20px',color:'red'}}></i></td>
                     </tr>
