@@ -4,7 +4,7 @@
 import '../css/iconfont.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../node_modules/codemirror/lib/codemirror.css';
-import '../../bower_components/bootstrapvalidator/dist/css/bootstrapValidator.css';
+import '../../node_modules/bootstrapvalidator/dist/css/bootstrapValidator.css';
 import '../bootstrap-contextmenu.js';
 import React from 'react';
 import ReactDOM,{} from 'react-dom';

@@ -116,8 +116,4 @@ class Grid extends Component{
         );
     }
 };
-Grid.propTypes={
-    headers:React.PropTypes.array.isRequired,
-    operationConfig:PropTypes.object
-};
 export default Grid;

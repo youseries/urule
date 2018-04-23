@@ -2,7 +2,7 @@
  * Created by jacky on 2016/6/17.
  */
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import '../../bower_components/bootstrapvalidator/dist/css/bootstrapValidator.css';
+import '../../node_modules/bootstrapvalidator/dist/css/bootstrapValidator.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore,applyMiddleware} from 'redux';
