@@ -22,6 +22,7 @@ import com.bstek.urule.model.rule.SimpleArithmetic;
  * @since 2014年12月29日
  */
 public class Left {
+	private String id;
 	private LeftPart leftPart;
 	private LeftType type;
 	private SimpleArithmetic arithmetic;
@@ -42,5 +43,14 @@ public class Left {
 	}
 	public void setType(LeftType type) {
 		this.type = type;
+	}
+	public String getId(){
+		if(id==null){
+			id=leftPart.getId();
+			if(arithmetic!=null){
+				id=id+arithmetic.getId();
+			}
+		}
+		return id;
 	}
 }

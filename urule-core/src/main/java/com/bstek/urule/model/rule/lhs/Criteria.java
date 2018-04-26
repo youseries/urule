@@ -27,7 +27,6 @@ import com.bstek.urule.model.library.Datatype;
 import com.bstek.urule.model.rule.Op;
 import com.bstek.urule.model.rule.SimpleArithmetic;
 import com.bstek.urule.model.rule.Value;
-import com.bstek.urule.runtime.assertor.AssertorEvaluator;
 import com.bstek.urule.runtime.rete.EvaluationContext;
 import com.bstek.urule.runtime.rete.ValueCompute;
 
@@ -44,72 +43,85 @@ public class Criteria extends BaseCriterion implements BaseCriteria{
 	
 	@Override
 	public EvaluateResponse evaluate(EvaluationContext context,Object obj,List<Object> allMatchedObjects){
-		Object leftValue=null;
 		Datatype datatype=null;
+		Object leftResult=null;
 		LeftPart leftPart=left.getLeftPart();
-		if(leftPart instanceof VariableLeftPart){
-			VariableLeftPart varPart=(VariableLeftPart)leftPart;
-			datatype=varPart.getDatatype();
-			if(varPart.getVariableName()==null){
-				throw new RuleException("Criteria left[variableName] can not be null.");
-			}
-			leftValue=Utils.getObjectProperty(obj, varPart.getVariableName());
-		}else{
-			if(leftPart instanceof MethodLeftPart){
-				MethodLeftPart methodPart=(MethodLeftPart)leftPart;
-				ExecuteMethodAction methodAction=new ExecuteMethodAction();
-				methodAction.setBeanId(methodPart.getBeanId());
-				methodAction.setBeanLabel(methodPart.getBeanLabel());
-				methodAction.setMethodLabel(methodPart.getMethodLabel());
-				methodAction.setMethodName(methodPart.getMethodName());
-				methodAction.setParameters(methodPart.getParameters());
-				ActionValue actionValue=methodAction.execute(context, obj,allMatchedObjects,null);
-				if(actionValue==null){
-					leftValue=null;
-				}else{
-					leftValue=actionValue.getValue();
-				}
-			}else if(leftPart instanceof ExistLeftPart){
-				ExistLeftPart existPart=(ExistLeftPart)leftPart;
-				leftValue=existPart.evaluate(context, obj, allMatchedObjects);
-			}else if(leftPart instanceof AllLeftPart){
-				AllLeftPart allPart=(AllLeftPart)leftPart;
-				leftValue=allPart.evaluate(context, obj, allMatchedObjects);
-			}else if(leftPart instanceof CollectLeftPart){
-				CollectLeftPart collectPart=(CollectLeftPart)leftPart;
-				leftValue=collectPart.evaluate(context, obj, allMatchedObjects);
-			}else if(leftPart instanceof CommonFunctionLeftPart){
-				CommonFunctionLeftPart part=(CommonFunctionLeftPart)leftPart;
-				leftValue=part.evaluate(context, obj, allMatchedObjects);
-			}
-			datatype=Utils.getDatatype(leftValue);
-		}
-		Object leftResult=leftValue;
-		SimpleArithmetic arithmetic=left.getArithmetic();
+		String leftId=left.getId();
 		ValueCompute valueCompute=context.getValueCompute();
-		if(arithmetic!=null){
-			leftResult=valueCompute.simpleArithmeticCompute(context,leftValue, arithmetic);
+		if(context.partValueExist(leftId)){
+			leftResult=context.getPartValue(leftId);
+			if(leftPart instanceof VariableLeftPart){
+				datatype=((VariableLeftPart)leftPart).getDatatype();
+			}
+		}else{
+			Object leftValue=null;
+			if(leftPart instanceof VariableLeftPart){
+				VariableLeftPart varPart=(VariableLeftPart)leftPart;
+				datatype=varPart.getDatatype();
+				if(varPart.getVariableName()==null){
+					throw new RuleException("Criteria left[variableName] can not be null.");
+				}
+				leftValue=Utils.getObjectProperty(obj, varPart.getVariableName());
+			}else{
+				if(leftPart instanceof MethodLeftPart){
+					MethodLeftPart methodPart=(MethodLeftPart)leftPart;
+					ExecuteMethodAction methodAction=new ExecuteMethodAction();
+					methodAction.setBeanId(methodPart.getBeanId());
+					methodAction.setBeanLabel(methodPart.getBeanLabel());
+					methodAction.setMethodLabel(methodPart.getMethodLabel());
+					methodAction.setMethodName(methodPart.getMethodName());
+					methodAction.setParameters(methodPart.getParameters());
+					ActionValue actionValue=methodAction.execute(context, obj,allMatchedObjects,null);
+					if(actionValue==null){
+						leftValue=null;
+					}else{
+						leftValue=actionValue.getValue();
+					}
+				}else if(leftPart instanceof ExistLeftPart){
+					ExistLeftPart existPart=(ExistLeftPart)leftPart;
+					leftValue=existPart.evaluate(context, obj, allMatchedObjects);
+				}else if(leftPart instanceof AllLeftPart){
+					AllLeftPart allPart=(AllLeftPart)leftPart;
+					leftValue=allPart.evaluate(context, obj, allMatchedObjects);
+				}else if(leftPart instanceof CollectLeftPart){
+					CollectLeftPart collectPart=(CollectLeftPart)leftPart;
+					leftValue=collectPart.evaluate(context, obj, allMatchedObjects);
+				}else if(leftPart instanceof CommonFunctionLeftPart){
+					CommonFunctionLeftPart part=(CommonFunctionLeftPart)leftPart;
+					leftValue=part.evaluate(context, obj, allMatchedObjects);
+				}
+			}
+			leftResult=leftValue;
+			SimpleArithmetic arithmetic=left.getArithmetic();
+			if(arithmetic!=null){
+				leftResult=valueCompute.simpleArithmeticCompute(context,leftValue, arithmetic);
+			}
+			context.storePartValue(leftId, leftResult);
 		}
 		EvaluateResponse response=new EvaluateResponse();
 		response.setLeftResult(leftResult);
 		Object right=null;
 		if(value!=null){
-			right=valueCompute.complexValueCompute(value,obj,context,allMatchedObjects,null);
-			response.setRightResult(right);
-			if(right==null){
-				response.setResult(false);
-				return response;
+			String valueId=value.getId();
+			if(context.partValueExist(valueId)){
+				right=context.getPartValue(valueId);
+			}else{				
+				right=valueCompute.complexValueCompute(value,obj,context,allMatchedObjects,null);
+				response.setRightResult(right);
+				context.storePartValue(valueId, right);
 			}
 		}
-		AssertorEvaluator assertorEvaluator=context.getAssertorEvaluator();
-		boolean result=assertorEvaluator.evaluate(leftResult, right, datatype,op);
+		if(datatype==null){
+			datatype=Utils.getDatatype(leftResult);
+		}
+		boolean result=context.getAssertorEvaluator().evaluate(leftResult, right, datatype,op);
 		response.setResult(result);
 		return response;
 	}
 	@Override
 	public String getId() {
 		if(id==null){
-			id=left.getLeftPart().getId()+"【"+op.toString()+"】";
+			id=left.getId()+"【"+op.toString()+"】";
 			if(value!=null)id+=value.getId();
 		}
 		return id;

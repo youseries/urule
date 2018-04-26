@@ -205,6 +205,7 @@ public class KnowledgeSessionImpl implements KnowledgeSession{
 		for(Object fact:facts){
 			evaluationRete(fact);
 		}
+		evaluationContext.clean();
 		buildElseRules(true);
 		ExecutionResponseImpl resp=(ExecutionResponseImpl)agenda.execute(filter,max);
 		resp.setDuration(System.currentTimeMillis()-start);
@@ -336,6 +337,7 @@ public class KnowledgeSessionImpl implements KnowledgeSession{
 		}
 		evaluationRete(obj);
 		buildElseRules(false);
+		evaluationContext.clean();
 	}
 	
 	private void evaluationRete(Object fact) {

@@ -44,7 +44,15 @@ public class CriteriaActivity  extends AbstractActivity {
 			return null;
 		}
 		List<Object> allMatchedObjects=new ArrayList<Object>();
-		EvaluateResponse response=criteria.evaluate(context, obj,allMatchedObjects);
+		EvaluateResponse response=null;
+		String criteriaId=criteria.getId();
+		Object storeValue=context.getCriteriaValue(criteriaId);
+		if(storeValue!=null){
+			response=(EvaluateResponse)storeValue;
+		}else{
+			response=criteria.evaluate(context,obj,allMatchedObjects);
+			context.storeCriteriaValue(criteriaId, response);;
+		}
 		boolean result=response.getResult();
 		doDebug(response,context);
 		if(result){
