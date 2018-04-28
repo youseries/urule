@@ -27,6 +27,9 @@ public class ParenValue extends AbstractValue {
 			id+=value.getId();
 		}
 		id+=")";
+		if(arithmetic!=null){
+			id=id+arithmetic.getId();
+		}
 		return id;
 	}
 	@Override
