@@ -184,7 +184,7 @@ window._setDirty=function(){
 				return false;
 			}
 			let file=getParameter('file'),xml=self.toXml();
-            xml=encodeURI(xml);
+            xml=encodeURIComponent(xml);
 			let postData={content:xml,file,newVersion};
 			const url=window._server+'/common/saveFile';
 			if(newVersion){

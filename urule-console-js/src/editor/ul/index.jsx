@@ -227,6 +227,7 @@ function save(file,newVersion){
         return false;
     }
     var content=codeMirror.getValue();
+    content=encodeURIComponent(content);
     let postData={content,file,newVersion};
     const url=window._server+'/common/saveFile';
     if(newVersion){

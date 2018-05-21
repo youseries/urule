@@ -191,7 +191,7 @@ export default class DecisionTree{
                 return;
             }
             xml+="</decision-tree>";
-
+            xml=encodeURIComponent(xml);
             let postData={content:xml,file,newVersion};
             const url=window._server+'/common/saveFile';
             if(newVersion){

@@ -53,7 +53,7 @@ export function save(data) {
         xml+="</user-permission>";
     }
     xml+="</user-permission>";
-    xml=encodeURI(xml);
+    xml=encodeURIComponent(xml);
     const url=window._server+"/permission/saveResourceSecurityConfigs";
     $.ajax({
         url,

@@ -84,7 +84,7 @@ public class CommonServletHandler extends RenderPageServletHandler{
 	public void saveFile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("file");
 		String content=req.getParameter("content");
-		content=Utils.decodeURL(content);
+		content=Utils.decodeContent(content);
 		String versionComment=req.getParameter("versionComment");
 		Boolean newVersion = Boolean.valueOf(req.getParameter("newVersion"));
 		User user=EnvironmentUtils.getLoginUser(new RequestContext(req, resp));

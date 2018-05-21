@@ -143,7 +143,7 @@ import {MsgBox} from 'flowdesigner';
 				return;
 			}
 			xml+="</rule-set>";
-            xml=encodeURI(xml);
+            xml=encodeURIComponent(xml);
 			let postData={content:xml,file,newVersion};
 			const url=window._server+'/common/saveFile';
 			if(newVersion){

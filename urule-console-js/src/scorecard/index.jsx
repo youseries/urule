@@ -150,7 +150,7 @@ $(document).ready(function (e) {
     function save(newVersion) {
         try{
             let content=cardTable.toXml();
-            content=encodeURI(content);
+            content=encodeURIComponent(content);
             const url=window._server+"/common/saveFile";
             if(newVersion){
                 bootbox.prompt("请输入新版本描述.",function (versionComment) {
