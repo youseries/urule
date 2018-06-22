@@ -65,6 +65,18 @@ public class Utils implements ApplicationContextAware{
 		}
 	}
 	
+	public static String decodeContent(String content){
+		if(StringUtils.isBlank(content)){
+			return content;
+		}
+		try{
+			content=URLDecoder.decode(content, "utf-8");
+			return content;
+		}catch(Exception ex){
+			return content;
+		}
+	}
+	
 	public static String encodeURL(String str){
 		if(StringUtils.isBlank(str)){
 			return str;
