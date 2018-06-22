@@ -688,7 +688,7 @@ public class RepositoryServiceImpl extends BaseRepositoryService implements Repo
 		for(String nodePath:files){
 			InputStream inputStream=readFile(nodePath,null);
 			try {
-				String content = IOUtils.toString(inputStream);
+				String content = IOUtils.toString(inputStream,"UTF-8");
 				inputStream.close();
 				boolean containPath=content.contains(path);
 				boolean containText=content.contains(searchText);

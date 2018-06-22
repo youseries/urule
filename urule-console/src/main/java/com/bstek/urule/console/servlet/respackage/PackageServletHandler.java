@@ -342,7 +342,7 @@ public class PackageServletHandler extends RenderPageServletHandler {
                 return false;
             }
 			InputStream inputStream=connection.getInputStream();
-			String result=IOUtils.toString(inputStream);
+			String result=IOUtils.toString(inputStream,"UTF-8");
 			outputStream.close();
 			inputStream.close();
 			if(!result.equals("ok")){
