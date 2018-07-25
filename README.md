@@ -18,6 +18,8 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>交叉决策表</td><td>有</td><td><font color="Hotpink">无</font></td></tr>
     <tr><td>文件名、项目名重构</td><td>有</td><td>无</td></tr>
     <tr><td>参数名、变量常量名重构</td><td>有</td><td>无</td></tr>
+    <tr><td>Excel决策表导入</td><td>有</td><td>无</td></tr>
+    <tr><td>规则集模版保存与加载</td><td>有</td><td>无</td></tr>
     <tr><td>算法优化及性能调优</td><td>有</td><td>无</td></tr>
     <tr><td>更为完善的文件读写权限控制</td><td>有</td><td>无</td></tr>
     <tr><td>技术支持</td><td>有</td><td>无</td></tr>
