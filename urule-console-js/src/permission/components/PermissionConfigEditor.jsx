@@ -85,10 +85,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看当前项目</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readProject" value="true" onChange={this.permissionChange.bind(this,'readProject',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readProject" value="true" onClick={this.permissionChange.bind(this,'readProject',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readProject" value="false" onChange={this.permissionChange.bind(this,'readProject',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readProject" value="false" onClick={this.permissionChange.bind(this,'readProject',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -98,10 +98,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看知识包</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readPackage" value="true" onChange={this.permissionChange.bind(this,'readPackage',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readPackage" value="true" onClick={this.permissionChange.bind(this,'readPackage',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readPackage" value="false" onChange={this.permissionChange.bind(this,'readPackage',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readPackage" value="false" onClick={this.permissionChange.bind(this,'readPackage',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -109,10 +109,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改知识包</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writePackage" value="true" onChange={this.permissionChange.bind(this,'writePackage',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writePackage" value="true" onClick={this.permissionChange.bind(this,'writePackage',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writePackage" value="false" onChange={this.permissionChange.bind(this,'writePackage',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writePackage" value="false" onClick={this.permissionChange.bind(this,'writePackage',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -122,10 +122,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看变量库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readVariableFile" value="true" onChange={this.permissionChange.bind(this,'readVariableFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readVariableFile" value="true" onClick={this.permissionChange.bind(this,'readVariableFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readVariableFile" value="false" onChange={this.permissionChange.bind(this,'readVariableFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readVariableFile" value="false" onClick={this.permissionChange.bind(this,'readVariableFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -133,10 +133,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改变量库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeVariableFile" value="true" onChange={this.permissionChange.bind(this,'writeVariableFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeVariableFile" value="true" onClick={this.permissionChange.bind(this,'writeVariableFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeVariableFile" value="false" onChange={this.permissionChange.bind(this,'writeVariableFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeVariableFile" value="false" onClick={this.permissionChange.bind(this,'writeVariableFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -146,10 +146,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看参数库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readParameterFile" value="true" onChange={this.permissionChange.bind(this,'readParameterFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readParameterFile" value="true" onClick={this.permissionChange.bind(this,'readParameterFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readParameterFile" value="false" onChange={this.permissionChange.bind(this,'readParameterFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readParameterFile" value="false" onClick={this.permissionChange.bind(this,'readParameterFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -157,10 +157,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改参数库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeParameterFile" value="true" onChange={this.permissionChange.bind(this,'writeParameterFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeParameterFile" value="true" onClick={this.permissionChange.bind(this,'writeParameterFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeParameterFile" value="false" onChange={this.permissionChange.bind(this,'writeParameterFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeParameterFile" value="false" onClick={this.permissionChange.bind(this,'writeParameterFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -170,10 +170,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看常量库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readConstantFile" value="true" onChange={this.permissionChange.bind(this,'readConstantFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readConstantFile" value="true" onClick={this.permissionChange.bind(this,'readConstantFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readConstantFile" value="false" onChange={this.permissionChange.bind(this,'readConstantFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readConstantFile" value="false" onClick={this.permissionChange.bind(this,'readConstantFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -181,10 +181,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改常量库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeConstantFile" value="true" onChange={this.permissionChange.bind(this,'writeConstantFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeConstantFile" value="true" onClick={this.permissionChange.bind(this,'writeConstantFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeConstantFile" value="false" onChange={this.permissionChange.bind(this,'writeConstantFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeConstantFile" value="false" onClick={this.permissionChange.bind(this,'writeConstantFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -194,10 +194,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看动作库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readActionFile" value="true" onChange={this.permissionChange.bind(this,'readActionFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readActionFile" value="true" onClick={this.permissionChange.bind(this,'readActionFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readActionFile" value="false" onChange={this.permissionChange.bind(this,'readActionFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readActionFile" value="false" onClick={this.permissionChange.bind(this,'readActionFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -205,10 +205,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改动作库文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeActionFile" value="true" onChange={this.permissionChange.bind(this,'writeActionFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeActionFile" value="true" onClick={this.permissionChange.bind(this,'writeActionFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeActionFile" value="false" onChange={this.permissionChange.bind(this,'writeActionFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeActionFile" value="false" onClick={this.permissionChange.bind(this,'writeActionFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -218,10 +218,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看规则集文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readRuleFile" value="true" onChange={this.permissionChange.bind(this,'readRuleFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readRuleFile" value="true" onClick={this.permissionChange.bind(this,'readRuleFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readRuleFile" value="false" onChange={this.permissionChange.bind(this,'readRuleFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readRuleFile" value="false" onClick={this.permissionChange.bind(this,'readRuleFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -229,10 +229,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改规则集文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeRuleFile" value="true" onChange={this.permissionChange.bind(this,'writeRuleFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeRuleFile" value="true" onClick={this.permissionChange.bind(this,'writeRuleFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeRuleFile" value="false" onChange={this.permissionChange.bind(this,'writeRuleFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeRuleFile" value="false" onClick={this.permissionChange.bind(this,'writeRuleFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -242,10 +242,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看决策表文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readDecisionTableFile" value="true" onChange={this.permissionChange.bind(this,'readDecisionTableFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readDecisionTableFile" value="true" onClick={this.permissionChange.bind(this,'readDecisionTableFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readDecisionTableFile" value="false" onChange={this.permissionChange.bind(this,'readDecisionTableFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readDecisionTableFile" value="false" onClick={this.permissionChange.bind(this,'readDecisionTableFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -253,10 +253,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改决策表文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeDecisionTableFile" value="true" onChange={this.permissionChange.bind(this,'writeDecisionTableFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeDecisionTableFile" value="true" onClick={this.permissionChange.bind(this,'writeDecisionTableFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeDecisionTableFile" value="false" onChange={this.permissionChange.bind(this,'writeDecisionTableFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeDecisionTableFile" value="false" onClick={this.permissionChange.bind(this,'writeDecisionTableFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -266,10 +266,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看决策树文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readDecisionTreeFile" value="true" onChange={this.permissionChange.bind(this,'readDecisionTreeFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readDecisionTreeFile" value="true" onClick={this.permissionChange.bind(this,'readDecisionTreeFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readDecisionTreeFile" value="false" onChange={this.permissionChange.bind(this,'readDecisionTreeFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readDecisionTreeFile" value="false" onClick={this.permissionChange.bind(this,'readDecisionTreeFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -277,10 +277,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改决策树文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeDecisionTreeFile" value="true" onChange={this.permissionChange.bind(this,'writeDecisionTreeFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeDecisionTreeFile" value="true" onClick={this.permissionChange.bind(this,'writeDecisionTreeFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeDecisionTreeFile" value="false" onChange={this.permissionChange.bind(this,'writeDecisionTreeFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeDecisionTreeFile" value="false" onClick={this.permissionChange.bind(this,'writeDecisionTreeFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -290,10 +290,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看评分卡文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readScorecardFile" value="true" onChange={this.permissionChange.bind(this,'readScorecardFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readScorecardFile" value="true" onClick={this.permissionChange.bind(this,'readScorecardFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readScorecardFile" value="false" onChange={this.permissionChange.bind(this,'readScorecardFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readScorecardFile" value="false" onClick={this.permissionChange.bind(this,'readScorecardFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -301,10 +301,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改评分卡文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeScorecardFile" value="true" onChange={this.permissionChange.bind(this,'writeScorecardFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeScorecardFile" value="true" onClick={this.permissionChange.bind(this,'writeScorecardFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeScorecardFile" value="false" onChange={this.permissionChange.bind(this,'writeScorecardFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeScorecardFile" value="false" onClick={this.permissionChange.bind(this,'writeScorecardFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -314,10 +314,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许查看决策流文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readFlowFile" value="true" onChange={this.permissionChange.bind(this,'readFlowFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="readFlowFile" value="true" onClick={this.permissionChange.bind(this,'readFlowFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="readFlowFile" value="false" onChange={this.permissionChange.bind(this,'readFlowFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="readFlowFile" value="false" onClick={this.permissionChange.bind(this,'readFlowFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
@@ -325,10 +325,10 @@ class ResourceSecurityConfigEditor extends Component{
                                         <div className="col-sm-7" style={{textAlign:'right'}}>是否允许修改决策流文件</div>
                                         <div className="col-sm-5">
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeFlowFile" value="true" onChange={this.permissionChange.bind(this,'writeFlowFile',true)} defaultChecked="false"></input> 是
+                                                <input type="radio" name="writeFlowFile" value="true" onClick={this.permissionChange.bind(this,'writeFlowFile',true)} defaultChecked="false"></input> 是
                                             </label>
                                             <label className="checkbox-inline">
-                                                <input type="radio" name="writeFlowFile" value="false" onChange={this.permissionChange.bind(this,'writeFlowFile',false)} defaultChecked="true"></input> 否
+                                                <input type="radio" name="writeFlowFile" value="false" onClick={this.permissionChange.bind(this,'writeFlowFile',false)} defaultChecked="true"></input> 否
                                             </label>
                                         </div>
                                     </div>
