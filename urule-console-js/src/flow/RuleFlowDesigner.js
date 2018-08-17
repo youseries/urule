@@ -157,12 +157,21 @@ export default class RuleFlowDesigner extends FlowDesigner{
 
             const debugGroup=$(`<div class="form-group"><label>允许调试信息输出</label></div>`);
             const debugSelect=$(`<select class="form-control">
-                <option value="true" ${_this.debug ? "selected" : ""}>是</option>
-                <option value="false" ${_this.debug ? "" : "selected"}>否</option>
+                <option value="true">是</option>
+                <option value="false">否</option>
             </select>`);
+            if(_this.debug){
+                debugSelect.val('true');
+            }else{
+                debugSelect.val('false');
+            }
             debugGroup.append(debugSelect);
             debugSelect.change(function(){
-                _this.debug=$(this).val();
+                if($(this).val()==='true'){
+                    _this.debug=true;
+                }else{
+                    _this.debug=false;
+                }
             });
             g.append(debugGroup);
 
