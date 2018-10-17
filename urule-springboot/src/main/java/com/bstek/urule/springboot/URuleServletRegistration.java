@@ -1,5 +1,7 @@
 package com.bstek.urule.springboot;
 
+import javax.servlet.http.HttpServlet;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -13,12 +15,12 @@ import com.bstek.urule.console.servlet.URuleServlet;
 @Component
 public class URuleServletRegistration {
 	@Bean
-	public ServletRegistrationBean registerURuleServlet(){
-		return new ServletRegistrationBean(new URuleServlet(),"/urule/*");
+	public ServletRegistrationBean<HttpServlet> registerURuleServlet(){
+		return new ServletRegistrationBean<HttpServlet>(new URuleServlet(),"/urule/*");
 	}
 	@Bean
-	public ServletRegistrationBean registerIndexServlet(){
-		return new ServletRegistrationBean(new IndexServlet(),"/");
+	public ServletRegistrationBean<HttpServlet> registerIndexServlet(){
+		return new ServletRegistrationBean<HttpServlet>(new IndexServlet(),"/");
 	}
 	
 }
