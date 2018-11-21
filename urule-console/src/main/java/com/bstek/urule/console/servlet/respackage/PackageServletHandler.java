@@ -61,7 +61,6 @@ import com.bstek.urule.builder.KnowledgeBuilder;
 import com.bstek.urule.builder.ResourceBase;
 import com.bstek.urule.console.EnvironmentUtils;
 import com.bstek.urule.console.User;
-import com.bstek.urule.console.repository.ClientConfig;
 import com.bstek.urule.console.repository.RepositoryService;
 import com.bstek.urule.console.repository.RepositoryServiceImpl;
 import com.bstek.urule.console.repository.model.ResourcePackage;
@@ -277,19 +276,6 @@ public class PackageServletHandler extends RenderPageServletHandler {
 		KnowledgePackage knowledgePackage=knowledgeBase.getKnowledgePackage();
 		CacheUtils.getKnowledgeCache().putKnowledge(packageId, knowledgePackage);
 		Map<String,Object> map=new HashMap<String,Object>();
-		List<ClientConfig> clients=repositoryService.loadClientConfigs(project);
-		if(clients.size()>0){
-			StringBuffer sb=new StringBuffer();
-			int i=1;
-			for(ClientConfig config:clients){
-				if(i>1){
-					sb.append("<br>");
-				}
-				sb.append(config.getName()+"："+config.getClient());
-				i++;
-			}
-			map.put("clientInfo", sb.toString());
-		}
 		writeObjectToJson(resp, map);
 	}
 	

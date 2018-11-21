@@ -87,9 +87,6 @@
 		<property name="repositoryService" ref="urule.repositoryService"></property>
 		<property name="builtInActionLibraryBuilder" ref="urule.builtInActionLibraryBuilder"></property>
 	</bean>
-	<bean id="urule.clientConfigServletHandler" class="com.bstek.urule.console.servlet.client.ClientConfigServletHandler">
-		<property name="repositoryService" ref="urule.repositoryService"></property>
-	</bean>
 	
 	<bean id="urule.console.propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreUnresolvablePlaceholders" value="true"></property>
