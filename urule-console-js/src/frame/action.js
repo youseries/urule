@@ -378,20 +378,6 @@ function buildData(data,level) {
                             fileDelete(data,dispatch);
                         });
                     }
-                },
-                {
-                    name:'配置接收推送客户端',
-                    icon:'rf rf-operation',
-                    click:function (data,dispatch) {
-                        const url=window._server+'/clientconfig?project='+encodeURI(data.name);
-                        componentEvent.eventEmitter.emit(componentEvent.TREE_NODE_CLICK,{
-                            id:'client_config_',
-                            name:'推送客户端配置',
-                            fullPath:'client_config_/'+data.name,
-                            project:data.name,
-                            path:url
-                        });
-                    }
                 }
             ];
             break;

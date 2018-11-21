@@ -16,16 +16,10 @@
 package com.bstek.urule.console.servlet.respackage;
 
 import java.awt.Color;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,7 +38,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -60,11 +53,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import com.bstek.urule.Configure;
-import com.bstek.urule.KnowledgePackageReceiverServlet;
 import com.bstek.urule.RuleException;
 import com.bstek.urule.Utils;
 import com.bstek.urule.builder.KnowledgeBase;
@@ -85,7 +74,6 @@ import com.bstek.urule.model.library.variable.Variable;
 import com.bstek.urule.model.library.variable.VariableCategory;
 import com.bstek.urule.model.rule.RuleInfo;
 import com.bstek.urule.runtime.KnowledgePackage;
-import com.bstek.urule.runtime.KnowledgePackageWrapper;
 import com.bstek.urule.runtime.KnowledgeSession;
 import com.bstek.urule.runtime.KnowledgeSessionFactory;
 import com.bstek.urule.runtime.cache.CacheUtils;
@@ -276,89 +264,7 @@ public class PackageServletHandler extends RenderPageServletHandler {
 		KnowledgeBase knowledgeBase=(KnowledgeBase)httpSessionKnowledgeCache.get(req, KB_KEY);
 		Collection<FlowDefinition> col=knowledgeBase.getFlowMap().values();
 		writeObjectToJson(resp, col);
-	}
-	
-	public void pushKnowledgePackageToClients(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		String project=req.getParameter("project");
-		project=Utils.decodeURL(project);
-		String packageId=project+"/"+Utils.decodeURL(req.getParameter("packageId"));
-		if(packageId.startsWith("/")){
-			packageId=packageId.substring(1,packageId.length());
-		}
-		KnowledgePackage knowledgePackage=CacheUtils.getKnowledgeCache().getKnowledge(packageId);
-		
-		ObjectMapper mapper=new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,false);
-		mapper.setDateFormat(new SimpleDateFormat(Configure.getDateFormat()));
-		StringWriter writer=new StringWriter();
-		mapper.writeValue(writer, new KnowledgePackageWrapper(knowledgePackage));
-		String content=writer.getBuffer().toString();
-		writer.close();
-		StringBuffer sb=new StringBuffer();
-		List<ClientConfig> clients=repositoryService.loadClientConfigs(project);
-		int i=0;
-		for(ClientConfig config:clients){
-			if(i>0){
-				sb.append("<br>");
-			}
-			boolean result=pushKnowledgePackage(packageId,content,config.getClient());
-			if(result){
-				sb.append("<span class=\"text-info\" style='line-height:30px'>推送到客户端："+config.getName()+"："+config.getClient()+" 成功</span>");
-			}else{
-				sb.append("<span class=\"text-danger\" style='line-height:30px'>推送到客户端："+config.getName()+"："+config.getClient()+" 失败</span>");
-			}
-			i++;
-		}
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("info", sb.toString());
-		writeObjectToJson(resp, map);
-	}
-	
-	private boolean pushKnowledgePackage(String packageId,String content,String client){
-		HttpURLConnection connection=null;
-		try{
-			if(client.endsWith("/")){
-				client=client.substring(0,client.length()-1);
-			}
-			String clientUrl=client+KnowledgePackageReceiverServlet.URL;
-			content="packageId="+URLEncoder.encode(packageId, "utf-8")+"&content="+URLEncoder.encode(content, "utf-8");
-			URL url=new URL(clientUrl);
-			connection=(HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Charset", "UTF-8");
-			connection.setRequestProperty("Accept-Charset", "utf-8");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			connection.setUseCaches(false);
-			connection.setDoOutput(true);
-			connection.setDoInput(true);
-			connection.connect();
-			OutputStream outputStream=connection.getOutputStream();
-			DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
-			wr.writeBytes(content);
-			wr.flush();
-			wr.close();
-			if (connection.getResponseCode() >= 300) {
-                return false;
-            }
-			InputStream inputStream=connection.getInputStream();
-			String result=IOUtils.toString(inputStream,"UTF-8");
-			outputStream.close();
-			inputStream.close();
-			if(!result.equals("ok")){
-				return false;
-			}
-			return true;
-		}catch(Exception ex){
-			ex.printStackTrace();
-			return false;
-		}finally {
-			if(connection!=null){
-				connection.disconnect();
-			}
-		}
-	}
-	
+	}	
 	
 	public void refreshKnowledgeCache(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String project=req.getParameter("project");
