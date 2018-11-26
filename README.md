@@ -30,7 +30,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>循环规则多循环单元支持</td><td>有</td><td>无</td></tr>
     <tr><td>循环规则中无条件执行的支持</td><td>有</td><td>无</td></tr>
     <tr><td>导入项目自动重命名功能</td><td>有</td><td>无</td></tr>    
-    <tr><td>算法优化及性能调优</td><td>有</td><td>无</td></tr>
+    <tr><td>规则树构建优化</td><td>有</td><td>无</td></tr>
     <tr><td>对象查找索引支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则树中短路计算的支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则条件冗余计算缓存支持</td><td>有</td><td>无</td></tr>
