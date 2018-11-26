@@ -20,9 +20,15 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>参数名、变量常量名重构</td><td>有</td><td>无</td></tr>
     <tr><td>Excel决策表导入</td><td>有</td><td>无</td></tr>
     <tr><td>规则集模版保存与加载</td><td>有</td><td>无</td></tr>
+    <tr><td>中文项目名和文件名支持</td><td>有</td><td>无</td></tr>
+    <tr><td>规则集中执行组的支持</td><td>有</td><td>无</td></tr>
+    <tr><td>规则流中所有节点向导式条件与动作配置的支持</td><td>有</td><td>无</td></tr>
     <tr><td>循环规则多循环单元支持</td><td>有</td><td>无</td></tr>
     <tr><td>导入项目自动重命名功能</td><td>有</td><td>无</td></tr>    
     <tr><td>算法优化及性能调优</td><td>有</td><td>无</td></tr>
+    <tr><td>对象查找索引支持</td><td>有</td><td>无</td></tr>
+    <tr><td>规则树中短路计算的支持</td><td>有</td><td>无</td></tr>
+    <tr><td>规则条件冗余计算缓存支持</td><td>有</td><td>无</td></tr>
     <tr><td>更为完善的文件读写权限控制</td><td>有</td><td>无</td></tr>
     <tr><td>技术支持</td><td>有</td><td>无</td></tr>
   </tbody></table>
