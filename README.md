@@ -21,6 +21,9 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>Excel决策表导入</td><td>有</td><td>无</td></tr>
     <tr><td>规则集模版保存与加载</td><td>有</td><td>无</td></tr>
     <tr><td>中文项目名和文件名支持</td><td>有</td><td>无</td></tr>
+    <tr><td>服务器推送知识包到客户端功能的支持</td><td>有</td><td>无</td></tr>
+    <tr><td>知识包优化与压缩的支持</td><td>有</td><td>无</td></tr>
+    <tr><td>客户端服务器模式下大知识包的推拉支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则集中执行组的支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则流中所有节点向导式条件与动作配置的支持</td><td>有</td><td>无</td></tr>
     <tr><td>循环规则多循环单元支持</td><td>有</td><td>无</td></tr>
