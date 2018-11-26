@@ -16,6 +16,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>决策流</td><td>有</td><td>有</td></tr>
     <tr><td>决策表</td><td>有</td><td>有</td></tr>
     <tr><td>交叉决策表</td><td>有</td><td><font color="Hotpink">无</font></td></tr>
+    <tr><td>复杂评分卡</td><td>有</td><td><font color="Hotpink">无</font></td></tr>
     <tr><td>文件名、项目名重构</td><td>有</td><td>无</td></tr>
     <tr><td>参数名、变量常量名重构</td><td>有</td><td>无</td></tr>
     <tr><td>Excel决策表导入</td><td>有</td><td>无</td></tr>
@@ -27,6 +28,7 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>规则集中执行组的支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则流中所有节点向导式条件与动作配置的支持</td><td>有</td><td>无</td></tr>
     <tr><td>循环规则多循环单元支持</td><td>有</td><td>无</td></tr>
+    <tr><td>循环规则中无条件执行的支持</td><td>有</td><td>无</td></tr>
     <tr><td>导入项目自动重命名功能</td><td>有</td><td>无</td></tr>    
     <tr><td>算法优化及性能调优</td><td>有</td><td>无</td></tr>
     <tr><td>对象查找索引支持</td><td>有</td><td>无</td></tr>
