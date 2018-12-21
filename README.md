@@ -34,6 +34,8 @@ URule提供了两个版本：一个是基于Apache-2.0协议开源免费版本�
     <tr><td>对象查找索引支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则树中短路计算的支持</td><td>有</td><td>无</td></tr>
     <tr><td>规则条件冗余计算缓存支持</td><td>有</td><td>无</td></tr>
+    <tr><td>基于方案的批量场景测试功能</td><td>有</td><td>无</td></tr>
+    <tr><td>知识包调用监控</td><td>有</td><td>无</td></tr>
     <tr><td>更为完善的文件读写权限控制</td><td>有</td><td>无</td></tr>
     <tr><td>技术支持</td><td>有</td><td>无</td></tr>
   </tbody></table>
