@@ -108,7 +108,7 @@ public class ScorecardResourceBuilder implements ResourceBuilder<ScoreRule> {
 
 	private Rule buildRule(List<CardCell> cells, List<CustomCol> customCols,String attributeVariableCategory, int attributeRowNumber,int rowNumber) {
 		Rule scoreRule=buildScoreRule(cells, attributeVariableCategory,attributeRowNumber,rowNumber);
-		scoreRule.getRhs().getActions().addAll(buildCustomColActions(cells, customCols, attributeRowNumber));
+		scoreRule.getRhs().getActions().addAll(buildCustomColActions(cells, customCols, rowNumber));
 		return scoreRule;
 	}
 
@@ -157,7 +157,7 @@ public class ScorecardResourceBuilder implements ResourceBuilder<ScoreRule> {
 		}
 		Rhs rhs=new Rhs();
 		rule.setRhs(rhs);
-		ScoringAction action=new ScoringAction(attributeCell.getRow(),ScoreRuntimeValue.SCORE_VALUE,attributeCell.getWeight());
+		ScoringAction action=new ScoringAction(conditionCell.getRow(),ScoreRuntimeValue.SCORE_VALUE,attributeCell.getWeight());
 		action.setValue(scoreCell.getValue());
 		rhs.addAction(action);
 		return rule;
