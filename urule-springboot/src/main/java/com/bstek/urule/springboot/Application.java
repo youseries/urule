@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
  * @since 2016年10月12日
  */
 @SpringBootApplication
-@ImportResource({"classpath:urule-console-context.xml"})
+@ImportResource({"classpath:context.xml"})
 public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class,args);
