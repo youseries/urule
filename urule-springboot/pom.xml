@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>com.bstek.urule</groupId>
 			<artifactId>urule-console-pro</artifactId>
-			<version>2.2.4</version>
+			<version>3.0.0-RC1</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
